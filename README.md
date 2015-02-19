@@ -1,2 +1,3 @@
-# the-patient-vimmer
+# The Patient Vimmer
+
 A guide for patient Vimmers.
