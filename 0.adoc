@@ -1,5 +1,5 @@
 = The Patient Vimmer — An introduction
-:stylesdir: ../css
+:stylesdir: css
 :stylesheet: style.css
 :linkcss:
 
