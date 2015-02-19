@@ -1,0 +1,42 @@
+
+
+In this chapter, we will explore the language that is at the foundation of Vim's powerful editing features and see how we can use it to move around efficiently.
+
+# The language
+
+Vim's language, inherited from its ancestor `vi` and vastly expanded, sounds a lot like a relatively simple spoken language: we have many expressive verbs, objects, etc. and the grammar to glue them together into meaningful sentences.
+
+The expressive nature of the language makes it very easy to learn progressively, like any spoken language. The idea is to start with a few basic operators like "cut" or "yank"; a few objects like "inner word", "outer WORD" or "to end of the line" and a few simple grammatical rules like "the *object* comes after the operator".
+
+From just those five building blocks, it is possible to infer other objects and rules to build the ten following sentences:
+
+* Cut inner word.
+* Cut inner WORD.
+* Cut outer word.
+* Cut outer WORD.
+* Cut to end of line.
+* Yank inner word.
+* Yank inner WORD.
+* Yank outer word.
+* Yank outer WORD.
+* Yank to end of line.
+
+The day we learn another object, say "to first printable character on the line", we can instantly add two more sentences:
+
+* Cut to first printable character on the line.
+* Yank to first printable character on the line.
+
+And we can add six more sentences when we learn another operator, say "visually select":
+
+* Visually select inner word.
+* Visually select inner WORD.
+* Visually select outer word.
+* Visually select outer WORD.
+* Visually select to end of line.
+* Visually select to first printable character on the line.
+
+Our vocabulary is now composed of seven words and we can build eighteen sentences. What happens when we learn about "inner parenthesis"? Well… we instantly infer "outer parenthesis", "inner brackets", "outer brackets", "inner braces" and "outer braces" and we can instantly build seventy two more sentences, bringing us to a total of ninety sentences built from thirteen words.
+
+Those ninety sentences are ninety commands that we will use everyday but we didn't have to learn those commands by heart, repeating them over and over until they are burnt into our brain. We only had to memorize five small bits and one grammar rule. Then another bit. And another. And another. And five others that we only had to infer from the latest one.
+
+Each new operator or object instantly adds more and more commands to our arsenal, giving us more expressivity and more power.

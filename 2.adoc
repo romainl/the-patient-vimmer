@@ -1,0 +1,239 @@
+A buffer is the internal representation of the content of a file or would-be file. It is the equivalent of a "document" in any regular document-based program like Word or Photoshop.
+
+When you do `:e foo.txt`, a buffer named `foo.txt` is created and displayed. Because you work on a representation of that file, your changes to buffer `foo.txt` will not be written to its corresponding file until you instruct Vim to do so with `:write` or `:update`.
+
+Buffers are the only file proxies you will normally deal with in a typical Vim session. Because they are (or should be) at the core of your workflow, they come with *many* specific commands of which a small number are *really* worth learning to reach a reasonable level of proficiency.
+
+Some of the basic commands may feel too complex or require too many keystrokes for your taste, though. But do yourself a favor and try to find native ways to work around those issues before going on a plugin safari. It's good for learning and good for startup time.
+
+Let's start Vim with two files and subsequently edit another file:
+
+    $ vim foo.txt bar.txt
+    :e baz.txt
+
+# One command to…
+
+The first navigation-related command worth knowing is `:b`, short for `:buffer`.
+
+`:b` expects one argument which can be:
+
+* a buffer number,
+* a buffer name,
+* a buffer reference.
+
+`:b2`, `:b3` and `:b1` pretty much do what you would expect them to do and `:b baz.txt` too.
+
+## Reference
+
+    :help :buffer
+
+# Next/Previous buffer
+
+This pair of commands lets you cycle through your buffers without using numbers:
+
+    :bn[ext]
+    :bp[revious]
+
+or with numbers if you want:
+
+    :5bn
+    :3bp
+
+As usual, you can map those commands to easier keys. These are my mappings:
+
+    nnoremap <PageUp>   :bprevious<CR>
+    nnoremap <PageDown> :bnext<CR>
+
+Those two commands, remapped or not, are obviously useful when your target buffer is relatively close or when the buffer list is short or, simply, when you just don't want to think, but they won't help much if your target is 27 `:bn` away.
+
+## Reference
+
+    :h :bnext
+    :h :bprevious
+
+# Listing buffers
+
+Maintaining an up-to-date mental number-to-name-to-number map to move around sounds silly, I agree, but we don't really have to!
+
+We have three commands — all three synonyms — at our disposal for listing buffers:
+
+    :buffers
+    :files
+    :ls
+
+The output of `:ls`, the shortest one, should look like that:
+
+      1  h   "foo.txt"                      line 1
+      2 #h   "bar.txt"                      line 1
+      3 %a   "baz.txt"                      line 1
+    Press ENTER or type command to continue
+    
+The most immediately useful bits are the buffer number in the first column and its status in the second column.
+
+* the buffer number, useful for `:b<number>`,
+* the `%` in the status column means "current buffer", we are already familiar with it.
+
+That list is not interactive, though: we can not move around and select an item so what good is it?
+
+Hitting `<CR>` makes the list go away but — as hinted by "or type command to continue" — but hitting `:` gives us the usual command-line where we can type `:b2` to go to buffer number 2. Neat.
+
+The whole process is a bit too verbose, though, what if there was a way to shorten that sequence?
+
+    :ls<CR>
+    :b2<CR>
+
+It turns out there *is* a way, and a very simple one at that! Behold the almighty mapping popularized by Barry Arthur, AKA bairui, AKA dahu in [this comic](http://2.bp.blogspot.com/-d1GaUBk-Y10/TyFhskmCYRI/AAAAAAAAARQ/CIEx1V7FLqg/s1600/vim-and-vigor-004-flying_is_faster_than_cycling.png):
+
+    :nnoremap <leader>b :ls<CR>:b<Space>
+
+It executes `:ls` and immediately puts `:b ` on the command-line, ready for us to type a number and hit `<CR>`:
+
+      1  h   "foo.txt"                      line 1
+      2 %a   "bar.txt"                      line 1
+      3 #h   "baz.txt"                      line 1
+    :b |
+
+With that mapping, we are down to 4 keystrokes:
+
+    <leader>b1<CR>
+
+Adding that mapping to our `~/.vimrc` sounds like a very good idea, doesn't it?
+
+## Reference
+
+    :help :ls
+
+# Our friend, the octothorpe
+
+Now is a good time to examine the output of `:ls` again…
+ 
+      1 %a   "foo.txt"                      line 1
+      2 #h   "bar.txt"                      line 1
+      3  h   "baz.txt"                      line 1
+
+`#`, which can be used exactly like `%` or a buffer number, marks the "alternate file", or the last file that was edited. In practical terms, the alternate file is usually synonymous with "previous buffer" and used like this:
+
+    :b#
+
+The current buffer is now `bar.txt` and its "alternate file" is the one we just left, `foo.txt`:
+
+      1 #h   "foo.txt"                      line 1
+      2 %a   "bar.txt"                      line 1
+      3  h   "baz.txt"                      line 1
+
+Until we edit another buffer, repeating `:b#` or the slightly more comfortable `<C-^>` will cycle between `foo.txt` and `bar.txt`. This doesn't sound like much but the ability to alternate between two commonly used buffers is an *extremely* useful feature.
+
+Note: I find the "file" part of "alternate file" hard to reason about so I usually think in terms of previous and current "buffer". YMMV of course.
+
+## Reference
+
+    :help alternate-file
+
+# Command-line completion
+
+We have seen earlier that `:b` accepts a buffer name as argument but doing `:b models/foo-bar.js` seems slow and error-prone.
+
+Like with `:edit` and `:find`, we can complete buffer names with `<Tab>`, see a list of possible completions with `<C-d>` and take advantage of the wildmenu:
+
+    (screencast)
+
+There is a *big* difference, though, the completion is done on any part of the buffer name so we can just use a small bit that we remember and get where we want to get to pretty quickly:
+
+    :b o<Tab><CR>
+
+## Reference
+
+    :help cmdline-completion
+
+# Mapping galore
+
+The `<leader>b` mapping we added to our arsenal earlier is a fine example of how Vim works. Vim gives us *many* small, low-level, bricks — text primitives, common commands, etc. — and the means — mappings, macros, vimscript, count, motions, etc. — to combine them in order to create the higher-level commands we need. However specialized or generic we want them to be.
+
+What about a "choose a buffer by partial name" mapping? Taking inspiration from our `<leader>f`, `<leader>e` and `<leader>b` mappings we can experience with other keys and start with something like:
+
+    :nnoremap <leader>u :b<Space>
+
+What about listing the candidates too?
+
+    :nnoremap <leader>u :b<Space><C-d>
+
+Cool! Well… kind of. It would be even cooler if the completion (and the wildmenu) was started automatically. Let's try with a `<Tab>`:
+
+    :nnoremap <leader>u :b<Space><Tab>
+
+Huh… It looks like `<Tab>` doesn't work like we expected.
+
+No, what we need is another option, `'wildcharm'`:
+
+    :set wildcharm=<C-z>
+
+and a slight change in our mapping:
+
+    :nnoremap <leader>u :b<Space><C-z>
+
+Hoooooo… *that* is good!
+
+## Reference
+
+    :help 'wildcharm'
+
+# Creating an unnamed buffer
+
+The basic command for creating a new empty, *unnamed*, buffer is:
+
+    :enew
+
+A new buffer created with that command is not associated with a file and doesn't have a filetype set. The two main consequences are:
+
+* we don't get syntax highlighting,
+* writing will fail if we don't provide a filename.
+
+If you intend to spend some time working on that buffer, you may want it to be recognized as… say JavaScript, if only to get syntax highlighting. This can be done in two ways:
+
+* explicitly set its filetype after it is created with `:set filetype=javascript`,
+* write to disk with `:w filename.js`.
+
+Or you can simply create a named buffer…
+
+## Reference
+
+    :help :enew
+    :help :new
+    :help :vnew
+    :help :tabnew
+    :help 'filetype'
+
+# Manipulating buffers
+
+## Creating a named buffer
+
+You can create a new empty, *named*, buffer, with:
+
+    :e foo.css
+
+Our new buffer has its filetype set and is associated by default with an as-of-yet non-existing file, `foo.css`. Be aware that `:w` or `:update` will write it to disk in the current directory… which may or may not be desired so watch your fingers!
+
+## Writing a buffer
+
+Whether it is named or not, it is easy to write a buffer to disk:
+
+    :w filename.css    " write the current buffer to file 'filename.css'
+    :w                 " write the current named buffer to its associated file
+
+Writing the current unnamed buffer in a non-existing directory is another story:
+
+    :!mkdir -p foo/bar
+    :w foo/bar/foo.less
+
+If the buffer is named:
+
+    :!mkdir -p foo/bar
+    :w foo/bar/%
+
+## Renaming a buffer
+
+## Closing a buffer
+
+## Deleting a buffer
+
+# But what about arguments?

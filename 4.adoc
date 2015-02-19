@@ -1,0 +1,49 @@
+Working a whole day on the same line in the same file is a relatively uncommon pattern. In reality, we spend a lot of time jumping from one word to another, one line to another, one file to another or even one area of the project to another. For years, editor developers have come up with various ways to make those movements easier and Vim has arguably been ahead of the curve for most of its long history.
+
+This chapter tries to present an exhaustive panorama of the many [...]
+
+# Moving within a buffer
+
+(intro text)
+
+## Text-objects and motions
+
+Contrary to common belief, `hjkl` are far from being the be-all and end-all of text editing. Using them to replace the arrows *may* make some sense but the gain will be negligible if you only use them. So negligible that the replacement is almost pointless. `hjkl` are unfortunately the Vim equivalent of a rachitic tree hiding a lush forest. A forest so rich you will wonder why you wasted so much energy on that ugly little excuse of a tree.
+
+The efficiency of character-by-character and line-by-line movement diminishes quickly as we augment the distance, whether we use `hjkl`, `wasd` or the arrows. That is why most "normal" editors allow us to do things like Alt+Right or Ctrl+Up to jump over whole words or paragraphs and why Vim allows us to do that… and a lot more.
+
+Starting at the word level, we have motions that go over whole words:
+
+    w
+    b
+    e
+
+
+we have this very useful distinction between a "word", delimited by non-keyword characters and a "WORD", delimited by white space:
+
+    +-------- a word
+     ++++---- a word
+         +--- a word
+    "word"
+    ++++++--- a WORD
+
+We can use that distinction 
+
+The awesome `:help navigation` is truly an indispensable read on the subject but I will try to list here some of the most common motions anyway.
+
+[...]
+
+## Search
+
+## Defines
+
+# Moving within a project
+
+## Files
+
+## Grep
+
+## Includes/Defines
+
+## Tags
+

@@ -1,0 +1,31 @@
+Extending Vim
+
+As should be obvious by now, Vim can do a lot and gives us plenty of means and opportunities to build higher-level tools to suit many needs.
+
+We have seen how to use options, mappings and custom commands to customize Vim's behavior but there are times when  
+
+~/.vim/ and its structure
+
+
+
+NB: Since 7.4, it is possible to keep our `vimrc` *inside* our `~/.vim/` (on Unix-like systems)
+
+vimscript
+	functions
+	commands
+	variables
+	etc.
+good practices
+when to look for plugins
+where to look for plugins
+installing plugins
+	manually
+	vimball
+	pathogen
+	vundle
+	neobundle
+	VAM
+	plug
+	notes on Git/Mercurial…
+updating plugins
+removing plugins

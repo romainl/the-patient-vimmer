@@ -1,0 +1,75 @@
+# Search-based navigation
+
+Searching is a wonderful way to navigate the current buffer. Together with `:set incsearch`, `/` and `?` rarely need more than 4 or 5 keystrokes to get us where we need to.
+
+(gif)
+
+    /foo<CR>          " search forward for foo
+    ?bar<CR>          " search backward for bar
+    n                 " repeat the last search
+    N                 " repeat the last search in the opposite direction
+
+These few options are generally considered useful:
+
+* `:help 'incsearch'` moves the cursor to — and highlights — the next match *as you type*.
+* `:help 'ignorecase'` makes search case-insensitive; allows you to reach `Foo` with `foo`.
+* `:help 'smartcase'` turns case-sensitivity on if the search pattern contains an uppercase letter. `/Foo` skips `foo` on the way to `Foo`.
+* `:help 'hlsearch'` highlights *every* match, in every visible window.
+* `:help :nohl` turns off `'hlsearch'`'s highlighting until next search.
+
+# Search inside the current buffer
+
+    :g/foo/#
+
+# Search inside the current buffer, and included files, excluding comments
+
+While `/` and `#` are awesome *navigation* tools, they are not that good for *actual* searching. "Searching" usually involves comparing matches, filtering… all things `/` and `?` actually make quite hard, if only because we can't see all the matches at once.
+
+But Vim has got our back with `:help :ilist`:
+
+* List every line containing the whole word `foo` and jump to one of them:
+
+    :il foo<CR>:202<CR> (gif)
+
+* List every line containing `foo`
+
+    :il /foo<CR> (gif)
+
+* Create a TOC of the current markdown document
+
+    :il /#<CR> (gif)
+
+… and its more specialized sibling `:help :dlist`:
+
+* List every function containing `bar` in its name
+
+    :dli bar<CR>
+
+* List every function
+
+    :dli /<CR>
+
+## … and replace
+
+* List all the functions containing `user` and add a TODO item above one of them 
+
+    :dli /user<CR>:1034norm O// TODO: fix this function<CR> (gif)
+
+* List all the occurences of `myVar` and substitute only some of them with `myArray`
+
+    :il myVar<CR>:53,89s/myVar/myArray (gif)
+
+# Search inside loaded buffers
+
+    :call setqflist([])<CR>
+    :bufdo vimgrepadd foo % | cw
+    
+    :command! -nargs=1 SearchInBuffers call setqflist([])|silent! bufdo vimgrepadd <args> %|cw
+
+## And replace
+
+    
+
+# Search recursively inside project
+
+## … and replace

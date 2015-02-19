@@ -1,0 +1,212 @@
+In Vim, you always have *at least* one buffer, displayed in *at least* one Window, itself contained in *at least* one tab page. That's the bare minimum.
+
+But you can have one or more buffers.
+
+And you can have one or more windows.
+
+And one or more tab pages.
+
+# Windows
+
+Simply put, a window is a *view* into whatever buffer you decide to display in that window. As such, windows can't be used as buffer proxies or, obviously, as file proxies.
+
+So what good are windows, then?
+
+## Using windows
+
+### Different views of the same file
+
+Because a single buffer can be viewed trough more than one window it is possible to view the definition of a function — upper in the same buffer — and the portion of code you are currently working on in two windows, the latter below the former.
+
+    (screenshot)
+
+### Work in one widow, refer to the other one
+
+One could split the current tab page in two vertical windows, with the documentation on the right and his current code on the left. With such a setup, it becomes very easy to refer to the content of one buffer while writing in another one… using only our eyeballs.
+
+    (screenshot)
+
+### Stay focused
+
+Alternating between two files — HTML or code/test — is easy with `:b#` or `<C-^>` but the focus change *can* become distracting after a while: the whole screen is changed, we must adapt to the new content… this can be a flow-breaker.
+
+Having your HTML in one window and your CSS in another makes it possible to refer to one when working in the other and avoids that split second of adjustment that can break our flow.
+
+    (screenshot)
+
+## Creating a window
+
+Creating a window is done by splitting the current window in two equal parts.
+
+* The current window is split to obtain two horizontal views of the current buffer:
+
+        :sp[lit]
+
+  or:
+
+        <C-w>s
+
+* The current window is split to obtain two vertical views of the current buffer:
+
+        :vs[plit]
+
+  or:
+
+        <C-w>v
+
+* The current window is split but the new horizontal window contains a new, empty, unnamed buffer:
+
+        :new
+        
+  or:
+
+        <C-w>n
+
+* The current window is split but the new vertical window contains a new, empty, unnamed buffer:
+
+        :vnew
+
+The somewhat unintuitive default is to open the new window on the top left of the current window. It is possible to tell Vim to do that on the bottom right by prepending `:sp`, `:vs`, :new and `:vnew` with `:botright`:
+
+    :botright new
+
+You can add the two options below to your `vimrc` to make this the default behavior:
+
+     set splitbelow
+     set splitright
+
+## Moving the cursor between windows
+
+Two windows make an easy layout: moving from one to the other is only a matter of mashing `<C-w>w`. But what if we have, say… six windows?
+
+That's where windows start to become "complicated". One could move in the four cardinal directions with:
+
+    <C-w>h or <C-w><Left>
+    <C-w>j or <C-w><Down>
+    <C-w>k or <C-w><Up>
+    <C-w>l or <C-w><Right>
+
+or directly move to the first one, at the top left:
+
+    <C-w>t ("top")
+
+or to the last one, at the bottom right:
+
+    <C-w>b ("bottom")
+
+or to the previous window:
+
+    <C-w>p
+
+or cycle through every window:
+
+    <C-w>w (forward)
+    <C-w>W (backward)
+
+In any case, keep the nature of windows in mind to avoid confusing "moving to a window" and "moving to a buffer".
+
+## Moving windows around
+
+What if you opened an horizontal window instead of a vertical one? What if you would prefer that window at the top right to be on the left, between the top one and the bottom one?
+
+Vim gives us a bunch of commands for moving windows around but, again, it is important to stress out the *fact* that windows and buffers are not tied in any ways. Hence the question you should ask to yourself each time you want to "move a window":
+
+*Do I want to change my window layout or do I want to view this buffer in that window?*
+
+### I want to change the window layout
+
+You can try these:
+
+    <C-w>H    turn the current window into a vertical one
+              at the far left of the screen
+    <C-w>J    turn the current window into an horizontal one
+              at the bottom of the screen
+    <C-w>K    turn the current window into an horizontal one
+              at the top of the screen
+    <C-w>L    turn the current window into a vertical one
+              at the far right of the screen
+
+    <C-w>x    switch the current window and the previous one
+    
+    <C-w>r    rotate windows (clockwise)
+    <C-w>R    rotate windows (counter-clockwise)
+
+### I want to view this buffer in that window
+
+Because windows are *views* into arbitrary buffers, this task is better done by going to "that" window and displaying "this" buffer:
+
+    <C-w>l
+    :b foo…
+
+Remember: while it is certainly a tempting shortcut, mentally associating a buffer and a window or a tab is counterproductive.
+
+## Closing windows
+
+Closing a window doesn't remove the currently displayed buffer from the buffer list and removing a buffer from the buffer list doesn't necessarily close the window where it is currently displayed.
+
+If you want to 
+
+## Reference
+
+    :help :split
+    :help :vsplit
+    :help new
+    :help vnew
+    :help :botright
+    :help 'splitbelow'
+    :help 'splitleft'
+    :help opening-window
+    :help window-move-cursor
+    :help window-moving
+
+# Tab pages
+
+The discord around tab pages is as old as the feature and largely a confusion issue.
+
+In IDEs and other editors, the file is viewed through a window attached to a "tab", itself sitting among other tabs in a "tabline". Because that tab is unambiguously tied to that window and to that file, the whole thing constitutes the de-facto file proxy people are used to. A somewhat reasonable convention that new vimmers often bring with them upon switching.
+
+They are more than that but, unfortunately, tab pages share quite a few important aspects with other editor's tabs:
+
+* their name, to begin with,
+* their look and feel,
+* their interaction model.
+
+Indeed, Vim's tab page is made of a view attached to a tab widget that contains some informative label and can be clicked, closed or move around. And yeah, it is called "tab" page.
+
+"Confusion", do you remember? Wait! I have more for you…
+
+Editing multiple files in vanilla Vim is admittedly not a fun experience because the `'hidden'` option is disabled by default, preventing us from moving to another buffer without saving the current one or *abandoning our changes.*
+
+Naming issues, hostile defaults, poor UX choices… everything leads newcomers to tab pages… which they will invariably use as if they were the familiar file proxy they are so used to.
+
+Basically, reading the relevant documentation or listening to the advice of other seasoned vimmers are the only ways one could learn that, in fact, Vim's tab pages are *very* different from other editors tabs. And we know how people like to read documentation…
+
+## A truth so simple it hurts
+
+A tab page is a *workspace*, a place where we can organize any number of windows.
+
+Because they contain windows, tab pages inherit their most striking limitation: *no one-to-one relationship between a buffer and a window.* Since it is impossible to tie a specific buffer to a specific window in a specific tab pages it is therefore impossible to use tab pages as file proxies.
+
+## Using tab pages
+
+### Creating a tab page
+
+### Moving between tab pages
+
+### Moving tab pages around
+
+### Closing tab pages
+
+# Buffers vs windows vs tab pages
+
+Let us go back to that famous "discord" I hinted at earlier.
+
+When asking help on an obviously tab-centric workflow, new vimmers often get an answer that sounds like "don't use tabs, use buffers instead" which sounds in turn like "tabs are useless, using buffers is the one true way of the vimmer".
+
+Of course, using tab pages as file proxies (the rookie vimmer) is just as wrong as ditching them by principle (the uptight netizen).
+
+To paraphrase [my lengthy answer](http://stackoverflow.com/a/26710166/546861) to [that dumb StackOverflow question](http://stackoverflow.com/q/26708822/546861), buffers, windows and tab pages are designed to serve different needs and should be used according to their respective strengths and weaknesses. Using only one is *not* the answer, whatever that "one" is.
+
+* Use buffers as what they are: file proxies.
+* Use windows as what they are: views.
+* Use tab pages as what they are: workspaces.
