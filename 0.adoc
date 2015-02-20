@@ -70,6 +70,7 @@ You may need slightly different packages depending on your Desktop Environment o
     $ sudo slackpkg install-new vim-gvim
 
 TODO TODO TODO
+
 ==== OpenBSD
 
     $ sudo pkg_add vim-x11
@@ -77,6 +78,7 @@ TODO TODO TODO
 ==== FreeBSD
 
     $ sudo pkg install editors/vim
+
 TODO TODO TODO
 
 === On Mac OS X
@@ -223,7 +225,7 @@ In addition to forcing Vim to start in “nocompatible mode”, creating an empt
     :help startup
     :help vimrc-intro
       
-NB: The very existence of that file makes adding `set nocompatible` to our `vimrc` generally useless so… don’t put that at the top of your `vimrc` like many sample `vimrc`s and blog posts tell you to do. An explicit `set nocompatible` can have interesting effects in *some* situations but they are honestly too rare to care.
+NB: The very existence of that file makes adding `set nocompatible` to our `vimrc` generally useless so… don’t put that at the top of your `vimrc` like many sample vimrcs and blog posts tell you to do. An explicit `set nocompatible` can have interesting effects in *some* situations but they are honestly too rare to care.
 
 === Problem 1 — Backspace
 
@@ -324,7 +326,7 @@ and… type `:` then press the `<Up>` key to recall the latest Ex command. Vim r
 
 === Problem 5 — Line numbers
 
-Line numbers is another feature people are attached to and it’s very easy to enable.
+Line numbering is another feature people are attached to and it’s very easy to enable.
 
 ==== Solution
 
@@ -382,14 +384,16 @@ This quick exercise helped us learn:
 I would say we are doing good, here.
 
 ++++
-<footer>
+<div id="front">
     <h6>The Patient Vimmer</h6>
     <ul>
         <li>
-            <a href="">0 — An introduction</a>
+            <a href="#">0&nbsp;&nbsp;&nbsp;An introduction</a>
         </li>
     </ul>
-    <p>Written by Romain Lafourcade with the help of Barry Arthur.</p>
-    <p>Copyleft 2015</p>
-</footer>
+    <div id="bottom">
+        <p>Written by <a href="#">Romain Lafourcade</a>, with help from <a href="#">Barry Arthur</a> and the #vim community.</p>
+        <p>Copyleft 2015</p>
+    </div>
+</div>
 ++++
