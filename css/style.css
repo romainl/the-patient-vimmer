@@ -440,6 +440,7 @@ pre {
     padding: 1em;
     background-color: #666666;
     color: #eeeeee;
+    font-size: 0.8em;
     overflow: auto;
     border-radius: 4px 4px 4px 4px;
 }
@@ -465,6 +466,7 @@ h3 {
     margin-bottom: 0.5em;
 }
 h1:before, h2:before, h3:before {
+    font-size: 14px;
     color: #cccccc;
     width: 50px;
     display: inline-block;
