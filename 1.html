@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.2">
+<title>The Patient Vimmer — Files</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>The Patient Vimmer — Files</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Due to its text editor nature, it is quite reasonable to expect Vim to be able to open text files. This chapter explores the many ways to open text files for editing.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__edit">:edit</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>:edit</code> (shortened to <code>:e</code>) is the canonical way to edit a file, existing or not:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:e foo.txt
+:e ../bar.txt</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It is important to note that this command only accepts <strong>one</strong> filename as argument so you can forget these for the time being:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:e file1 file2 file3
+:e *foo</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It can be done, of course, but we will come to that later.</p>
+</div>
+<div class="paragraph">
+<p><code>:e</code> covers a lot of ground already, but we will need fast fingers and a vast memory when time will come to edit files buried at the bottom of a large and complex directory structure.</p>
+</div>
+<div class="sect2">
+<h3 id="_reference">Reference</h3>
+<div class="literalblock">
+<div class="content">
+<pre>:help :edit</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_tab_completion">Tab-completion</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Fortunately, Vim’s tab-completion lets us cycle through eligible files:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(screencast)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here are a few default bindings:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>&lt;Tab&gt;</code> selects the next item,</p>
+</li>
+<li>
+<p><code>&lt;S-Tab&gt;</code> selects the previous item,</p>
+</li>
+<li>
+<p><code>&lt;Down&gt;</code> enters a directory,</p>
+</li>
+<li>
+<p><code>&lt;CR&gt;</code> chooses the selected item,</p>
+</li>
+<li>
+<p><code>&lt;C-d&gt;</code> lists the completion items.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Pretty basic.</p>
+</div>
+<div class="sect2">
+<h3 id="_reference_2">Reference</h3>
+<div class="literalblock">
+<div class="content">
+<pre>:help cmdline-completion</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_wildmenu">The wildmenu</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>But we are in the dark, here: we have no idea how large the completion list is unless we press <code>&lt;C-d&gt;</code> every couple of keystrokes or if and how we could refine our query or how to leave the current directory! <strong>Basic</strong> tab-completion is better than nothing but meh…</p>
+</div>
+<div class="paragraph">
+<p>Don’t worry! Vim has got our back with a brilliant feature called “wildmenu” that temporarily replaces the status line with a handy menu:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(screencast)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Navigation is a lot easier now that we have an idea of where we are and what’s next. It is also easier to traverse directories with the new <code>&lt;Up&gt;</code> binding. You can enable this feature for the current session with:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:set wildmenu</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or for every further session by adding this line to your <code>vimrc</code>, as usual:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>set wildmenu</pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_reference_3">Reference</h3>
+<div class="literalblock">
+<div class="content">
+<pre>:help 'wildmenu'</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_wildcards_up_our_sleeve">Wildcards up our sleeve</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Most of the time, though, the first two or three letters are not enough or we only remember the end of the filename. That’s where the “star” wildcard comes handy, just like in your shell:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:e *fr&lt;Tab&gt;
+:e README_fr.txt</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Vim even has a special wildcard called “starstar", that makes it possible to recurse through subdirectories.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:e **/*use&lt;Tab&gt;
+:e app/controllers/user_management.js</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>"starstar"’s main benefits are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>that we are now able to navigate through a flat list instead of a potentially deep hierarchy, saving quite a bunch of keystrokes and brain cells in the process,</p>
+</li>
+<li>
+<p>that we can save large amounts of typing by skipping subdirectories.</p>
+<div class="literalblock">
+<div class="content">
+<pre>(screencast)</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_reference_4">Reference</h3>
+<div class="literalblock">
+<div class="content">
+<pre>:help starstar`</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_mappings">Mappings</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>What if we could skip the pretty but too repetitive <code>:e <strong>*/</strong></code> part?</p>
+</div>
+<div class="paragraph">
+<p>"Macros” are a core aspect of the Vim experience. The name is most often associated with “recording” but they can also be used directly, with <code>:normal</code>, or as part of a mapping. The principle is always the same: we give Vim a bunch of keys to “press” very quickly, expecting the same result as if we pressed those keys ourself.</p>
+</div>
+<div class="paragraph">
+<p>Mappings are very important when it comes to customizing Vim, simply because they turn repetitive actions into instantaneous magic. Allowing us to save many thousands of keystrokes with minimal configuration.</p>
+</div>
+<div class="paragraph">
+<p>Here is the anatomy of a mapping:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:map key action</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where <code>action</code> is what you want to happen when you press <code>key</code>; it could be a macro, an Ex command, calling a function… The Sky Is The Limit!</p>
+</div>
+<div class="paragraph">
+<p>The command used to define your mapping can be any of the following:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">recursive</th>
+<th class="tableblock halign-left valign-top">non-recursive</th>
+<th class="tableblock halign-left valign-top">mode</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>map</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>noremap</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">normal, visual, select, operator-pending</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cmap</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cnoremap</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">command-line</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>imap</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>inoremap</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">insert</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nmap</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nnoremap</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">normal</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>omap</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>onoremap</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">operator-pending</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>smap</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>snoremap</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">select</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vmap</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vnoremap</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">visual, select</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>xmap</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>xnoremap</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">visual</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Try to be as specific as possible.</p>
+</div>
+<div class="paragraph">
+<p>Here are a few examples:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>" press &lt;F5&gt; to quote the word under the cursor
+:nnoremap &lt;F5&gt; ciw"&lt;C-r&gt;""</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>" press &lt;F6&gt; to call a function
+:nnoremap &lt;F6&gt; :call MyFunction()&lt;CR&gt;</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>" press &lt;F7&gt; to execute a command
+:nnoremap &lt;F7&gt; :MyCommand&lt;CR&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let’s say we want Vim to type <code>:e <strong>*/</strong></code> for us when we press <code>&lt;F6&gt;</code> in <strong>normal</strong> mode:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:nmap &lt;F6&gt; :e **/*</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Easy! We only have to do <code>&lt;F6&gt;foo&lt;Tab&gt;</code> to list every file whose name contains <code>foo</code> under the working directory, recursively. Woohoo!</p>
+</div>
+<div class="paragraph">
+<p>But what’s the deal with <code>*map</code> and <code>*noremap</code>?</p>
+</div>
+<div class="paragraph">
+<p>It’s really quite simple…</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>nmap key command</code> means that pressing <code>key</code> in normal mode will execute <code>command</code> <strong>with its current meaning</strong>. This form is <strong>only</strong> useful when we want to use another mapping in our mapping; it is called “recursive mapping".</p>
+</li>
+<li>
+<p><code>nnoremap key command</code> means that pressing <code>key</code> in normal mode will execute <code>command</code> <strong>with its default meaning</strong>. This form is usually the one we want, it is called “non-recursive mapping".</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Our mappings <strong>have</strong> to be solid because they will serve as the foundation of our workflow; non-recursive mappings are the safest choice:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:nnoremap &lt;F6&gt; :e **/*</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>While the whole purpose of the <code>&lt;Fn&gt;</code> keys is to be “programmed” to do whatever specific <strong>function</strong> the user needs, they don’t fit very well with Vim’s other highly mnemonic bindings so it is wiser to use a key that “maps” to the idea of <strong>editing</strong>. But we have problem: Vim already uses most — if not all — of the freaking keys on our keyboard!</p>
+</div>
+<div class="paragraph">
+<p>The “leader” mechanism allows us to define a <code>&lt;leader&gt;</code> key (<code>\</code> by default) that will work as a mini-mode or namespace for our custom mappings. <code>:help mapleader</code> gives us the following example :</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:let mapleader = ","</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>which allows us to use the comma as <code>&lt;leader&gt;</code> in all our mappings:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:nnoremap &lt;leader&gt;e :edit **/*</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We are of course free to choose what key to use as our leader. <code>&lt;Space&gt;</code>, for example, can be a more sensible choice because:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>,</code> is a very useful key (repeat last <code>fFtT</code> in the other direction) with no alternative,</p>
+</li>
+<li>
+<p><code>&lt;Space&gt;</code> is synonymous with <code>l</code> and <code>&lt;Right&gt;</code> so it can safely be remapped.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Let’s end this section by adding these lines to our <code>vimrc</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>let mapleader = ','
+nnoremap &lt;leader&gt;e :edit **/*</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and try them out after sourcing our <code>vimrc</code> again:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(screencast)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Neat!</p>
+</div>
+<div class="sect2">
+<h3 id="_reference_5">Reference</h3>
+<div class="literalblock">
+<div class="content">
+<pre>:help mapping
+:help mapleader</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__find">:find</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Vim comes with an often overlooked command fittingly named <code>:find</code> that differs from <code>:edit</code> in one big way:</p>
+</div>
+<div class="paragraph">
+<p><strong>it can be set to visit specific directories.</strong></p>
+</div>
+<div class="paragraph">
+<p>The key to using <code>:find</code> efficiently is to define a good value for the <code>path</code> option. The default value makes sense for C programmers but we can set it to a more generic — and simplistic — value:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:set path=.,**</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>that allows us to find files in the directory of the current file <strong>and</strong> anywhere under the working directory, recursively, without needing to use <code>**</code> explicitly.</p>
+</div>
+<div class="paragraph">
+<p>Or we can use a more project-specific value:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:set path=app/views/**,app/controllers/**</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The sky is still the limit…</p>
+</div>
+<div class="paragraph">
+<p>We can now use the <code>:find</code> command as a smarter replacement for <code>:edit</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:find foo&lt;Tab&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that, like <code>:edit</code>, <code>:find</code> does its completion from the start of the argument so <code>:find foo</code> will match <code>foobar.txt</code> but not <code>model_foo.txt</code>. Add a wildcard for an even more useful completion:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:find *foo&lt;Tab&gt;</pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_reference_6">Reference</h3>
+<div class="literalblock">
+<div class="content">
+<pre>:help :find
+:help 'path'</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_more_mappings">More mappings</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Again, we can go a bit further with a nice <strong>normal</strong> mode mapping similar to the one we devised earlier for <code>:edit</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:nnoremap &lt;leader&gt;f :find *</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(screencast)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let’s replace the <code>:edit</code>-based mapping in our <code>vimrc</code> with the following:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>nnoremap &lt;leader&gt;f :find *
+set path=.,**</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and move on to the next section…</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_customizing_filename_completion_and_the_wildmenu">Customizing filename completion and the “wildmenu"</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We can further customize the behavior of Vim’s file name completion with a bunch of options that work for <code>:edit</code>  <strong>and</strong> <code>:find</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:help wildmode        " defines the behavior of the wildmenu
+:help wildignore      " tells vim to ignore some patterns
+:help wildignorecase  " enables case insensitivity
+:help suffixes        " sets pattern-based priority</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let’s go through them one by one:</p>
+</div>
+<div class="sect2">
+<h3 id="_wildmode">wildmode</h3>
+<div class="paragraph">
+<p><code>'wildmode'</code> defines the behavior of the wildmenu. You can tell Vim to show a list of completions or not but also when to show it. It is recommended to play with the many possible combinations until you find the right one.</p>
+</div>
+<div class="paragraph">
+<p>The default value is <code>full</code>, here is the value I have in my <code>~/.vimrc</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>set wildmode=list:full</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_wildignore">wildignore</h3>
+<div class="paragraph">
+<p><code>'wildignore'</code> serves the same purpose as <code>.gitignore</code> and similar configuration files: patterns are used to tell Vim what files/directories to ignore when doing completion. Again, the right values depend on your actual needs.</p>
+</div>
+<div class="paragraph">
+<p>Here is an example value that ignores <code>tags</code> and <code>cscope.out</code> files:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>set wildignore+=tags,cscope.out</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note the <code>+=</code> operator that allows us to <strong>add</strong> new values instead of redefining the whole thing every time.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_wildignorecase">wildignorecase</h3>
+<div class="paragraph">
+<p><code>'wildignorecase'</code> is a more generic variant of <code>'fileignorecase'</code>; it allows this:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:e read&lt;Tab&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>to match that:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:e README.md</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_suffixes">suffixes</h3>
+<div class="paragraph">
+<p><code>'suffixes'</code> is a “priority” mechanism that allows Vim to give low priority to files matching the defined patterns.</p>
+</div>
+<div class="paragraph">
+<p>Example usage:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>set suffixes+=.foo,.min.bar</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_reference_7">Reference</h3>
+<div class="literalblock">
+<div class="content">
+<pre>:help 'wildmode'
+:help 'wildignore'
+:help 'wildignorecase'
+:help 'suffixes'</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_but_i_strong_need_strong_a_file_explorer">But I <strong>need</strong> a file explorer!</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Sometimes, we just need to find our way in the deep and uncharted waters of a project that was started by someone else. We only have a rough idea of the structure of the project and choosing what to edit on the command-line can be less than fun, even with our shiny mappings.</p>
+</div>
+<div class="paragraph">
+<p>Thankfully, Vim comes with Netrw, a full-featured (some say “bloated") text-based file explorer that allows us to dig down that new project much like we would do in a graphical file explorer:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(screencast)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here are a few default bindings for reference:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>&lt;cr&gt;</code> open the file/directory under the cursor,</p>
+</li>
+<li>
+<p><code>-</code> go up one directory,</p>
+</li>
+<li>
+<p><code>o</code> open the file/directory under the cursor in a new window,</p>
+</li>
+<li>
+<p><code>P</code> open the file/directory under the cursor in the preview window,</p>
+</li>
+<li>
+<p><code>t</code> open the file/directory under the cursor in a new tab page.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>And the two commands that you need to know:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>:Ex</code> open a listing of the current directory,</p>
+</li>
+<li>
+<p><code>:Rex</code> come back to the previous listing.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Netrw’s documentation is massive and covers a lot more than what you probably need for basic exploration and file-handling but you should at least take a look at the following sections…</p>
+</div>
+<div class="paragraph">
+<p>Note: Coming from another text editor or from an IDE, you may miss your familiar explorer pane but netrw’s author, DrChip, recently added a new command to mimic that feature, <code>:Lexplore</code>. Yeah!</p>
+</div>
+<div class="sect2">
+<h3 id="_reference_8">Reference</h3>
+<div class="literalblock">
+<div class="content">
+<pre>:help netrw-browse-maps
+:help netrw-quickhelp
+:help :Lexplore</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_editing_multiple_files">Editing multiple files</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>As discussed before, <code>:edit</code> and <code>:find</code> accept only <strong>one</strong> filename as argument. Opening multiple files at once is such a common need that it deserves its own set of commands and a bit of background. But first things first…</p>
+</div>
+<div class="sect2">
+<h3 id="_multiple_arguments">Multiple arguments</h3>
+<div class="paragraph">
+<p>It is of course entirely possible to start Vim with multiple files or something that would be expanded to multiple files:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ vim file1 file2 file3
+$ vim `find . -name '*.txt'`</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_the_argument_list_and_the_buffer_list">The argument list and the buffer list</h3>
+<div class="paragraph">
+<p>Vim comes with two special lists meant to contain file references:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the filenames used as arguments when starting Vim are stored in the global <strong>argument list</strong>,</p>
+</li>
+<li>
+<p>the buffers created during the current sessions are stored in the global <strong>buffer list</strong>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The two lists often overlap but they are not the same <strong>at all</strong> and, contrary to the buffer list, the argument list can be manipulated!</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_in_practice">In practice</h3>
+<div class="paragraph">
+<p>In Vim, editing multiple files at once is as simple as replacing the argument list:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:args foo.js foo.html foo.css</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or adding to it:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:argadd *.py</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that replacing the argument list doesn’t remove the corresponding buffers.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_reference_9">Reference</h3>
+<div class="literalblock">
+<div class="content">
+<pre>:help buffer-list
+:help argument-list
+:help :args
+:help :argadd</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_conclusion">Conclusion</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Opening files for editing is neither complex nor hard but — as with everything in Vim — it can be made quicker and easier with a couple of settings and mappings. Make sure you have exhausted the built-in ways before installing the latest and greatest fuzzy gadget people rave about on Reddit, Twitter or Hacker News.</p>
+</div>
+<div id="front">
+    <h6>The Patient Vimmer</h6>
+    <ul>
+        <li>
+            <a href="#">0&nbsp;&nbsp;&nbsp;An introduction</a>
+        </li>
+    </ul>
+    <div id="bottom">
+        <p>Written by <a href="https://github.com/romainl">Romain Lafourcade</a>, with help from <a href="https://github.com/dahu/">Barry Arthur</a> and the #vim community.</p>
+        <p>Copyleft 2015</p>
+    </div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2015-02-20 17:50:37 CET
+</div>
+</div>
+</body>
+</html>

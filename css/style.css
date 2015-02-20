@@ -538,3 +538,17 @@ h6 {
     border-radius: 0 0 4px 4px;
     padding: 16px 32px;
 }
+table {
+    width: 100%;
+}
+table col {
+    width: 1 !important;
+}
+table tr th {
+    width: 1;
+    border-bottom: 2px solid #999999;
+}
+table tr td {
+    border-bottom: 1px solid #999999;
+    width: 1;
+}
