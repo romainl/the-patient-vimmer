@@ -2,6 +2,7 @@
 :stylesdir: css
 :stylesheet: style.css
 :imagesdir: images
+:scriptsdir: javascript
 :linkcss:
 
 Due to its text editor nature, it is quite reasonable to expect Vim to be able to open text files. This chapter explores the many ways to open text files for editing.
@@ -194,6 +195,7 @@ Let’s end this section by adding these lines to our `vimrc`:
 and try them out after sourcing our `vimrc` again:
 
 image::1_leader-e.gif[leader-e]
+image::gifcast_off.png[link="images/1_leader-e.gif"]
 
 Neat!
 
@@ -404,4 +406,6 @@ Opening files for editing is neither complex nor hard but — as with everything
         <p>Copyleft 2015</p>
     </div>
 </div>
+<script src="javascript/jquery-1.11.2.min.js"></script>
+<script src="javascript/behavior.js"></script>
 ++++
