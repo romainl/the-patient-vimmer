@@ -8,17 +8,17 @@ Due to its text editor nature, it is quite reasonable to expect Vim to be able t
 
 == :edit
 
-`:edit` (shortened to `:e`) is the canonical way to edit a file, existing or not:
+`:edit` (shortened to `:e`) is the canonical way to open a file for editing, whether the file exists on disk or not.
 
     :e foo.txt
     :e ../bar.txt
 
-It is important to note that this command only accepts *one* filename as argument so you can forget these for the time being:
+It is important to note that this command only accepts *one* file name as argument so you can forget these for the time being:
 
     :e file1 file2 file3
     :e *foo
 
-It can be done, of course, but we will come to that later.
+It can be done, of course, but with a different command. We will come to that later.
 
 `:e` covers a lot of ground already, but we will need fast fingers and a vast memory when time will come to edit files buried at the bottom of a large and complex directory structure.
 
@@ -30,7 +30,7 @@ It can be done, of course, but we will come to that later.
 
 Fortunately, Vim’s tab-completion lets us cycle through eligible files:
 
-    (screencast)
+image::1_tab-completion.gif[tab-completion]
 
 Here are a few default bindings:
 
@@ -52,7 +52,7 @@ But we are in the dark, here: we have no idea how large the completion list is u
 
 Don’t worry! Vim has got our back with a brilliant feature called “wildmenu” that temporarily replaces the status line with a handy menu:
 
-    (screencast)
+image::1_wildmenu.gif[wildmenu]
 
 Navigation is a lot easier now that we have an idea of where we are and what’s next. It is also easier to traverse directories with the new `<Up>` binding. You can enable this feature for the current session with:
 
@@ -68,7 +68,7 @@ or for every further session by adding this line to your `vimrc`, as usual:
 
 == Wildcards up our sleeve
 
-Most of the time, though, the first two or three letters are not enough or we only remember the end of the filename. That’s where the “star” wildcard comes handy, just like in your shell:
+Most of the time, though, the first two or three letters of a file name are not enough or we only remember the end. That’s where the “star” wildcard comes handy, just like in your shell:
 
     :e *fr<Tab>
     :e README_fr.txt
@@ -80,14 +80,14 @@ Vim even has a special wildcard called “starstar", that makes it possible to r
 
 "starstar"’s main benefits are:
 
-* that we are now able to navigate through a flat list instead of a potentially deep hierarchy, saving quite a bunch of keystrokes and brain cells in the process,
-* that we can save large amounts of typing by skipping subdirectories.
+* we are now able to navigate through a flat list instead of a potentially deep hierarchy, saving quite a bunch of keystrokes and brain cells in the process,
+* we can save large amounts of typing by skipping subdirectories.
 
-    (screencast)
+image::1_wildcards.gif[wildcards]
 
 === Reference
 
-    :help starstar`
+    :help starstar
 
 == Mappings
 
@@ -95,7 +95,7 @@ What if we could skip the pretty but too repetitive `:e **/*` part?
 
 "Macros” are a core aspect of the Vim experience. The name is most often associated with “recording” but they can also be used directly, with `:normal`, or as part of a mapping. The principle is always the same: we give Vim a bunch of keys to “press” very quickly, expecting the same result as if we pressed those keys ourself.
 
-Mappings are very important when it comes to customizing Vim, simply because they turn repetitive actions into instantaneous magic. Allowing us to save many thousands of keystrokes with minimal configuration.
+Mappings are very important when it comes to customizing Vim, simply because they turn repetitive actions into near-instantaneous magic. Allowing us to save many thousands of keystrokes with minimal configuration.
 
 Here is the anatomy of a mapping:
 
@@ -145,7 +145,7 @@ Try to be as specific as possible.
 
 Here are a few examples:
 
-    " press <F5> to quote the word under the cursor
+    " press <F5> to add quotes around the word under the cursor
     :nnoremap <F5> ciw"<C-r>""
 
     " press <F6> to call a function
@@ -154,7 +154,7 @@ Here are a few examples:
     " press <F7> to execute a command
     :nnoremap <F7> :MyCommand<CR>
 
-Let’s say we want Vim to type `:e **/*` for us when we press `<F6>` in *normal* mode:
+Let’s say we want Vim to type `:e \**/*` for us when we press `<F6>` in *normal* mode:
 
      :nmap <F6> :e **/*
 
@@ -167,7 +167,7 @@ It’s really quite simple…
 * `nmap key command` means that pressing `key` in normal mode will execute `command` *with its current meaning*. This form is *only* useful when we want to use another mapping in our mapping; it is called “recursive mapping".
 * `nnoremap key command` means that pressing `key` in normal mode will execute `command` *with its default meaning*. This form is usually the one we want, it is called “non-recursive mapping".
 
-Our mappings *have* to be solid because they will serve as the foundation of our workflow; non-recursive mappings are the safest choice:
+Our mappings *have* to be stable because they will serve as the foundation of our workflow. Non-recursive mappings are the safest choice:
 
     :nnoremap <F6> :e **/*
 
@@ -188,12 +188,12 @@ We are of course free to choose what key to use as our leader. `<Space>`, for ex
 
 Let’s end this section by adding these lines to our `vimrc`:
 
-    let mapleader = ','
+    let mapleader = "\<Space>"
     nnoremap <leader>e :edit **/*
 
 and try them out after sourcing our `vimrc` again:
 
-    (screencast)
+image::1_leader-e.gif[leader-e]
 
 Neat!
 
@@ -204,11 +204,9 @@ Neat!
 
 == :find
 
-Vim comes with an often overlooked command fittingly named `:find` that differs from `:edit` in one big way:
+Vim comes with an often overlooked command fittingly named `:find` that differs from `:edit` in one big way: **it can be set to visit specific directories.**
 
-**it can be set to visit specific directories.**
-
-The key to using `:find` efficiently is to define a good value for the `path` option. The default value makes sense for C programmers but we can set it to a more generic — and simplistic — value:
+The key to using `:find` efficiently is to define a good value for the `path` option that tells Vim where to *find* files. The default value may be a good starting point for C programmers but we can set it to a more generic — and simplistic — value:
 
     :set path=.,**
 
@@ -224,7 +222,11 @@ We can now use the `:find` command as a smarter replacement for `:edit`:
 
     :find foo<Tab>
 
-Note that, like `:edit`, `:find` does its completion from the start of the argument so `:find foo` will match `foobar.txt` but not `model_foo.txt`. Add a wildcard for an even more useful completion:
+versus:
+
+    :e **/foo<Tab>
+
+Note that, like `:edit`, `:find` does its completion from the start of the file name so `:find foo` will match `foobar.txt` but not `model_foo.txt`. Add a wildcard for an even more useful completion:
 
     :find *foo<Tab>
 
@@ -248,7 +250,7 @@ Let’s replace the `:edit`-based mapping in our `vimrc` with the following:
 
 and move on to the next section…
 
-== Customizing filename completion and the “wildmenu"
+== Customizing file name completion and the “wildmenu"
 
 We can further customize the behavior of Vim’s file name completion with a bunch of options that work for `:edit`  *and* `:find`:
 
@@ -263,7 +265,9 @@ Let’s go through them one by one:
 
 `'wildmode'` defines the behavior of the wildmenu. You can tell Vim to show a list of completions or not but also when to show it. It is recommended to play with the many possible combinations until you find the right one.
 
-The default value is `full`, here is the value I have in my `~/.vimrc`:
+The default value is `full`
+
+here is an example value from my `~/.vimrc`:
 
     set wildmode=list:full
 
@@ -333,37 +337,24 @@ Note: Coming from another text editor or from an IDE, you may miss your familiar
     :help netrw-quickhelp
     :help :Lexplore
 
-== Editing multiple files
+== Opening multiple files
 
-As discussed before, `:edit` and `:find` accept only *one* filename as argument. Opening multiple files at once is such a common need that it deserves its own set of commands and a bit of background. But first things first…
+As discussed before, `:edit` and `:find` accept only *one* file name as argument but opening multiple files at once is such a common need that it deserves its own set of commands…
 
-=== Multiple arguments
+=== The argument list
 
 It is of course entirely possible to start Vim with multiple files or something that would be expanded to multiple files:
 
     $ vim file1 file2 file3
     $ vim `find . -name '*.txt'`
 
-=== The argument list and the buffer list
-
-Vim comes with two special lists meant to contain file references:
-
-* the filenames used as arguments when starting Vim are stored in the global *argument list*,
-* the buffers created during the current sessions are stored in the global *buffer list*.
-
-The two lists often overlap but they are not the same *at all* and, contrary to the buffer list, the argument list can be manipulated!
-
-=== In practice
-
-In Vim, editing multiple files at once is as simple as replacing the argument list:
+The file names used as arguments when starting Vim are stored in the global *argument list* that can be manipulated. In practice editing multiple files at once is as simple as replacing the argument list:
 
     :args foo.js foo.html foo.css
 
 or adding to it:
 
     :argadd *.py
-
-Note that replacing the argument list doesn’t remove the corresponding buffers.
 
 === Reference
 
@@ -381,7 +372,31 @@ Opening files for editing is neither complex nor hard but — as with everything
     <h6>The Patient Vimmer</h6>
     <ul>
         <li>
-            <a href="#">0&nbsp;&nbsp;&nbsp;An introduction</a>
+            <a href="0.html">0&nbsp;&nbsp;&nbsp;An introduction</a>
+        </li>
+        <li class="current">
+            <a href="1.html">1&nbsp;&nbsp;&nbsp;Files</a>
+        </li>
+        <li>
+            <a href="2.html">2&nbsp;&nbsp;&nbsp;Title pending</a>
+        </li>
+        <li>
+            <a href="3.html">3&nbsp;&nbsp;&nbsp;Title pending</a>
+        </li>
+        <li>
+            <a href="4.html">4&nbsp;&nbsp;&nbsp;Title pending</a>
+        </li>
+        <li>
+            <a href="5.html">5&nbsp;&nbsp;&nbsp;Title pending</a>
+        </li>
+        <li>
+            <a href="6.html">6&nbsp;&nbsp;&nbsp;Title pending</a>
+        </li>
+        <li>
+            <a href="7.html">7&nbsp;&nbsp;&nbsp;Title pending</a>
+        </li>
+        <li>
+            <a href="8.html">8&nbsp;&nbsp;&nbsp;Title pending</a>
         </li>
     </ul>
     <div id="bottom">

@@ -387,8 +387,32 @@ I would say we are doing good, here.
 <div id="front">
     <h6>The Patient Vimmer</h6>
     <ul>
-        <li>
+        <li class="current">
             <a href="#">0&nbsp;&nbsp;&nbsp;An introduction</a>
+        </li>
+        <li>
+            <a href="1.html">1&nbsp;&nbsp;&nbsp;Files</a>
+        </li>
+        <li>
+            <a href="2.html">2&nbsp;&nbsp;&nbsp;Title pending</a>
+        </li>
+        <li>
+            <a href="3.html">3&nbsp;&nbsp;&nbsp;Title pending</a>
+        </li>
+        <li>
+            <a href="4.html">4&nbsp;&nbsp;&nbsp;Title pending</a>
+        </li>
+        <li>
+            <a href="5.html">5&nbsp;&nbsp;&nbsp;Title pending</a>
+        </li>
+        <li>
+            <a href="6.html">6&nbsp;&nbsp;&nbsp;Title pending</a>
+        </li>
+        <li>
+            <a href="7.html">7&nbsp;&nbsp;&nbsp;Title pending</a>
+        </li>
+        <li>
+            <a href="8.html">8&nbsp;&nbsp;&nbsp;Title pending</a>
         </li>
     </ul>
     <div id="bottom">

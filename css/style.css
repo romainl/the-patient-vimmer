@@ -519,6 +519,9 @@ h6 {
     border-bottom: 1px solid #007f00;
     background-color: #409f40;
 }
+#front ul li.current {
+    background-color: #ffffff;
+}
 #front ul li a {
     color: #ffffff;
     display: block;
@@ -530,6 +533,9 @@ h6 {
 }
 #front ul li a:hover {
     text-decoration: underline;
+}
+#front ul li.current a {
+    color: #007f00;
 }
 #front #bottom {
     background-color: #cccccc;
@@ -551,4 +557,7 @@ table tr th {
 table tr td {
     border-bottom: 1px solid #999999;
     width: 1;
+}
+img {
+    border-radius: 4px 4px 4px 4px;
 }
