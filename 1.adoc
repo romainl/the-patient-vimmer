@@ -31,7 +31,7 @@ It can be done, of course, but with a different command. We will come to that la
 
 Fortunately, Vim’s tab-completion lets us cycle through eligible files:
 
-image::1_tab-completion.gif[tab-completion]
+image::gifcast_off.png[link="images/1_tab-completion.gif"]
 
 Here are a few default bindings:
 
@@ -53,7 +53,7 @@ But we are in the dark, here: we have no idea how large the completion list is u
 
 Don’t worry! Vim has got our back with a brilliant feature called “wildmenu” that temporarily replaces the status line with a handy menu:
 
-image::1_wildmenu.gif[wildmenu]
+image::gifcast_off.png[link="images/1_wildmenu.gif"]
 
 Navigation is a lot easier now that we have an idea of where we are and what’s next. It is also easier to traverse directories with the new `<Up>` binding. You can enable this feature for the current session with:
 
@@ -84,7 +84,7 @@ Vim even has a special wildcard called “starstar", that makes it possible to r
 * we are now able to navigate through a flat list instead of a potentially deep hierarchy, saving quite a bunch of keystrokes and brain cells in the process,
 * we can save large amounts of typing by skipping subdirectories.
 
-image::1_wildcards.gif[wildcards]
+image::gifcast_off.png[link="images/1_wildcards.gif"]
 
 === Reference
 
@@ -194,7 +194,6 @@ Let’s end this section by adding these lines to our `vimrc`:
 
 and try them out after sourcing our `vimrc` again:
 
-image::1_leader-e.gif[leader-e]
 image::gifcast_off.png[link="images/1_leader-e.gif"]
 
 Neat!
