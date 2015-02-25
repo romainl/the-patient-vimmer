@@ -146,14 +146,17 @@ Try to be as specific as possible.
 
 Here are a few examples:
 
-    " press <F5> to add quotes around the word under the cursor
+    " press <F5> to add quotes around the word under the cursor in normal mode
     :nnoremap <F5> ciw"<C-r>""
 
-    " press <F6> to call a function
+    " press <F6> to call a function in normal mode
     :nnoremap <F6> :call MyFunction()<CR>
 
-    " press <F7> to execute a command
+    " press <F7> to execute a command in normal mode
     :nnoremap <F7> :MyCommand<CR>
+
+    " press <F8> to filter the current visual selection trough 'uniq'
+    :xnoremap <F8> !uniq<CR>
 
 Let’s say we want Vim to type `:e \**/*` for us when we press `<F6>` in *normal* mode:
 
@@ -326,11 +329,10 @@ Here are a few default bindings for reference:
 And the two commands that you need to know:
 
 * `:Ex` open a listing of the current directory,
+* `:Lex` open a listing of the current directory in a smaller vertical window, similar to the "project" pane common in other editors and IDEs,
 * `:Rex` come back to the previous listing.
 
 Netrw’s documentation is massive and covers a lot more than what you probably need for basic exploration and file-handling but you should at least take a look at the following sections…
-
-Note: Coming from another text editor or from an IDE, you may miss your familiar explorer pane but netrw’s author, DrChip, recently added a new command to mimic that feature, `:Lexplore`. Yeah!
 
 === Reference
 

@@ -558,6 +558,10 @@ table tr td {
     border-bottom: 1px solid #999999;
     width: 1;
 }
+table tr td p {
+    text-align: left;
+}
 img {
     border-radius: 4px 4px 4px 4px;
+    max-width: 100%;
 }

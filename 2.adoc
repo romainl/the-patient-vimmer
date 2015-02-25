@@ -1,3 +1,10 @@
+= The Patient Vimmer — Buffers
+:stylesdir: css
+:stylesheet: style.css
+:imagesdir: images
+:scriptsdir: javascript
+:linkcss:
+
 A buffer is the internal representation of the content of a file or would-be file. It is the equivalent of a "document" in any regular document-based program like Word or Photoshop.
 
 When you do `:e foo.txt`, a buffer named `foo.txt` is created and displayed. Because you work on a representation of that file, your changes to buffer `foo.txt` will not be written to its corresponding file until you instruct Vim to do so with `:write` or `:update`.
@@ -11,7 +18,7 @@ Let's start Vim with two files and subsequently edit another file:
     $ vim foo.txt bar.txt
     :e baz.txt
 
-# One command to…
+== One command to…
 
 The first navigation-related command worth knowing is `:b`, short for `:buffer`.
 
@@ -23,35 +30,35 @@ The first navigation-related command worth knowing is `:b`, short for `:buffer`.
 
 `:b2`, `:b3` and `:b1` pretty much do what you would expect them to do and `:b baz.txt` too.
 
-## Reference
+=== Reference
 
     :help :buffer
 
-# Next/Previous buffer
+== Next/Previous buffer
 
-This pair of commands lets you cycle through your buffers without using numbers:
+These commands let you cycle through your buffers without using numbers:
 
     :bn[ext]
     :bp[revious]
 
-or with numbers if you want:
+or with numbers if you want an equivalent of the `FFWD` and `REW` buttons on your parents' VCR:
 
     :5bn
     :3bp
 
-As usual, you can map those commands to easier keys. These are my mappings:
+As usual, you can map those commands to easier keys. These are my mappings, YMMV:
 
     nnoremap <PageUp>   :bprevious<CR>
     nnoremap <PageDown> :bnext<CR>
 
-Those two commands, remapped or not, are obviously useful when your target buffer is relatively close or when the buffer list is short or, simply, when you just don't want to think, but they won't help much if your target is 27 `:bn` away.
+Those two commands, remapped or not, are useful when your target buffer is relatively close or when the buffer list is short or, simply, when you just don't want to think but they won't help much if your target is 27 `:bn` away.
 
-## Reference
+=== Reference
 
     :h :bnext
     :h :bprevious
 
-# Listing buffers
+== Listing buffers
 
 Maintaining an up-to-date mental number-to-name-to-number map to move around sounds silly, I agree, but we don't really have to!
 
@@ -99,11 +106,11 @@ With that mapping, we are down to 4 keystrokes:
 
 Adding that mapping to our `~/.vimrc` sounds like a very good idea, doesn't it?
 
-## Reference
+=== Reference
 
     :help :ls
 
-# Our friend, the octothorpe
+== Our friend, the octothorpe
 
 Now is a good time to examine the output of `:ls` again…
  
@@ -125,11 +132,11 @@ Until we edit another buffer, repeating `:b#` or the slightly more comfortable `
 
 Note: I find the "file" part of "alternate file" hard to reason about so I usually think in terms of previous and current "buffer". YMMV of course.
 
-## Reference
+=== Reference
 
     :help alternate-file
 
-# Command-line completion
+== Command-line completion
 
 We have seen earlier that `:b` accepts a buffer name as argument but doing `:b models/foo-bar.js` seems slow and error-prone.
 
@@ -141,11 +148,11 @@ There is a *big* difference, though, the completion is done on any part of the b
 
     :b o<Tab><CR>
 
-## Reference
+=== Reference
 
     :help cmdline-completion
 
-# Mapping galore
+== Mapping galore
 
 The `<leader>b` mapping we added to our arsenal earlier is a fine example of how Vim works. Vim gives us *many* small, low-level, bricks — text primitives, common commands, etc. — and the means — mappings, macros, vimscript, count, motions, etc. — to combine them in order to create the higher-level commands we need. However specialized or generic we want them to be.
 
@@ -173,11 +180,11 @@ and a slight change in our mapping:
 
 Hoooooo… *that* is good!
 
-## Reference
+=== Reference
 
     :help 'wildcharm'
 
-# Creating an unnamed buffer
+== Creating an unnamed buffer
 
 The basic command for creating a new empty, *unnamed*, buffer is:
 
@@ -195,7 +202,7 @@ If you intend to spend some time working on that buffer, you may want it to be r
 
 Or you can simply create a named buffer…
 
-## Reference
+=== Reference
 
     :help :enew
     :help :new
@@ -203,9 +210,9 @@ Or you can simply create a named buffer…
     :help :tabnew
     :help 'filetype'
 
-# Manipulating buffers
+== Manipulating buffers
 
-## Creating a named buffer
+=== Creating a named buffer
 
 You can create a new empty, *named*, buffer, with:
 
@@ -213,7 +220,7 @@ You can create a new empty, *named*, buffer, with:
 
 Our new buffer has its filetype set and is associated by default with an as-of-yet non-existing file, `foo.css`. Be aware that `:w` or `:update` will write it to disk in the current directory… which may or may not be desired so watch your fingers!
 
-## Writing a buffer
+=== Writing a buffer
 
 Whether it is named or not, it is easy to write a buffer to disk:
 
@@ -230,10 +237,10 @@ If the buffer is named:
     :!mkdir -p foo/bar
     :w foo/bar/%
 
-## Renaming a buffer
+=== Renaming a buffer
 
-## Closing a buffer
+=== Closing a buffer
 
-## Deleting a buffer
+=== Deleting a buffer
 
-# But what about arguments?
+== But what about arguments?
