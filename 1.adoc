@@ -69,7 +69,7 @@ or for every further session by adding this line to your `vimrc`, as usual:
 
 == Wildcards up our sleeve
 
-Most of the time, though, the first two or three letters of a file name are not enough or we only remember the end. That’s where the “star” wildcard comes handy, just like in your shell:
+Most of the time, though, the first two or three letters of a file name are not enough or we only remember the end. That’s where the “star” wildcard comes in handy, just like in your shell:
 
     :e *fr<Tab>
     :e README_fr.txt
@@ -107,39 +107,15 @@ where `action` is what you want to happen when you press `key`; it could be a ma
 The command used to define your mapping can be any of the following:
 
 |===
-|recursive |non-recursive |mode
-
-|`map`
-| `noremap`
-| normal, visual, select, operator-pending
-
-|`cmap`
-| `cnoremap`
-| command-line
-
-|`imap`
-| `inoremap`
-| insert
-
-|`nmap`
-| `nnoremap`
-| normal
-
-|`omap`
-| `onoremap`
-| operator-pending
-
-|`smap`
-| `snoremap`
-| select
-
-|`vmap`
-| `vnoremap`
-| visual, select
-
-|`xmap`
-| `xnoremap`
-| visual
+| recursive | non-recursive | mode
+| `map`     | `noremap`     | normal, visual, select, operator-pending
+| `cmap`    | `cnoremap`    | command-line
+| `imap`    | `inoremap`    | insert
+| `nmap`    | `nnoremap`    | normal
+| `omap`    | `onoremap`    | operator-pending
+| `smap`    | `snoremap`    | select
+| `vmap`    | `vnoremap`    | visual, select
+| `xmap`    | `xnoremap`    | visual
 |===
 
 Try to be as specific as possible.
@@ -162,6 +138,8 @@ Let’s say we want Vim to type `:e \**/*` for us when we press `<F6>` in *norma
 Easy! We only have to do `<F6>foo<Tab>` to list every file whose name contains `foo` under the working directory, recursively. Woohoo!
 
 But what’s the deal with `*map` and `*noremap`?
+
+TODO: Consider explicitly mention that the use of the term "recursively" above and below do not refer to the same thing. Above is recursive file searching whereas below is recursive application of key maps. Possibly a source of confusion for beginners -- for example, the beginner might think they need a recursive map when creating commands that search the file system recursively.
 
 It’s really quite simple…
 
@@ -256,7 +234,7 @@ and move on to the next section…
 We can further customize the behavior of Vim’s file name completion with a bunch of options that work for `:edit`  *and* `:find`:
 
     :help wildmode        " defines the behavior of the wildmenu
-    :help wildignore      " tells vim to ignore some patterns
+    :help wildignore      " tells Vim to ignore some patterns
     :help wildignorecase  " enables case insensitivity
     :help suffixes        " sets pattern-based priority
 
