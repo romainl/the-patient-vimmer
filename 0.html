@@ -5,21 +5,21 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.2">
-<title>The Patient Vimmer — An introduction</title>
+<title>The Patient Vimmer&#8201;&#8212;&#8201;An introduction</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="article">
 <div id="header">
-<h1>The Patient Vimmer — An introduction</h1>
+<h1>The Patient Vimmer&#8201;&#8212;&#8201;An introduction</h1>
 </div>
 <div id="content">
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Our first contact with vim is always frustrating: the incapacity to type text right away, the non-obvious commands for writing and quitting…</p>
+<p>Our first contact with Vim is always frustrating: the incapacity to type text right away, the non-obvious commands for writing and quitting&#8230;&#8203;</p>
 </div>
 <div class="paragraph">
-<p>Most of us bail out and learn to mentally replace <code>vi</code> and <code>vim</code> with <code>nano</code> in every tutorial they read.</p>
+<p>Most of us bail out and learn to mentally replace <code>vi</code> and <code>vim</code> with <code>nano</code> in every tutorial we read.</p>
 </div>
 <div class="paragraph">
 <p>Others learn the bare minimum to make those occasional edits as painless as possible, confident in their knowledge that there are vastly better editors for serious work anyway.</p>
@@ -31,16 +31,16 @@
 <p>This guide is directed toward that third group. Picking up where <code>vimtutor</code> left off, it will hopefully give your Vim experience the right kind of foundations: deep and dependable.</p>
 </div>
 <div class="paragraph">
-<p>Vim does a lot and thus requires quite a bit of learning as well as a significant amount of will and <strong>patience</strong>. In that respect, it isn’t worse than Photoshop, any serious 3D modeling software, font editor or digital audio workstation: you can quickly learn the basics needed for performing simple tasks but you can’t honestly put “ProTools” on your resumé after a tutorial or two.</p>
+<p>Vim does a lot and thus requires quite a bit of learning as well as a significant amount of will and <strong>patience</strong>. In that respect, it isn&#8217;t worse than Photoshop, any serious 3D modeling software, font editor or digital audio workstation: you can quickly learn the basics needed for performing simple tasks but you can&#8217;t honestly put ``ProTools'' on your resumé after a tutorial or two.</p>
 </div>
 <div class="paragraph">
 <p>But what kind of involvement are we talking about? Is it the kind that requires us to commit all of <a href="http://www.viemu.com/vi-vim-cheat-sheet.gif">that meaningless garbage</a> to memory?</p>
 </div>
 <div class="paragraph">
-<p>No. <a href="http://www.moolenaar.net/habits.html">Like Vim&#8217;s author</a>, I don’t believe “knowing all of Vim” or “being a Vim guru” should be anyone’s goal. Those are <strong>consequences</strong> of using Vim daily for 10 or 20 years, maybe. But the real <strong>goal</strong> is in my opinion much less visible, much less quantifiable: we should learn Vim because it helps us become better at what we do, not because we want to reach a grand goal. And, well… I don’t even believe anybody <strong>should</strong> learn Vim at all.</p>
+<p>No. <a href="http://www.moolenaar.net/habits.html">Like Vim&#8217;s author</a>, I don&#8217;t believe <code>knowing all of Vim'' or </code>being a Vim guru'' should be anyone&#8217;s goal. Those are <strong>consequences</strong> of using Vim daily for 10 or 20 years, maybe. But the real <strong>goal</strong> is, in my opinion, much less visible; much less quantifiable: we should learn Vim because it helps us become better at what we do, not because we want to reach a grand goal. And, well&#8230;&#8203; I don&#8217;t even believe anybody <strong>should</strong> learn Vim at all.</p>
 </div>
 <div class="paragraph">
-<p>Learning Vim is a long journey where the destination doesn’t really matter. What happens along the way and the positive changes it causes in us is all that counts.</p>
+<p>Learning Vim is a long journey where the destination doesn&#8217;t really matter. What happens along the way and the positive changes it causes in us is all that counts.</p>
 </div>
 <div class="paragraph">
 <p>You are playing in your own Tolkien trilogy, goddammit!</p>
@@ -67,7 +67,7 @@
 </ul>
 </div>
 <div class="paragraph">
-<p>The default Vim on your system — if you have one — is usually a very small build that lacks useful features for serious usage. While this isn’t a huge deal in principle, those missing features can be a source of frustration if you intend to use Vim <strong>seriously</strong>, as your main text editor.</p>
+<p>The default Vim on your system&#8201;&#8212;&#8201;if you have one&#8201;&#8212;&#8201;is usually a very small build that lacks useful features for serious usage. While this isn&#8217;t a huge deal in principle, those missing features can be a source of frustration if you intend to use Vim <strong>seriously</strong>, as your main text editor.</p>
 </div>
 <div class="paragraph">
 <p>I therefore recommend you upgrade to a more up-to-date and full-featured build. How to do that depends on your platform.</p>
@@ -75,10 +75,10 @@
 <div class="sect2">
 <h3 id="_on_linux_bsd">On Linux/BSD</h3>
 <div class="paragraph">
-<p>On Linux/BSD systems, the trick is generally to install the more featured “gvim” package, which gives you both a <code>vim</code> command for terminal usage and a <code>gvim</code> command for GUI usage.</p>
+<p>On Linux/BSD systems, the trick is generally to install the more featured <code>`gvim'' package, which gives you both a `vim</code> command for terminal usage and a <code>gvim</code> command for GUI usage.</p>
 </div>
 <div class="paragraph">
-<p>You may need slightly different packages depending on your Desktop Environment or even distribution variant. There are too many possibilities so… use your package manager and common-sense to decide what to install. for any issue, refer to your package manager’s documentation.</p>
+<p>You may need slightly different packages depending on your Desktop Environment or even distribution variant. There are too many possibilities so&#8230;&#8203; use your package manager and common-sense to decide what to install. For any issue, refer to your package manager&#8217;s documentation.</p>
 </div>
 <div class="sect3">
 <h4 id="_arch">Arch</h4>
@@ -152,7 +152,7 @@ $ sudo slackpkg install-new vim-gvim</pre>
 <div class="sect2">
 <h3 id="_on_mac_os_x">On Mac OS X</h3>
 <div class="paragraph">
-<p>MacVim, the most complete Vim you can get on Mac OS X, comes with both a GUI version <strong>and</strong> a CLI version. All the methods below should give you a regular “double-clickable” Mac OS X app and an <code>mvim</code> command you can run in a terminal emulator without messing with the default Vim:</p>
+<p>MacVim, the most complete Vim you can get on Mac OS X, comes with both a GUI version <strong>and</strong> a CLI version. All the methods below should give you a regular <code>`double-clickable'' Mac OS X app and an `mvim</code> command you can run in a terminal emulator without messing with the default Vim:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -217,13 +217,13 @@ $ sudo port install macvim</pre>
 <h2 id="_the_mother_of_all_commands">The mother of all commands</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Every complex piece of software comes with an extensive documentation and Vim is no stranger to that rule. Learning how to use that documentation is the first and most important step on your way to “edit at the speed of thought” or “becoming a vim ninja” or making your editor look like a christmas tree in Las Vegas.</p>
+<p>Every complex piece of software comes with extensive documentation and Vim is no stranger to that rule. Learning how to use that documentation is the first and most important step on your way to <code>editing at the speed of thought'' or </code>becoming a Vim ninja'' or making your editor look like a Christmas tree in Las Vegas.</p>
 </div>
 <div class="paragraph">
 <p>Learning how to use the documentation makes you self-reliant. With self-reliance comes confidence and with confidence comes efficiency.</p>
 </div>
 <div class="paragraph">
-<p>So, without further ado, let me introduce you to Vim’s amazing…</p>
+<p>So, without further ado, let me introduce you to Vim&#8217;s amazing&#8230;&#8203;</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -259,7 +259,7 @@ $ sudo port install macvim</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>That’s it! You are now capable of searching Vim’s documentation for anything and ready to explore a few interesting areas. Again, the focus of this guide is <strong>not</strong> on rote learning. Skim these sections, get a feel for how they are organized, of the vocabulary, of the extent of Vim’s features… but don’t learn everything; there’s absolutely no point doing that.</p>
+<p>That&#8217;s it! You are now capable of searching Vim&#8217;s documentation for anything and ready to explore a few interesting areas. Again, the focus of this guide is <strong>not</strong> on rote learning. Skim these sections, get a feel for how they are organized, of the vocabulary, of the extent of Vim&#8217;s features&#8230;&#8203; but don&#8217;t learn everything; there&#8217;s absolutely no point doing that.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -321,27 +321,27 @@ $ sudo port install macvim</pre>
 <h2 id="_making_vim_more_friendly">Making Vim more friendly</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>As is, even a “huge” build with plenty of developer-friendly features is still the frustratingly alien editor we are used to.</p>
+<p>As is, even a ``huge'' build with plenty of developer-friendly features is still the frustratingly alien editor we are used to.</p>
 </div>
 <div class="paragraph">
-<p>What happens, here, is that Vim is just being humble and professional. Its role is to act as a stand-in for old <code>vi</code> and it tries its best to look and behave like its model… to the point of being as obnoxious the original.</p>
+<p>What&#8217;s happening here is that Vim is just being humble and professional. Its role is to act as a stand-in for old <code>vi</code> and it tries its best to look and behave like its model&#8230;&#8203; to the point of being as obnoxious as the original.</p>
 </div>
 <div class="paragraph">
 <p>Or <strong>more</strong>, if we consider all the <strong>improvements</strong> hidden behind that impenetrable <code>vi</code> persona.</p>
 </div>
 <div class="paragraph">
-<p>Vim’s support files are often tweaked by distribution maintainers to comply to whatever standard — written or not — they have to follow or to fit Vim into their specific file hierarchy or — how kind of them — make the default behavior <strong>slightly</strong> more useful. This means that Vim’s “runtime” can be in many places and that the system <code>vimrc</code> — if there is one — may or may not already contain solutions to some of the problems below. I will assume no system <code>vimrc</code> to keep this guide simple.</p>
+<p>Vim&#8217;s support files are often tweaked by distribution maintainers to comply to whatever standard&#8201;&#8212;&#8201;written or not&#8201;&#8212;&#8201;they have to follow or to fit Vim into their specific file hierarchy or&#8201;&#8212;&#8201;how kind of them&#8201;&#8212;&#8201;make the default behavior <strong>slightly</strong> more useful. This means that Vim&#8217;s <code>`runtime'' can be in many places and that the system `vimrc</code>&#8201;&#8212;&#8201;if there is one&#8201;&#8212;&#8201;may or may not already contain solutions to some of the problems below. I will assume no system <code>vimrc</code> to keep this guide simple.</p>
 </div>
 <div class="paragraph">
-<p>Anyway, making Vim <strong>a little bit</strong> more comfortable is a quick and easy exercise that will give us many opportunities to learn useful things: let’s do it step by step, one problem at a time.</p>
+<p>Anyway, making Vim <strong>a little bit</strong> more comfortable is a quick and easy exercise that will give us many opportunities to learn useful things: let&#8217;s do it step by step, one problem at a time.</p>
 </div>
 <div class="sect2">
-<h3 id="_problem_0_vi_compatibility">Problem 0 — Vi compatibility</h3>
+<h3 id="_problem_0_vi_compatibility">Problem 0&#8201;&#8212;&#8201;Vi compatibility</h3>
 <div class="paragraph">
-<p>The closest we have from a definitive list of <code>vi</code>-compatible behaviors can be found at <code>:help 'cpoptions'</code>. A quick glance at that table should be enough to understand the importance of dropping <code>vi</code>-compatibility for intensive use.</p>
+<p>The closest we have to a definitive list of <code>vi</code>-compatible behaviors can be found at <code>:help 'cpoptions'</code>. A quick glance at that table should be enough to understand the importance of dropping <code>vi</code>-compatibility for intensive use.</p>
 </div>
 <div class="paragraph">
-<p>The <code>'compatible'</code> option being enabled by default, Vim <strong>always</strong> start in what we will call “compatible mode” and never comes back to its senses unless instructed to do so. There are three ways to disable “compatible mode”:</p>
+<p>The <code>'compatible'</code> option being enabled by default, Vim <strong>always</strong> starts in what we will call <code>compatible mode'' and never comes back to its senses unless instructed to do so. There are three ways to disable </code>compatible mode'':</p>
 </div>
 <div class="paragraph">
 <p>The first way consists of typing this command:</p>
@@ -352,10 +352,10 @@ $ sudo port install macvim</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>every time we start Vim to set <code>'cpoptions'</code> and many other options to their “Vim” value.</p>
+<p>every time we start Vim to set <code>'cpoptions'</code> and many other options to their ``Vim'' value.</p>
 </div>
 <div class="paragraph">
-<p>The second way consists of using a command-line flag to tell Vim to start in “nocompatible mode”:</p>
+<p>The second way consists of using a command-line flag to tell Vim to start in ``nocompatible mode'':</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -363,16 +363,16 @@ $ sudo port install macvim</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The two solutions above may be OK for infrequent, quick, sessions but we are trying to use Vim as our main editor so they rather obviously don’t scale. Let’s see a third way: creating our very own <code>vimrc</code>.</p>
+<p>The two solutions above may be OK for infrequent, quick sessions but we are trying to use Vim as our main editor so they rather obviously don&#8217;t scale. Let&#8217;s see a third way: creating our very own <code>vimrc</code>.</p>
 </div>
 <div class="paragraph">
-<p>Vim’s user-level configuration file is called <code>.vimrc</code> on Unix-like systems and <code>_vimrc</code> on Windows. During the startup procedure, Vim looks for that file in a couple of standard locations; as soon as it is found, the <code>'compatible'</code> option is disabled, just like if you typed <code>:set nocompatible</code>.</p>
+<p>Vim&#8217;s user-level configuration file is called <code>.vimrc</code> on Unix-like systems and <code>_vimrc</code> on Windows. During the startup procedure, Vim looks for that file in a couple of standard locations; as soon as it is found, the <code>'compatible'</code> option is disabled, just like if you typed <code>:set nocompatible</code>.</p>
 </div>
 <div class="paragraph">
 <p>We will simply create that file in order to never have to type that command again.</p>
 </div>
 <div class="paragraph">
-<p>In addition to forcing Vim to start in “nocompatible mode”, creating an empty <code>vimrc</code> will serve another important purpose: <strong>holding all our future mappings and settings.</strong></p>
+<p>In addition to forcing Vim to start in <code>`nocompatible mode'', creating an empty `vimrc</code> will serve another important purpose: <strong>holding all our future mappings and settings.</strong></p>
 </div>
 <div class="sect3">
 <h4 id="_solution">Solution</h4>
@@ -399,14 +399,14 @@ $ vim .vimrc          C:vim _vimrc</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>NB: The very existence of that file makes adding <code>set nocompatible</code> to our <code>vimrc</code> generally useless so… don’t put that at the top of your <code>vimrc</code> like many sample vimrcs and blog posts tell you to do. An explicit <code>set nocompatible</code> can have interesting effects in <strong>some</strong> situations but they are honestly too rare to care.</p>
+<p>NB: The very existence of that file makes adding <code>set nocompatible</code> to our <code>vimrc</code> generally useless so&#8230;&#8203; don&#8217;t put that at the top of your <code>vimrc</code> like many sample vimrcs and blog posts tell you to do. An explicit <code>set nocompatible</code> can have interesting effects in <strong>some</strong> situations but they are honestly too rare to care about.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_problem_1_backspace">Problem 1 — Backspace</h3>
+<h3 id="_problem_1_backspace">Problem 1&#8201;&#8212;&#8201;Backspace</h3>
 <div class="paragraph">
-<p>So you may or may not have noticed that the backspace key doesn’t really work as expected in vanilla Vim. Thankfully, this can be changed easily with the <code>'backspace'</code> option.</p>
+<p>So you may or may not have noticed that the backspace key doesn&#8217;t really work as expected in vanilla Vim. Thankfully, this can be changed easily with the <code>'backspace'</code> option.</p>
 </div>
 <div class="sect3">
 <h4 id="_solution_2">Solution</h4>
@@ -435,7 +435,7 @@ $ vim .vimrc          C:vim _vimrc</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>When used as argument for an Ex command, <code>%</code> is replaced before execution by the current file name so <code>:source %</code> is exactly the same as <code>:source ~/.vimrc</code>, except a lot shorter <strong>and</strong> generic. That will certainly come in handy!</p>
+<p>When used as an argument for an Ex command, <code>%</code> is replaced before execution by the current file name so <code>:source %</code> is exactly the same as <code>:source ~/.vimrc</code>, except a lot shorter <strong>and</strong> generic. That will certainly come in handy!</p>
 </div>
 </div>
 <div class="sect3">
@@ -451,12 +451,12 @@ $ vim .vimrc          C:vim _vimrc</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_problem_2_automatic_indentation">Problem 2 — Automatic indentation</h3>
+<h3 id="_problem_2_automatic_indentation">Problem 2&#8201;&#8212;&#8201;Automatic indentation</h3>
 <div class="paragraph">
 <p>Next comes automatic indentation. This one is more of a <strong>comfort</strong> thing but how are we supposed to be efficient at text editing if we are forced to adjust the indent of every new line manually?</p>
 </div>
 <div class="paragraph">
-<p>It turns out Vim has got a bunch of automatic indentation mechanisms, none of which are enabled by default. The most basic, <code>'autoindent'</code>, doesn’t try to be too smart or do different things for different filetypes… That’s all we need for now.</p>
+<p>It turns out Vim has a bunch of automatic indentation mechanisms, none of which are enabled by default. The most basic, <code>'autoindent'</code>, doesn&#8217;t try to be too smart or do different things for different filetypes&#8230;&#8203; That&#8217;s all we need for now.</p>
 </div>
 <div class="sect3">
 <h4 id="_solution_3">Solution</h4>
@@ -485,10 +485,10 @@ $ vim .vimrc          C:vim _vimrc</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Most Ex commands and options can be shortened to a couple of letters — which undoubtedly make things easier to type. Short names are a must on the command-line!</p>
+<p>Most Ex commands and options can be shortened to a couple of letters&#8201;&#8212;&#8201;which undoubtedly make things easier to type. Short names are a must on the command-line!</p>
 </div>
 <div class="paragraph">
-<p>In configuration files and scripts, though, the short form can be hard to read and doesn’t provide any benefit over the long form so don’t use it; your future self will thank you.</p>
+<p>In configuration files and scripts, though, the short form can be hard to read and doesn&#8217;t provide any benefit over the long form so don&#8217;t use it; your future self will thank you.</p>
 </div>
 </div>
 <div class="sect3">
@@ -501,9 +501,9 @@ $ vim .vimrc          C:vim _vimrc</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_problem_3_dealing_with_multiple_files">Problem 3 — Dealing with multiple files</h3>
+<h3 id="_problem_3_dealing_with_multiple_files">Problem 3&#8201;&#8212;&#8201;Dealing with multiple files</h3>
 <div class="paragraph">
-<p>Vim will refuse to edit another file when there are unsaved changes in the current buffer, leaving us with a cornelian dilemma: write that buffer or abandon our changes.</p>
+<p>Vim will refuse to edit another file when there are unsaved changes in the current buffer, leaving us with a Cornelian dilemma: write that buffer or abandon our changes.</p>
 </div>
 <div class="paragraph">
 <p>Thanks for watching our back, Vim, but that feature can really slow us down! Luckily, we have a <code>'hidden'</code> option for that (pun intended).</p>
@@ -527,7 +527,7 @@ $ vim .vimrc          C:vim _vimrc</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>In Vim’s command-line, the vertical bar allows us to chain Ex commands. While it looks the same, the “bar” is <strong>not</strong> the equivalent of a Unix “pipe”, if only because no data is sent from one command to the next.</p>
+<p>In Vim&#8217;s command-line, the vertical bar allows us to chain Ex commands. While it looks the same, the <code>bar'' is <strong>not</strong> the equivalent of a Unix </code>pipe'', if only because no data is sent from one command to the next. It is more akin to ``;'' in C.</p>
 </div>
 </div>
 <div class="sect3">
@@ -541,12 +541,12 @@ $ vim .vimrc          C:vim _vimrc</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_problem_4_syntax_highlighting">Problem 4 — Syntax highlighting</h3>
+<h3 id="_problem_4_syntax_highlighting">Problem 4&#8201;&#8212;&#8201;Syntax highlighting</h3>
 <div class="paragraph">
-<p>Syntax highlighting is a staple of programming. It helps readability, eye-comfort, bug-fixing… and it’s pretty. Well, it <strong>can</strong> be pretty.</p>
+<p>Syntax highlighting is a staple of programming. It helps readability, eye-comfort, bug-fixing&#8230;&#8203; and it&#8217;s pretty. Well, it <strong>can</strong> be pretty.</p>
 </div>
 <div class="paragraph">
-<p>Vim does syntax highlighting, of course, but the feature isn’t enabled by default because <code>vi</code> didn’t have it. Thankfully, it’s easy to turn on.</p>
+<p>Vim does syntax highlighting, of course, but the feature isn&#8217;t enabled by default because <code>vi</code> didn&#8217;t have it. Thankfully, it&#8217;s easy to turn on.</p>
 </div>
 <div class="sect3">
 <h4 id="_solution_5">Solution</h4>
@@ -559,7 +559,7 @@ $ vim .vimrc          C:vim _vimrc</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>and… type <code>:</code> then press the <code>&lt;Up&gt;</code> key to recall the latest Ex command. Vim remembers 20 commands by default so I know someone who will fall in love with his/her <code>&lt;Up&gt;</code> key…</p>
+<p>and&#8230;&#8203; type <code>:</code> then press the <code>&lt;Up&gt;</code> key to recall the latest Ex command. Vim remembers 20 commands by default so I know someone who will fall in love with his/her <code>&lt;Up&gt;</code> key&#8230;&#8203;</p>
 </div>
 </div>
 <div class="sect3">
@@ -573,9 +573,9 @@ $ vim .vimrc          C:vim _vimrc</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_problem_5_line_numbers">Problem 5 — Line numbers</h3>
+<h3 id="_problem_5_line_numbers">Problem 5&#8201;&#8212;&#8201;Line numbers</h3>
 <div class="paragraph">
-<p>Line numbering is another feature people are attached to and it’s very easy to enable.</p>
+<p>Line numbering is another feature people are attached to and it&#8217;s very easy to enable.</p>
 </div>
 <div class="sect3">
 <h4 id="_solution_6">Solution</h4>
@@ -598,9 +598,9 @@ $ vim .vimrc          C:vim _vimrc</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_problem_6_huge_tabs">Problem 6 — Huge tabs</h3>
+<h3 id="_problem_6_huge_tabs">Problem 6&#8201;&#8212;&#8201;Huge tabs</h3>
 <div class="paragraph">
-<p>Vim follows the de-facto standard of 8 spaces but we, programmers, <strong>need</strong> our 4 or 2 character-wide indentation, don’t we? <code>:help 'tabstop'</code> does a good job of explaining what strategy to adopt when dealing with tab-width. The strategy I recommend is to keep the default <code>'tabstop'</code> and only adjust <code>'shiftwidth'</code> and <code>'softtabstop'</code>.</p>
+<p>Vim follows the de-facto standard of 8 spaces but we, programmers, <strong>need</strong> our 4 or 2 character-wide indentation, don&#8217;t we? <code>:help 'tabstop'</code> does a good job of explaining what strategy to adopt when dealing with tab-width. The strategy I recommend is to keep the default <code>'tabstop'</code> and only adjust <code>'shiftwidth'</code> and <code>'softtabstop'</code>.</p>
 </div>
 <div class="sect3">
 <h4 id="_solution_7">Solution</h4>
@@ -641,7 +641,7 @@ let &amp;softtabstop = &amp;shiftwidth</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_that_s_it">That’s it</h2>
+<h2 id="_that_s_it">That&#8217;s it</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Our short <code>vimrc</code> already gives us most of the comfort we sorely missed each time we had to use Vim to edit those configuration files.</p>
@@ -652,7 +652,7 @@ let &amp;softtabstop = &amp;shiftwidth</pre>
 <div class="ulist">
 <ul>
 <li>
-<p>how to use Vim’s online documentation,</p>
+<p>how to use Vim&#8217;s online documentation,</p>
 </li>
 <li>
 <p>how to recall command history,</p>
@@ -715,7 +715,7 @@ let &amp;softtabstop = &amp;shiftwidth</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-02-24 14:11:24 CET
+Last updated 2015-02-25 23:22:59 CET
 </div>
 </div>
 </body>

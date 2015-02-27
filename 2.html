@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.2">
+<title>The Patient Vimmer — Your workspace</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>The Patient Vimmer — Your workspace</h1>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_buffers">Buffers</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The buffer is Vim&#8217;s internal representation of the content of a file or would-be file. It is the equivalent of a "document" in any regular document-based program like Word or Photoshop.</p>
+</div>
+<div class="paragraph">
+<p>When you do <code>$ vim foo.txt</code> or <code>:e foo.txt</code>, a buffer named <code>foo.txt</code> is created and displayed. Because you work on a representation of that file, your changes to the buffer named <code>foo.txt</code> will not be written to the corresponding file until you instruct Vim to do so with <code>:write</code> or <code>:update</code>.</p>
+</div>
+<div class="paragraph">
+<p>Buffers are the file proxies you will normally deal with in a typical Vim session. Because they are (or should be) at the core of your workflow, they come with <strong>many</strong> specific commands some of which are <strong>really</strong> worth learning to reach a reasonable efficiency level.</p>
+</div>
+<div class="paragraph">
+<p>Some of the basic commands may feel too complex or require too many keystrokes for your taste, though. But do yourself a favor and try to find native ways to work around those issues before going on a plugin safari. It&#8217;s good for learning and good for startup time.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s start Vim with two files and subsequently edit another file:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ vim foo.txt bar.txt
+:e baz.txt</pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_one_command_to">One command to…</h3>
+<div class="paragraph">
+<p>The first navigation-related command worth knowing is <code>:b</code>, short for <code>:buffer</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>:b</code> expects one argument which can be:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>a buffer number,</p>
+</li>
+<li>
+<p>a buffer name,</p>
+</li>
+<li>
+<p>a buffer reference.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><code>:b2</code>, <code>:b3</code> and <code>:b1</code> pretty much do what you would expect them to do and <code>:b baz.txt</code> too.</p>
+</div>
+<div class="sect3">
+<h4 id="_reference">Reference</h4>
+<div class="literalblock">
+<div class="content">
+<pre>:help :buffer</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_next_previous_buffer">Next/Previous buffer</h3>
+<div class="paragraph">
+<p>These commands let you cycle through your buffers without using numbers:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:bn[ext]
+:bp[revious]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or with numbers if you want an equivalent of the <code>FFWD</code> and <code>REW</code> buttons on your parents' VCR:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:5bn
+:3bp</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As usual, you can map those commands to easier keys. These are my mappings, YMMV:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>nnoremap &lt;PageUp&gt;   :bprevious&lt;CR&gt;
+nnoremap &lt;PageDown&gt; :bnext&lt;CR&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Those two commands, remapped or not, are useful when your target buffer is relatively close or when the buffer list is short or, simply, when you just don&#8217;t want to think but they won&#8217;t help much if your target is 27 <code>:bn</code> away.</p>
+</div>
+<div class="sect3">
+<h4 id="_reference_2">Reference</h4>
+<div class="literalblock">
+<div class="content">
+<pre>:h :bnext
+:h :bprevious</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_listing_buffers">Listing buffers</h3>
+<div class="paragraph">
+<p>Maintaining an up-to-date mental number-to-name-to-number map to move around sounds silly, I agree, but we don&#8217;t really have to!</p>
+</div>
+<div class="paragraph">
+<p>We have three commands — all three synonyms — at our disposal for listing buffers:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:buffers
+:files
+:ls</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output of <code>:ls</code>, the shortest one, should look like that:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>  1  h   "foo.txt"                      line 1
+  2 #h   "bar.txt"                      line 1
+  3 %a   "baz.txt"                      line 1
+Press ENTER or type command to continue</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The most immediately useful bits are the buffer number in the first column and its status in the second column.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the buffer number, useful for <code>:b&lt;number&gt;</code>,</p>
+</li>
+<li>
+<p>the <code>%</code> in the status column means "current buffer", we are already familiar with it.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>That list is not interactive, though: we can not move around and select an item so what good is it?</p>
+</div>
+<div class="paragraph">
+<p>Hitting <code>&lt;CR&gt;</code> makes the list go away but — as hinted by "or type command to continue" — but hitting <code>:</code> gives us the usual command-line where we can type <code>:b2</code> to go to buffer number 2. Neat.</p>
+</div>
+<div class="paragraph">
+<p>The whole process is a bit too verbose, though, what if there was a way to shorten that sequence?</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:ls&lt;CR&gt;
+:b2&lt;CR&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It turns out there <strong>is</strong> a way, and a very simple one at that! Behold the almighty mapping popularized by Barry Arthur, AKA bairui, AKA dahu in [this comic](<a href="http://2.bp.blogspot.com/-d1GaUBk-Y10/TyFhskmCYRI/AAAAAAAAARQ/CIEx1V7FLqg/s1600/vim-and-vigor-004-flying_is_faster_than_cycling.png" class="bare">http://2.bp.blogspot.com/-d1GaUBk-Y10/TyFhskmCYRI/AAAAAAAAARQ/CIEx1V7FLqg/s1600/vim-and-vigor-004-flying_is_faster_than_cycling.png</a>):</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:nnoremap &lt;leader&gt;b :ls&lt;CR&gt;:b&lt;Space&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It executes <code>:ls</code> and immediately puts <code>:b ` on the command-line, ready for us to type a number and hit `&lt;CR&gt;</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>  1  h   "foo.txt"                      line 1
+  2 %a   "bar.txt"                      line 1
+  3 #h   "baz.txt"                      line 1
+:b |</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With that mapping, we are down to 4 keystrokes:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;leader&gt;b1&lt;CR&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Adding that mapping to our <code>~/.vimrc</code> sounds like a very good idea, doesn&#8217;t it?</p>
+</div>
+<div class="sect3">
+<h4 id="_reference_3">Reference</h4>
+<div class="literalblock">
+<div class="content">
+<pre>:help :ls</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_our_friend_the_octothorpe">Our friend, the octothorpe</h3>
+<div class="paragraph">
+<p>Now is a good time to examine the output of <code>:ls</code> again…</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>1 %a   "foo.txt"                      line 1
+2 #h   "bar.txt"                      line 1
+3  h   "baz.txt"                      line 1</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>#</code>, which can be used exactly like <code>%</code> or a buffer number, marks the "alternate file", or the last file that was edited. In practical terms, the alternate file is usually synonymous with "previous buffer" and used like this:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:b#</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The current buffer is now <code>bar.txt</code> and its "alternate file" is the one we just left, <code>foo.txt</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>1 #h   "foo.txt"                      line 1
+2 %a   "bar.txt"                      line 1
+3  h   "baz.txt"                      line 1</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Until we edit another buffer, repeating <code>:b#</code> or the slightly more comfortable <code>&lt;C-^&gt;</code> will cycle between <code>foo.txt</code> and <code>bar.txt</code>. This doesn&#8217;t sound like much but the ability to alternate between two commonly used buffers is an <strong>extremely</strong> useful feature.</p>
+</div>
+<div class="paragraph">
+<p>Note: I find the "file" part of "alternate file" hard to reason about so I usually think in terms of previous and current "buffer". YMMV of course.</p>
+</div>
+<div class="sect3">
+<h4 id="_reference_4">Reference</h4>
+<div class="literalblock">
+<div class="content">
+<pre>:help alternate-file</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_command_line_completion">Command-line completion</h3>
+<div class="paragraph">
+<p>We have seen earlier that <code>:b</code> accepts a buffer name as argument but doing <code>:b models/foo-bar.js</code> seems slow and error-prone.</p>
+</div>
+<div class="paragraph">
+<p>Like with <code>:edit</code> and <code>:find</code>, we can complete buffer names with <code>&lt;Tab&gt;</code>, see a list of possible completions with <code>&lt;C-d&gt;</code> and take advantage of the wildmenu:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(screencast)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There is a <strong>big</strong> difference, though, the completion is done on any part of the buffer name so we can just use a small bit that we remember and get where we want to get to pretty quickly:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:b o&lt;Tab&gt;&lt;CR&gt;</pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_reference_5">Reference</h4>
+<div class="literalblock">
+<div class="content">
+<pre>:help cmdline-completion</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_mapping_galore">Mapping galore</h3>
+<div class="paragraph">
+<p>The <code>&lt;leader&gt;b</code> mapping we added to our arsenal earlier is a fine example of how Vim works. Vim gives us <strong>many</strong> small, low-level, bricks — text primitives, common commands, etc. — and the means — mappings, macros, vimscript, count, motions, etc. — to combine them in order to create the higher-level commands we need. However specialized or generic we want them to be.</p>
+</div>
+<div class="paragraph">
+<p>What about a "choose a buffer by partial name" mapping? Taking inspiration from our <code>&lt;leader&gt;f</code>, <code>&lt;leader&gt;e</code> and <code>&lt;leader&gt;b</code> mappings we can experience with other keys and start with something like:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:nnoremap &lt;leader&gt;u :b&lt;Space&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>What about listing the candidates too?</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:nnoremap &lt;leader&gt;u :b&lt;Space&gt;&lt;C-d&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Cool! Well… kind of. It would be even cooler if the completion (and the wildmenu) was started automatically. Let&#8217;s try with a <code>&lt;Tab&gt;</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:nnoremap &lt;leader&gt;u :b&lt;Space&gt;&lt;Tab&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Huh… It looks like <code>&lt;Tab&gt;</code> doesn&#8217;t work like we expected.</p>
+</div>
+<div class="paragraph">
+<p>No, what we need is another option, <code>'wildcharm'</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:set wildcharm=&lt;C-z&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and a slight change in our mapping:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:nnoremap &lt;leader&gt;u :b&lt;Space&gt;&lt;C-z&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Hoooooo… <strong>that</strong> is good!</p>
+</div>
+<div class="sect3">
+<h4 id="_reference_6">Reference</h4>
+<div class="literalblock">
+<div class="content">
+<pre>:help 'wildcharm'</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_creating_an_unnamed_buffer">Creating an unnamed buffer</h3>
+<div class="paragraph">
+<p>The basic command for creating a new empty, <strong>unnamed</strong>, buffer is:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:enew</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A new buffer created with that command is not associated with a file and doesn&#8217;t have a filetype set. The two main consequences are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>we don&#8217;t get syntax highlighting,</p>
+</li>
+<li>
+<p>writing will fail if we don&#8217;t provide a filename.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If you intend to spend some time working on that buffer, you may want it to be recognized as… say JavaScript, if only to get syntax highlighting. This can be done in two ways:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>explicitly set its filetype after it is created with <code>:set filetype=javascript</code>,</p>
+</li>
+<li>
+<p>write to disk with <code>:w filename.js</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Or you can simply create a named buffer…</p>
+</div>
+<div class="sect3">
+<h4 id="_reference_7">Reference</h4>
+<div class="literalblock">
+<div class="content">
+<pre>:help :enew
+:help :new
+:help :vnew
+:help :tabnew
+:help 'filetype'</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_manipulating_buffers">Manipulating buffers</h3>
+<div class="sect3">
+<h4 id="_creating_a_named_buffer">Creating a named buffer</h4>
+<div class="paragraph">
+<p>You can create a new empty, <strong>named</strong>, buffer, with:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:e foo.css</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Our new buffer has its filetype set and is associated by default with an as-of-yet non-existing file, <code>foo.css</code>. Be aware that <code>:w</code> or <code>:update</code> will write it to disk in the current directory… which may or may not be desired so watch your fingers!</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_writing_a_buffer">Writing a buffer</h4>
+<div class="paragraph">
+<p>Whether it is named or not, it is easy to write a buffer to disk:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:w filename.css    " write the current buffer to file 'filename.css'
+:w                 " write the current named buffer to its associated file</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Writing the current unnamed buffer in a non-existing directory is another story:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:!mkdir -p foo/bar
+:w foo/bar/foo.less</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If the buffer is named:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:!mkdir -p foo/bar
+:w foo/bar/%</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_renaming_a_buffer">Renaming a buffer</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_closing_a_buffer">Closing a buffer</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_deleting_a_buffer">Deleting a buffer</h4>
+
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_windows_and_tab_pages">Windows and tab pages</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_special_windows">Special windows</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="_miscellaneousns_ui_elements">Miscellaneousns UI elements</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2015-02-27 00:32:05 CET
+</div>
+</div>
+</body>
+</html>

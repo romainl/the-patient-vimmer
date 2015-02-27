@@ -7,13 +7,11 @@
 
 == Buffers
 
-A buffer is Vim's internal representation of the content of a file or would-be file. It is the equivalent of a "document" in any regular document-based program like Word or Photoshop.
+The buffer is Vim's internal representation of the content of a file or would-be file. It is the equivalent of a "document" in any regular document-based program like Word or Photoshop.
 
-Buffers are usually global and accessible from any window or tab page.
+When you do `$ vim foo.txt` or `:e foo.txt`, a buffer named `foo.txt` is created and displayed. Because you work on a representation of that file, your changes to the buffer named `foo.txt` will not be written to the corresponding file until you instruct Vim to do so with `:write` or `:update`.
 
-When you do `:e foo.txt`, a buffer named `foo.txt` is created and displayed. Because you work on a representation of that file, your changes to buffer `foo.txt` will not be written to its corresponding file until you instruct Vim to do so with `:write` or `:update`.
-
-Buffers are the only file proxies you will normally deal with in a typical Vim session. Because they are (or should be) at the core of your workflow, they come with *many* specific commands of which a small number are *really* worth learning to reach a reasonable level of proficiency.
+Buffers are the file proxies you will normally deal with in a typical Vim session. Because they are (or should be) at the core of your workflow, they come with *many* specific commands some of which are *really* worth learning to reach a reasonable efficiency level.
 
 Some of the basic commands may feel too complex or require too many keystrokes for your taste, though. But do yourself a favor and try to find native ways to work around those issues before going on a plugin safari. It's good for learning and good for startup time.
 
