@@ -282,20 +282,26 @@
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>" press &lt;F5&gt; to add quotes around the word under the cursor
+<pre>" press &lt;F5&gt; to add quotes around the word under the cursor in normal mode
 :nnoremap &lt;F5&gt; ciw"&lt;C-r&gt;""</pre>
 </div>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>" press &lt;F6&gt; to call a function
+<pre>" press &lt;F6&gt; to call a function in normal mode
 :nnoremap &lt;F6&gt; :call MyFunction()&lt;CR&gt;</pre>
 </div>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>" press &lt;F7&gt; to execute a command
+<pre>" press &lt;F7&gt; to execute a command in normal mode
 :nnoremap &lt;F7&gt; :MyCommand&lt;CR&gt;</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>" press &lt;F8&gt; to filter the current visual selection trough 'uniq'
+:xnoremap &lt;F8&gt; !uniq&lt;CR&gt;</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -631,15 +637,15 @@ set path=.,**</pre>
 <p><code>:Ex</code> open a listing of the current directory,</p>
 </li>
 <li>
+<p><code>:Lex</code> open a listing of the current directory in a smaller vertical window, similar to the "project" pane common in other editors and IDEs,</p>
+</li>
+<li>
 <p><code>:Rex</code> come back to the previous listing.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
 <p>Netrw’s documentation is massive and covers a lot more than what you probably need for basic exploration and file-handling but you should at least take a look at the following sections…</p>
-</div>
-<div class="paragraph">
-<p>Note: Coming from another text editor or from an IDE, you may miss your familiar explorer pane but netrw’s author, DrChip, recently added a new command to mimic that feature, <code>:Lexplore</code>. Yeah!</p>
 </div>
 <div class="sect2">
 <h3 id="_reference_8">Reference</h3>
@@ -749,7 +755,7 @@ $ vim `find . -name '*.txt'`</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-02-24 22:58:03 CET
+Last updated 2015-02-25 11:09:25 CET
 </div>
 </div>
 </body>
