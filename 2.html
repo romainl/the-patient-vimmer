@@ -17,14 +17,167 @@
 <h2 id="_buffers">Buffers</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The buffer is Vim&#8217;s internal representation of the content of a file or would-be file. It is the equivalent of a "document" in any regular document-based program like Word or Photoshop.</p>
+<p>Like Word or Photoshop, Vim lets us create, delete and&#8201;&#8212;&#8201;of course&#8201;&#8212;&#8201;edit &#8220;documents&#8221;, whether they are associated to an actual file or not. Those documents are called &#8220;buffers&#8221;.</p>
 </div>
 <div class="paragraph">
-<p>When you do <code>$ vim foo.txt</code> or <code>:e foo.txt</code>, a buffer named <code>foo.txt</code> is created and displayed. Because you work on a representation of that file, your changes to the buffer named <code>foo.txt</code> will not be written to the corresponding file until you instruct Vim to do so with <code>:write</code> or <code>:update</code>.</p>
+<p>A buffer is the internal representation of the content of a file. Because you work on a representation of that file, your changes will not be written to the corresponding file unless you instruct Vim to do so with <code>:write</code> or <code>:update</code>.</p>
 </div>
 <div class="paragraph">
-<p>Buffers are the file proxies you will normally deal with in a typical Vim session. Because they are (or should be) at the core of your workflow, they come with <strong>many</strong> specific commands some of which are <strong>really</strong> worth learning to reach a reasonable efficiency level.</p>
+<p>As Vim&#8217;s core file proxies, buffers are (or should be) at the core of your workflow and you owe it to yourself to know how to work with them to achieve reasonable efficiency.</p>
 </div>
+<div class="sect2">
+<h3 id="_the_buffer_list">The buffer list</h3>
+<div class="paragraph">
+<p>Every buffer created in Vim is added to the <em>buffer list</em> where it is assigned a number that will never change until it is explicitely wiped out from the list. Beside that number, a buffer associated with a file will be named after that file, giving us a second way to address that buffer.</p>
+</div>
+<div class="paragraph">
+<p>A typical Vim session could be short and only consist of editing a single file&#8201;&#8212;&#8201;and thus a single buffer&#8201;&#8212;&#8201;or it could go for weeks and consist of dozens and dozens of buffers. Keeping track of so many buffers would be daunting if Vim didn&#8217;t gave us not one, not two, but <em>three</em> commands for listing buffers:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:buffers
+:files
+:ls</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>All those commands do the same thing so we will simply use the shortest: <code>:ls</code>. Here is what its output looks like:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>  1  h   "foo.txt"                      line 1
+  2 #h   "bar.txt"                      line 1
+  3 %a   "baz.txt"                      line 1
+Press ENTER or type command to continue</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The first column shows the buffer number.</p>
+</li>
+<li>
+<p>The second column gives us information on the state of the buffer, <code>h</code> means &#8220;hidden&#8221;, <code>a</code> means &#8220;active&#8221;, <code>%</code> marks the current buffer and <code>#</code> marks the &#8220;alternate file&#8221;, which I usually think of as &#8220;previous buffer&#8221;.</p>
+</li>
+<li>
+<p>The third column tells us the buffer name.</p>
+</li>
+<li>
+<p>And the last column shows the current position of the cursor.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>No cursor, no active line, no selection… obviously, this list is not nicely interactive so what good is it? The last line gives us a couple of hints, though: pressing <code>ENTER</code> unsurprisingly makes the list go away but we can also press <code>:</code> to enter command-line mode and use an Ex command to do something with the info we get from the list.</p>
+</div>
+<div class="paragraph">
+<p>Buffers come with <em>a lot</em> of navigation and management commands, let&#8217;s see a few things we can do with the list above:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:b1   " jump to buffer number 1
+:b#   " jump back to the previous buffer
+:bd 2 " delete buffer number 2</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Unlike other editors, Vim doesn&#8217;t have a built-in way to display a list of loaded buffers permanently. This may feel like a limitation if you are used to that feature but think about it for a moment&#8230;&#8203; would you <em>really</em> need that list when you are not trying to jump to another buffer?</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s save buffer navigation for the next chapter and explore the life and death of a buffer.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_the_life_cycle_of_a_buffer">The life cycle of a buffer</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_working_with_buffers">Working with buffers</h3>
+
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_windows">Windows</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>(intro)</p>
+</div>
+<div class="sect2">
+<h3 id="_the_life_cycle_of_a_window">The life cycle of a window</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_working_with_windows">Working with windows</h3>
+
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_tab_pages">Tab pages</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>(intro)</p>
+</div>
+<div class="sect2">
+<h3 id="_the_life_cycle_of_a_tab_page">The life cycle of a tab page</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_working_with_tab_pages">Working with tab pages</h3>
+
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_special_windows">Special Windows</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>(intro)</p>
+</div>
+<div class="sect2">
+<h3 id="_the_quickfix_window">The quickfix window</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_the_preview_window">The preview window</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_the_command_line_window">The Command-line window</h3>
+
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ui_elements">UI elements</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_the_tabline">The tabline</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_the_statusline">The statusline</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_line_numbers">Line numbers</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_the_foldcolumn">The foldcolumn</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_the_signcolumn">The signcolumn</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_the_completion_menu">The completion menu</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_the_command_line">The command-line</h3>
 <div class="paragraph">
 <p>Some of the basic commands may feel too complex or require too many keystrokes for your taste, though. But do yourself a favor and try to find native ways to work around those issues before going on a plugin safari. It&#8217;s good for learning and good for startup time.</p>
 </div>
@@ -35,6 +188,7 @@
 <div class="content">
 <pre>$ vim foo.txt bar.txt
 :e baz.txt</pre>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -147,7 +301,7 @@ Press ENTER or type command to continue</pre>
 <p>the buffer number, useful for <code>:b&lt;number&gt;</code>,</p>
 </li>
 <li>
-<p>the <code>%</code> in the status column means "current buffer", we are already familiar with it.</p>
+<p>the <code>%</code> in the status column means &#8220;current buffer&#8221;, we are already familiar with it.</p>
 </li>
 </ul>
 </div>
@@ -155,7 +309,7 @@ Press ENTER or type command to continue</pre>
 <p>That list is not interactive, though: we can not move around and select an item so what good is it?</p>
 </div>
 <div class="paragraph">
-<p>Hitting <code>&lt;CR&gt;</code> makes the list go away but — as hinted by "or type command to continue" — but hitting <code>:</code> gives us the usual command-line where we can type <code>:b2</code> to go to buffer number 2. Neat.</p>
+<p>Hitting <code>&lt;CR&gt;</code> makes the list go away but — as hinted by &#8220;or type command to continue&#8221; — but hitting <code>:</code> gives us the usual command-line where we can type <code>:b2</code> to go to buffer number 2. Neat.</p>
 </div>
 <div class="paragraph">
 <p>The whole process is a bit too verbose, though, what if there was a way to shorten that sequence?</p>
@@ -167,7 +321,7 @@ Press ENTER or type command to continue</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>It turns out there <strong>is</strong> a way, and a very simple one at that! Behold the almighty mapping popularized by Barry Arthur, AKA bairui, AKA dahu in [this comic](<a href="http://2.bp.blogspot.com/-d1GaUBk-Y10/TyFhskmCYRI/AAAAAAAAARQ/CIEx1V7FLqg/s1600/vim-and-vigor-004-flying_is_faster_than_cycling.png" class="bare">http://2.bp.blogspot.com/-d1GaUBk-Y10/TyFhskmCYRI/AAAAAAAAARQ/CIEx1V7FLqg/s1600/vim-and-vigor-004-flying_is_faster_than_cycling.png</a>):</p>
+<p>It turns out there <em>is</em> a way, and a very simple one at that! Behold the almighty mapping popularized by Barry Arthur, AKA bairui, AKA dahu in [this comic](<a href="http://2.bp.blogspot.com/-d1GaUBk-Y10/TyFhskmCYRI/AAAAAAAAARQ/CIEx1V7FLqg/s1600/vim-and-vigor-004-flying_is_faster_than_cycling.png" class="bare">http://2.bp.blogspot.com/-d1GaUBk-Y10/TyFhskmCYRI/AAAAAAAAARQ/CIEx1V7FLqg/s1600/vim-and-vigor-004-flying_is_faster_than_cycling.png</a>):</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -218,7 +372,7 @@ Press ENTER or type command to continue</pre>
 </div>
 </div>
 <div class="paragraph">
-<p><code>#</code>, which can be used exactly like <code>%</code> or a buffer number, marks the "alternate file", or the last file that was edited. In practical terms, the alternate file is usually synonymous with "previous buffer" and used like this:</p>
+<p><code>#</code>, which can be used exactly like <code>%</code> or a buffer number, marks the &#8220;alternate file&#8221;, or the last file that was edited. In practical terms, the alternate file is usually synonymous with &#8220;previous buffer&#8221; and used like this:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -226,7 +380,7 @@ Press ENTER or type command to continue</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The current buffer is now <code>bar.txt</code> and its "alternate file" is the one we just left, <code>foo.txt</code>:</p>
+<p>The current buffer is now <code>bar.txt</code> and its &#8220;alternate file&#8221; is the one we just left, <code>foo.txt</code>:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -236,10 +390,10 @@ Press ENTER or type command to continue</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Until we edit another buffer, repeating <code>:b#</code> or the slightly more comfortable <code>&lt;C-^&gt;</code> will cycle between <code>foo.txt</code> and <code>bar.txt</code>. This doesn&#8217;t sound like much but the ability to alternate between two commonly used buffers is an <strong>extremely</strong> useful feature.</p>
+<p>Until we edit another buffer, repeating <code>:b#</code> or the slightly more comfortable <code>&lt;C-^&gt;</code> will cycle between <code>foo.txt</code> and <code>bar.txt</code>. This doesn&#8217;t sound like much but the ability to alternate between two commonly used buffers is an <em>extremely</em> useful feature.</p>
 </div>
 <div class="paragraph">
-<p>Note: I find the "file" part of "alternate file" hard to reason about so I usually think in terms of previous and current "buffer". YMMV of course.</p>
+<p>Note: I find the &#8220;file&#8221; part of &#8220;alternate file&#8221; hard to reason about so I usually think in terms of previous and current &#8220;buffer&#8221;. YMMV of course.</p>
 </div>
 <div class="sect3">
 <h4 id="_reference_4">Reference</h4>
@@ -264,7 +418,7 @@ Press ENTER or type command to continue</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>There is a <strong>big</strong> difference, though, the completion is done on any part of the buffer name so we can just use a small bit that we remember and get where we want to get to pretty quickly:</p>
+<p>There is a <em>big</em> difference, though, the completion is done on any part of the buffer name so we can just use a small bit that we remember and get where we want to get to pretty quickly:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -283,10 +437,10 @@ Press ENTER or type command to continue</pre>
 <div class="sect2">
 <h3 id="_mapping_galore">Mapping galore</h3>
 <div class="paragraph">
-<p>The <code>&lt;leader&gt;b</code> mapping we added to our arsenal earlier is a fine example of how Vim works. Vim gives us <strong>many</strong> small, low-level, bricks — text primitives, common commands, etc. — and the means — mappings, macros, vimscript, count, motions, etc. — to combine them in order to create the higher-level commands we need. However specialized or generic we want them to be.</p>
+<p>The <code>&lt;leader&gt;b</code> mapping we added to our arsenal earlier is a fine example of how Vim works. Vim gives us <em>many</em> small, low-level, bricks — text primitives, common commands, etc. — and the means — mappings, macros, vimscript, count, motions, etc. — to combine them in order to create the higher-level commands we need. However specialized or generic we want them to be.</p>
 </div>
 <div class="paragraph">
-<p>What about a "choose a buffer by partial name" mapping? Taking inspiration from our <code>&lt;leader&gt;f</code>, <code>&lt;leader&gt;e</code> and <code>&lt;leader&gt;b</code> mappings we can experience with other keys and start with something like:</p>
+<p>What about a &#8220;choose a buffer by partial name&#8221; mapping? Taking inspiration from our <code>&lt;leader&gt;f</code>, <code>&lt;leader&gt;e</code> and <code>&lt;leader&gt;b</code> mappings we can experience with other keys and start with something like:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -329,7 +483,7 @@ Press ENTER or type command to continue</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Hoooooo… <strong>that</strong> is good!</p>
+<p>Hoooooo… <em>that</em> is good!</p>
 </div>
 <div class="sect3">
 <h4 id="_reference_6">Reference</h4>
@@ -343,7 +497,7 @@ Press ENTER or type command to continue</pre>
 <div class="sect2">
 <h3 id="_creating_an_unnamed_buffer">Creating an unnamed buffer</h3>
 <div class="paragraph">
-<p>The basic command for creating a new empty, <strong>unnamed</strong>, buffer is:</p>
+<p>The basic command for creating a new empty, <em>unnamed</em>, buffer is:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -397,7 +551,7 @@ Press ENTER or type command to continue</pre>
 <div class="sect3">
 <h4 id="_creating_a_named_buffer">Creating a named buffer</h4>
 <div class="paragraph">
-<p>You can create a new empty, <strong>named</strong>, buffer, with:</p>
+<p>You can create a new empty, <em>named</em>, buffer, with:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -460,7 +614,7 @@ Press ENTER or type command to continue</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_special_windows">Special windows</h2>
+<h2 id="_special_windows_2">Special windows</h2>
 <div class="sectionbody">
 
 </div>
@@ -474,7 +628,7 @@ Press ENTER or type command to continue</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-02-27 00:32:05 CET
+Last updated 2015-03-01 23:19:17 CET
 </div>
 </div>
 </body>

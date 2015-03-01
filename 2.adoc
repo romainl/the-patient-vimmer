@@ -7,11 +7,94 @@
 
 == Buffers
 
-The buffer is Vim's internal representation of the content of a file or would-be file. It is the equivalent of a "document" in any regular document-based program like Word or Photoshop.
+Like Word or Photoshop, Vim lets us create, delete and -- of course -- edit "`documents`", whether they are associated to an actual file or not. Those documents are called "`buffers`".
 
-When you do `$ vim foo.txt` or `:e foo.txt`, a buffer named `foo.txt` is created and displayed. Because you work on a representation of that file, your changes to the buffer named `foo.txt` will not be written to the corresponding file until you instruct Vim to do so with `:write` or `:update`.
+A buffer is the internal representation of the content of a file. Because you work on a representation of that file, your changes will not be written to the corresponding file unless you instruct Vim to do so with `:write` or `:update`.
 
-Buffers are the file proxies you will normally deal with in a typical Vim session. Because they are (or should be) at the core of your workflow, they come with *many* specific commands some of which are *really* worth learning to reach a reasonable efficiency level.
+As Vim's core file proxies, buffers are (or should be) at the core of your workflow and you owe it to yourself to know how to work with them to achieve reasonable efficiency.
+
+=== The buffer list
+
+Every buffer created in Vim is added to the _buffer list_ where it is assigned a number that will never change until it is explicitely wiped out from the list. Beside that number, a buffer associated with a file will be named after that file, giving us a second way to address that buffer.
+
+A typical Vim session could be short and only consist of editing a single file -- and thus a single buffer -- or it could go for weeks and consist of dozens and dozens of buffers. Keeping track of so many buffers would be daunting if Vim didn't gave us not one, not two, but _three_ commands for listing buffers:
+
+    :buffers
+    :files
+    :ls
+
+All those commands do the same thing so we will simply use the shortest: `:ls`. Here is what its output looks like:
+
+      1  h   "foo.txt"                      line 1
+      2 #h   "bar.txt"                      line 1
+      3 %a   "baz.txt"                      line 1
+    Press ENTER or type command to continue
+
+* The first column shows the buffer number.
+
+* The second column gives us information on the state of the buffer, `h` means "`hidden`", `a` means "`active`", `%` marks the current buffer and `#` marks the "`alternate file`", which I usually think of as "`previous buffer`".
+
+* The third column tells us the buffer name.
+
+* And the last column shows the current position of the cursor.
+
+No cursor, no active line, no selection… obviously, this list is not nicely interactive so what good is it? The last line gives us a couple of hints, though: pressing `ENTER` unsurprisingly makes the list go away but we can also press `:` to enter command-line mode and use an Ex command to do something with the info we get from the list.
+
+Buffers come with _a lot_ of navigation and management commands, let's see a few things we can do with the list above:
+
+    :b1   " jump to buffer number 1
+    :b#   " jump back to the previous buffer
+    :bd 2 " delete buffer number 2
+
+Unlike other editors, Vim doesn't have a built-in way to display a list of loaded buffers permanently. This may feel like a limitation if you are used to that feature but think about it for a moment... would you _really_ need that list when you are not trying to jump to another buffer?
+
+Let's save buffer navigation for the next chapter and explore the life and death of a buffer.
+
+=== The life cycle of a buffer
+
+=== Working with buffers
+
+== Windows
+
+(intro)
+
+=== The life cycle of a window
+
+=== Working with windows
+
+== Tab pages
+
+(intro)
+
+=== The life cycle of a tab page
+
+=== Working with tab pages
+
+== Special Windows
+
+(intro)
+
+=== The quickfix window
+
+=== The preview window
+
+=== The Command-line window
+
+== UI elements
+
+=== The tabline
+
+=== The statusline
+
+=== Line numbers
+
+=== The foldcolumn
+
+=== The signcolumn
+
+=== The completion menu
+
+=== The command-line
 
 Some of the basic commands may feel too complex or require too many keystrokes for your taste, though. But do yourself a favor and try to find native ways to work around those issues before going on a plugin safari. It's good for learning and good for startup time.
 
@@ -80,18 +163,18 @@ The output of `:ls`, the shortest one, should look like that:
 The most immediately useful bits are the buffer number in the first column and its status in the second column.
 
 * the buffer number, useful for `:b<number>`,
-* the `%` in the status column means "current buffer", we are already familiar with it.
+* the `%` in the status column means "`current buffer`", we are already familiar with it.
 
 That list is not interactive, though: we can not move around and select an item so what good is it?
 
-Hitting `<CR>` makes the list go away but — as hinted by "or type command to continue" — but hitting `:` gives us the usual command-line where we can type `:b2` to go to buffer number 2. Neat.
+Hitting `<CR>` makes the list go away but — as hinted by "`or type command to continue`" — but hitting `:` gives us the usual command-line where we can type `:b2` to go to buffer number 2. Neat.
 
 The whole process is a bit too verbose, though, what if there was a way to shorten that sequence?
 
     :ls<CR>
     :b2<CR>
 
-It turns out there *is* a way, and a very simple one at that! Behold the almighty mapping popularized by Barry Arthur, AKA bairui, AKA dahu in [this comic](http://2.bp.blogspot.com/-d1GaUBk-Y10/TyFhskmCYRI/AAAAAAAAARQ/CIEx1V7FLqg/s1600/vim-and-vigor-004-flying_is_faster_than_cycling.png):
+It turns out there _is_ a way, and a very simple one at that! Behold the almighty mapping popularized by Barry Arthur, AKA bairui, AKA dahu in [this comic](http://2.bp.blogspot.com/-d1GaUBk-Y10/TyFhskmCYRI/AAAAAAAAARQ/CIEx1V7FLqg/s1600/vim-and-vigor-004-flying_is_faster_than_cycling.png):
 
     :nnoremap <leader>b :ls<CR>:b<Space>
 
@@ -120,19 +203,19 @@ Now is a good time to examine the output of `:ls` again…
       2 #h   "bar.txt"                      line 1
       3  h   "baz.txt"                      line 1
 
-`#`, which can be used exactly like `%` or a buffer number, marks the "alternate file", or the last file that was edited. In practical terms, the alternate file is usually synonymous with "previous buffer" and used like this:
+`#`, which can be used exactly like `%` or a buffer number, marks the "`alternate file`", or the last file that was edited. In practical terms, the alternate file is usually synonymous with "`previous buffer`" and used like this:
 
     :b#
 
-The current buffer is now `bar.txt` and its "alternate file" is the one we just left, `foo.txt`:
+The current buffer is now `bar.txt` and its "`alternate file`" is the one we just left, `foo.txt`:
 
       1 #h   "foo.txt"                      line 1
       2 %a   "bar.txt"                      line 1
       3  h   "baz.txt"                      line 1
 
-Until we edit another buffer, repeating `:b#` or the slightly more comfortable `<C-^>` will cycle between `foo.txt` and `bar.txt`. This doesn't sound like much but the ability to alternate between two commonly used buffers is an *extremely* useful feature.
+Until we edit another buffer, repeating `:b#` or the slightly more comfortable `<C-^>` will cycle between `foo.txt` and `bar.txt`. This doesn't sound like much but the ability to alternate between two commonly used buffers is an _extremely_ useful feature.
 
-Note: I find the "file" part of "alternate file" hard to reason about so I usually think in terms of previous and current "buffer". YMMV of course.
+Note: I find the "`file`" part of "`alternate file`" hard to reason about so I usually think in terms of previous and current "`buffer`". YMMV of course.
 
 ==== Reference
 
@@ -146,7 +229,7 @@ Like with `:edit` and `:find`, we can complete buffer names with `<Tab>`, see a 
 
     (screencast)
 
-There is a *big* difference, though, the completion is done on any part of the buffer name so we can just use a small bit that we remember and get where we want to get to pretty quickly:
+There is a _big_ difference, though, the completion is done on any part of the buffer name so we can just use a small bit that we remember and get where we want to get to pretty quickly:
 
     :b o<Tab><CR>
 
@@ -156,9 +239,9 @@ There is a *big* difference, though, the completion is done on any part of the b
 
 === Mapping galore
 
-The `<leader>b` mapping we added to our arsenal earlier is a fine example of how Vim works. Vim gives us *many* small, low-level, bricks — text primitives, common commands, etc. — and the means — mappings, macros, vimscript, count, motions, etc. — to combine them in order to create the higher-level commands we need. However specialized or generic we want them to be.
+The `<leader>b` mapping we added to our arsenal earlier is a fine example of how Vim works. Vim gives us _many_ small, low-level, bricks — text primitives, common commands, etc. — and the means — mappings, macros, vimscript, count, motions, etc. — to combine them in order to create the higher-level commands we need. However specialized or generic we want them to be.
 
-What about a "choose a buffer by partial name" mapping? Taking inspiration from our `<leader>f`, `<leader>e` and `<leader>b` mappings we can experience with other keys and start with something like:
+What about a "`choose a buffer by partial name`" mapping? Taking inspiration from our `<leader>f`, `<leader>e` and `<leader>b` mappings we can experience with other keys and start with something like:
 
     :nnoremap <leader>u :b<Space>
 
@@ -180,7 +263,7 @@ and a slight change in our mapping:
 
     :nnoremap <leader>u :b<Space><C-z>
 
-Hoooooo… *that* is good!
+Hoooooo… _that_ is good!
 
 ==== Reference
 
@@ -188,7 +271,7 @@ Hoooooo… *that* is good!
 
 === Creating an unnamed buffer
 
-The basic command for creating a new empty, *unnamed*, buffer is:
+The basic command for creating a new empty, _unnamed_, buffer is:
 
     :enew
 
@@ -216,7 +299,7 @@ Or you can simply create a named buffer…
 
 ==== Creating a named buffer
 
-You can create a new empty, *named*, buffer, with:
+You can create a new empty, _named_, buffer, with:
 
     :e foo.css
 
