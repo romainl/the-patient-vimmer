@@ -5,12 +5,12 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.2">
-<title>Editing files</title>
+<title>Lord of the files</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="article">
 <div id="header">
-<h1>Editing files</h1>
+<h1>Lord of the files</h1>
 </div>
 <div id="content">
 <div id="preamble">
@@ -147,7 +147,7 @@
 <h2 id="_wildcards_up_our_sleeve">Wildcards up our sleeve</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Most of the time, though, the first two or three letters of a file name are not enough or we only remember the end. That&#8217;s where the &#8220;star&#8221; wildcard comes in handy, just like in your shell:</p>
+<p>Most of the time, though, the first two or three letters of a file name may not be enough&#8230;&#8203; or we only remember the end. That&#8217;s where the &#8220;star&#8221; wildcard comes in handy, just like in your shell:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -173,7 +173,7 @@
 <p>we are now able to navigate through a flat list instead of a potentially deep hierarchy, saving quite a bunch of keystrokes and brain cells in the process,</p>
 </li>
 <li>
-<p>we can save large amounts of typing by skipping subdirectories.</p>
+<p>we can also save large amounts of typing by skipping subdirectories.</p>
 </li>
 </ul>
 </div>
@@ -329,7 +329,7 @@
 </div>
 </div>
 <div class="sect2">
-<h3 id="_a_leader_we_can_follow">A leader we can follow</h3>
+<h3 id="_a_leader_worth_following">A leader worth following</h3>
 <div class="paragraph">
 <p>While the whole purpose of the <code>&lt;Fn&gt;</code> keys is to be &#8220;programmed&#8221; to do whatever specific <em>function</em> the user needs, they don&#8217;t fit very well with Vim&#8217;s other highly mnemonic bindings so it is wiser to use a key that &#8220;maps&#8221; to the idea of <em>editing</em>. But we have a problem: Vim already uses most&#8201;&#8212;&#8201;if not all&#8201;&#8212;&#8201;of the freaking keys on our keyboard!</p>
 </div>
@@ -444,6 +444,11 @@ nnoremap &lt;leader&gt;e :edit **/*</pre>
 <div class="literalblock">
 <div class="content">
 <pre>:find *foo&lt;Tab&gt;</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(screencast)</pre>
 </div>
 </div>
 <div class="sect2">
@@ -588,7 +593,7 @@ set path=.,**</pre>
 <h2 id="_but_i_em_need_em_a_file_explorer">But I <em>need</em> a file explorer!</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Sometimes, we just need to find our way in the deep and uncharted waters of a project that was started by someone else. We only have a rough idea of the structure of the project and choosing what to edit on the command-line can be less than fun, even with our shiny mappings.</p>
+<p>Sometimes, we just need to find our way in the deep and uncharted waters of a project that was started by the guy whom just left the company. We only have a rough idea of the structure of the project and choosing what to edit on the command-line can be less than fun, even with our shiny mappings.</p>
 </div>
 <div class="paragraph">
 <p>Thankfully, Vim comes with Netrw, a full-featured (some say &#8220;bloated&#8221;) text-based file explorer that allows us to dig down that new project much like we would do in a graphical file explorer:</p>
@@ -613,7 +618,7 @@ set path=.,**</pre>
 <p><code>o</code>      open the file/directory under the cursor in a new window,</p>
 </li>
 <li>
-<p><code>P</code>      open the file/directory under the cursor in the preview window,</p>
+<p><code>P</code>      open the file/directory under the cursor in the previous window,</p>
 </li>
 <li>
 <p><code>t</code>      open the file/directory under the cursor in a new tab page.</p>
@@ -684,6 +689,9 @@ $ vim `find . -name '*.txt'`</pre>
 <pre>:argadd *.py</pre>
 </div>
 </div>
+<div class="paragraph">
+<p>Note that you can use <code>:next file file file</code> as an alternative to <code>:args file file file</code></p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_reference_9">Reference</h3>
@@ -692,7 +700,8 @@ $ vim `find . -name '*.txt'`</pre>
 <pre>:help buffer-list
 :help argument-list
 :help :args
-:help :argadd</pre>
+:help :argadd
+:help :next</pre>
 </div>
 </div>
 </div>
@@ -711,7 +720,7 @@ $ vim `find . -name '*.txt'`</pre>
             <a href="0.html">0&nbsp;&nbsp;&nbsp;An introduction</a>
         </li>
         <li class="current">
-            <a href="1.html">1&nbsp;&nbsp;&nbsp;Files</a>
+            <a href="1.html">1&nbsp;&nbsp;&nbsp;Lord of the files</a>
         </li>
         <li>
             <a href="2.html">2&nbsp;&nbsp;&nbsp;Title pending</a>
@@ -747,7 +756,7 @@ $ vim `find . -name '*.txt'`</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-03-18 00:18:40 CET
+Last updated 2015-03-21 00:03:09 CET
 </div>
 </div>
 </body>

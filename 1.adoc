@@ -1,4 +1,4 @@
-= Editing files
+= Lord of the files
 :stylesdir: css
 :stylesheet: style.css
 :imagesdir: images
@@ -69,7 +69,7 @@ and for every further session by adding this line to your `vimrc`, as usual:
 
 == Wildcards up our sleeve
 
-Most of the time, though, the first two or three letters of a file name are not enough or we only remember the end. That's where the "`star`" wildcard comes in handy, just like in your shell:
+Most of the time, though, the first two or three letters of a file name may not be enough... or we only remember the end. That's where the "`star`" wildcard comes in handy, just like in your shell:
 
     :e *fr<Tab>
     :e README_fr.txt
@@ -82,7 +82,7 @@ Vim even has a special wildcard called "`starstar`", that makes it possible to r
 The main benefits of "`starstar`" are:
 
 * we are now able to navigate through a flat list instead of a potentially deep hierarchy, saving quite a bunch of keystrokes and brain cells in the process,
-* we can save large amounts of typing by skipping subdirectories.
+* we can also save large amounts of typing by skipping subdirectories.
 
 image::gifcast_off.png[link="images/1_wildcards.gif"]
 
@@ -153,7 +153,7 @@ Our mappings _have_ to be stable because they will serve as the foundation of ou
 
     :nnoremap <F6> :e **/*
 
-=== A leader we can follow
+=== A leader worth following
 
 While the whole purpose of the `<Fn>` keys is to be "`programmed`" to do whatever specific _function_ the user needs, they don't fit very well with Vim's other highly mnemonic bindings so it is wiser to use a key that "`maps`" to the idea of _editing_. But we have a problem: Vim already uses most -- if not all -- of the freaking keys on our keyboard!
 
@@ -213,6 +213,8 @@ versus:
 Like `:edit`, `:find` does its completion from the start of the file name so `:find foo` will match `foobar.txt` but not `model_foo.txt`. Add a wildcard for an even more useful completion:
 
     :find *foo<Tab>
+
+    (screencast)
 
 === Reference
 
@@ -292,7 +294,7 @@ Example usage:
 
 == But I _need_ a file explorer!
 
-Sometimes, we just need to find our way in the deep and uncharted waters of a project that was started by someone else. We only have a rough idea of the structure of the project and choosing what to edit on the command-line can be less than fun, even with our shiny mappings.
+Sometimes, we just need to find our way in the deep and uncharted waters of a project that was started by the guy whom just left the company. We only have a rough idea of the structure of the project and choosing what to edit on the command-line can be less than fun, even with our shiny mappings.
 
 Thankfully, Vim comes with Netrw, a full-featured (some say "`bloated`") text-based file explorer that allows us to dig down that new project much like we would do in a graphical file explorer:
 
@@ -303,7 +305,7 @@ Here are a few default bindings for reference:
 * `<cr>`   open the file/directory under the cursor,
 * `-`      go up one directory,
 * `o`      open the file/directory under the cursor in a new window,
-* `P`      open the file/directory under the cursor in the preview window,
+* `P`      open the file/directory under the cursor in the previous window,
 * `t`      open the file/directory under the cursor in a new tab page.
 
 And the three commands you need to know:
@@ -339,12 +341,15 @@ or adding to it:
 
     :argadd *.py
 
+Note that you can use `:next file file file` as an alternative to `:args file file file`
+
 === Reference
 
     :help buffer-list
     :help argument-list
     :help :args
     :help :argadd
+    :help :next
 
 == Conclusion
 
@@ -358,7 +363,7 @@ Opening files for editing is neither complex nor hard but -- as with everything 
             <a href="0.html">0&nbsp;&nbsp;&nbsp;An introduction</a>
         </li>
         <li class="current">
-            <a href="1.html">1&nbsp;&nbsp;&nbsp;Files</a>
+            <a href="1.html">1&nbsp;&nbsp;&nbsp;Lord of the files</a>
         </li>
         <li>
             <a href="2.html">2&nbsp;&nbsp;&nbsp;Title pending</a>
