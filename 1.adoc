@@ -5,7 +5,23 @@
 :scriptsdir: javascript
 :linkcss:
 
-Due to its text editor nature, it is quite reasonable to expect Vim to be able to open text files. This chapter explores the many ways to open text files for editing.
+This chapter explores the many ways to open text files for editing. From outside of Vim and from Vim itself.
+
+== For argument's sake
+
+Like its distant cousins `nano` and `emacs` or, really, most command-line programs, Vim is usually started without arguments:
+
+    $ vim
+
+or with one or more explicit filename as arguments:
+
+    $ vim file1 file2 file3
+
+or with an expression expanded by your shell before passing it to Vim:
+
+    $ vim *.js
+
+But, no matter how we start Vim, we might want to edit other files without leaving Vim. How do we do it?
 
 == :edit
 
@@ -102,7 +118,7 @@ Here is the anatomy of a mapping:
 
     :map key action
 
-where `action` is what you want to happen when you press `key`; it could be a macro, an Ex command, calling a function... The Sky Is The Limit!
+where `action` is what you want to happen when you press `key`; it could be a macro, an Ex command, a function call...
 
 The command used to define your mapping can be any of the following:
 
@@ -146,10 +162,17 @@ But what's the deal with `*map` and `*noremap`?
 
 It's really quite simple...
 
-* `nmap key command` means that pressing `key` in normal mode will execute `command` _with its current meaning_. This form is _only_ useful when we want to use another mapping in our mapping; it is called "`recursive mapping`".
-* `nnoremap key command` means that pressing `key` in normal mode will execute `command` _with its default meaning_. This form is usually the one we want, it is called "`non-recursive mapping`".
+* `nmap key command` means that pressing `key` in normal mode will execute `command` _with its current meaning_. This form is _only_ useful when we want to use another mapping in our mapping; it is called "`recursive mapping`". Example:
 
-Our mappings _have_ to be stable because they will serve as the foundation of our workflow. Non-recursive mappings are the safest choice:
+    :nmap b B        " change 'b' to work like 'B'
+    :nmap <F5> dB    " '<F5>' works like 'BD', not like 'dB'
+
+* `nnoremap key command` means that pressing `key` in normal mode will execute `command` _with its default meaning_. This form is usually the one we want, it is called "`non-recursive mapping`". Example:
+
+    :nmap b B            " change 'b' to work like 'B'
+    :nnoremap <F5> dB    " '<F5>' works like 'bD'
+
+Our mappings _have_ to be solid because they will serve as the foundation of our workflow. Non-recursive mappings are the safest choice:
 
     :nnoremap <F6> :e **/*
 
@@ -324,16 +347,12 @@ Netrw's documentation is massive and covers a lot more than what you probably ne
 
 == Opening multiple files
 
-As discussed before, `:edit` and `:find` accept only _one_ file name as argument but opening multiple files at once is such a common need that it deserves its own set of commands...
-
-=== The argument list
-
-It is of course entirely possible to start Vim with multiple files or something that would be expanded to multiple files:
+As discussed before, it is very common to start Vim with multiple files or an expression expanded to multiple files:
 
     $ vim file1 file2 file3
     $ vim `find . -name '*.txt'`
 
-The file names used as arguments when starting Vim are stored in the global _argument list_ which can be manipulated in many ways. In practice, opening multiple files at once is as simple as replacing the argument list:
+The filenames used as arguments when starting Vim are stored in the global _argument list_ which can be manipulated in many ways. In practice, opening multiple files at once from Vim is as simple as replacing the argument list:
 
     :args foo.js foo.html foo.css
 
