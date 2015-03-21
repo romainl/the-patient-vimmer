@@ -571,6 +571,9 @@ table tr td {
 table tr td p {
     text-align: left;
 }
+a {
+    color: #007f00;
+}
 a.image {
     background-color: #262626;
 }
