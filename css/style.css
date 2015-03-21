@@ -425,6 +425,9 @@ td,
 th {
     padding: 0;
 }
+
+/* End of normalize.css */
+
 html {
     margin: 2em 10%;
 }
@@ -568,8 +571,11 @@ table tr td {
 table tr td p {
     text-align: left;
 }
+a.image {
+    background-color: #262626;
+}
 img {
-    border: 4px solid #323132;
+    border: 4px solid #262626;
     border-radius: 4px 4px 4px 4px;
     max-width: 100%;
 }

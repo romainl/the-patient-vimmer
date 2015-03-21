@@ -45,7 +45,7 @@ It can be done, of course, but with a different command. We will come to that la
 
 == Tab-completion
 
-Fortunately, Vim's tab-completion lets us cycle through eligible files:
+Fortunately, tab-completion lets us cycle through eligible files:
 
 image::gifcast_off.png[link="images/1_tab-completion.gif"]
 
@@ -237,7 +237,9 @@ Like `:edit`, `:find` does its completion from the start of the file name so `:f
 
     :find *foo<Tab>
 
-    (screencast)
+Here is `:find` in action:
+
+image::gifcast_off.png[link="images/1_find.gif"]
 
 === Reference
 
@@ -250,7 +252,7 @@ Again, we can go a bit further with a nice _normal_ mode mapping similar to the 
 
     :nnoremap <leader>f :find *
 
-    (screencast)
+image::gifcast_off.png[link="images/1_leader-f.gif"]
 
 Let's replace the `:edit`-based mapping in our `vimrc` with the following:
 
@@ -321,7 +323,7 @@ Sometimes, we just need to find our way in the deep and uncharted waters of a pr
 
 Thankfully, Vim comes with Netrw, a full-featured (some say "`bloated`") text-based file explorer that allows us to dig down that new project much like we would do in a graphical file explorer:
 
-    (screencast)
+image::gifcast_off.png[link="images/1_netrw.gif"]
 
 Here are a few default bindings for reference:
 
@@ -359,8 +361,6 @@ The filenames used as arguments when starting Vim are stored in the global _argu
 or adding to it:
 
     :argadd *.py
-
-Note that you can use `:next file file file` as an alternative to `:args file file file`
 
 === Reference
 

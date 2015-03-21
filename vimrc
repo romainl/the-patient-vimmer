@@ -12,10 +12,10 @@ let &softtabstop = &shiftwidth
 set wildmenu
 let mapleader = "\<Space>"
 nnoremap <leader>e :edit **/*
-" nnoremap <leader>f :find *
-" set path=.,**
-" set wildmode=list:full
-" set wildignorecase
+set path=.,**
+nnoremap <leader>f :find *
+set wildmode=list:full
+set wildignorecase
 
 " CHAPTER 2
 " CHAPTER 3
