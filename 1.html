@@ -16,7 +16,39 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Due to its text editor nature, it is quite reasonable to expect Vim to be able to open text files. This chapter explores the many ways to open text files for editing.</p>
+<p>This chapter explores the many ways to open text files for editing. From outside of Vim and from Vim itself.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_for_argument_s_sake">For argument&#8217;s sake</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Like its distant cousins <code>nano</code> and <code>emacs</code> or, really, most command-line programs, Vim is usually started without arguments:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ vim</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or with one or more explicit filename as arguments:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ vim file1 file2 file3</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or with an expression expanded by your shell before passing it to Vim:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ vim *.js</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>But, no matter how we start Vim, we might want to edit other files without leaving Vim. How do we do it?</p>
 </div>
 </div>
 </div>
@@ -313,15 +345,27 @@
 <div class="ulist">
 <ul>
 <li>
-<p><code>nmap key command</code> means that pressing <code>key</code> in normal mode will execute <code>command</code> <em>with its current meaning</em>. This form is <em>only</em> useful when we want to use another mapping in our mapping; it is called &#8220;recursive mapping&#8221;.</p>
+<p><code>nmap key command</code> means that pressing <code>key</code> in normal mode will execute <code>command</code> <em>with its current meaning</em>. This form is <em>only</em> useful when we want to use another mapping in our mapping; it is called &#8220;recursive mapping&#8221;. Example:</p>
+<div class="literalblock">
+<div class="content">
+<pre>:nmap b B        " change 'b' to work like 'B'
+:nmap &lt;F5&gt; dB    " '&lt;F5&gt;' works like 'BD', not like 'dB'</pre>
+</div>
+</div>
 </li>
 <li>
-<p><code>nnoremap key command</code> means that pressing <code>key</code> in normal mode will execute <code>command</code> <em>with its default meaning</em>. This form is usually the one we want, it is called &#8220;non-recursive mapping&#8221;.</p>
+<p><code>nnoremap key command</code> means that pressing <code>key</code> in normal mode will execute <code>command</code> <em>with its default meaning</em>. This form is usually the one we want, it is called &#8220;non-recursive mapping&#8221;. Example:</p>
+<div class="literalblock">
+<div class="content">
+<pre>:nmap b B            " change 'b' to work like 'B'
+:nnoremap &lt;F5&gt; dB    " '&lt;F5&gt;' works like 'bD'</pre>
+</div>
+</div>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Our mappings <em>have</em> to be stable because they will serve as the foundation of our workflow. Non-recursive mappings are the safest choice:</p>
+<p>Our mappings <em>have</em> to be solid because they will serve as the foundation of our workflow. Non-recursive mappings are the safest choice:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -663,12 +707,7 @@ set path=.,**</pre>
 <h2 id="_opening_multiple_files">Opening multiple files</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>As discussed before, <code>:edit</code> and <code>:find</code> accept only <em>one</em> file name as argument but opening multiple files at once is such a common need that it deserves its own set of commands&#8230;&#8203;</p>
-</div>
-<div class="sect2">
-<h3 id="_the_argument_list">The argument list</h3>
-<div class="paragraph">
-<p>It is of course entirely possible to start Vim with multiple files or something that would be expanded to multiple files:</p>
+<p>As discussed before, it is very common to start Vim with multiple files or an expression expanded to multiple files:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -677,7 +716,7 @@ $ vim `find . -name '*.txt'`</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The file names used as arguments when starting Vim are stored in the global <em>argument list</em> which can be manipulated in many ways. In practice, opening multiple files at once is as simple as replacing the argument list:</p>
+<p>The filenames used as arguments when starting Vim are stored in the global <em>argument list</em> which can be manipulated in many ways. In practice, opening multiple files at once from Vim is as simple as replacing the argument list:</p>
 </div>
 <div class="literalblock">
 <div class="content">
