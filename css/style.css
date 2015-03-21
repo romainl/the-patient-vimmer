@@ -479,7 +479,7 @@ h1:before, h2:before, h3:before {
     display: inline-block;
     text-align: right;
     margin-left: -55px;
-    border-right: 5px solid #ffffff;
+    border-right: 5px solid #fcfcfc;
 }
 h1:before {
     content: "#";
