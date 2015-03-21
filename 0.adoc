@@ -396,10 +396,10 @@ I would say we are doing good, here.
 <div id="front">
     <h6>The Patient Vimmer</h6>
     <ul>
-        <li>
+        <li class="current">
             <a href="0.html">0&nbsp;&nbsp;&nbsp;An introduction</a>
         </li>
-        <li class="current">
+        <li>
             <a href="1.html">1&nbsp;&nbsp;&nbsp;Lord of the files</a>
         </li>
         <li>
