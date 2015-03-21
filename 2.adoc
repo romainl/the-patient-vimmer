@@ -1,9 +1,11 @@
-= The Patient Vimmer — Your workspace
+= Your workspace
 :stylesdir: css
 :stylesheet: style.css
 :imagesdir: images
 :scriptsdir: javascript
 :linkcss:
+
+TODO (texte d'intro)
 
 == Buffers
 
