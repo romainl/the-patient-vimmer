@@ -1,4 +1,4 @@
-= Lord of the files
+= The Patient Vimmer — Lord of the files
 :stylesdir: css
 :stylesheet: style.css
 :imagesdir: images
@@ -30,7 +30,7 @@ But, no matter how we start Vim, we might want to edit other files without leavi
     :e foo.txt
     :e ../bar.txt
 
-It is important to note that this command only accepts _one_ file name as argument so you can forget these for the time being:
+It is important to note that this command only accepts _one_ filename as argument so you can forget these for the time being:
 
     :e file1 file2 file3
     :e *foo
@@ -85,7 +85,7 @@ and for every further session by adding this line to your `vimrc`, as usual:
 
 == Wildcards up our sleeve
 
-Most of the time, though, the first two or three letters of a file name may not be enough... or we only remember the end. That's where the "`star`" wildcard comes in handy, just like in your shell:
+Most of the time, though, the first two or three letters of a filename may not be enough... or we only remember the end. That's where the "`star`" wildcard comes in handy, just like in your shell:
 
     :e *fr<Tab>
     :e README_fr.txt
@@ -233,7 +233,7 @@ versus:
 
     :e **/foo<Tab>
 
-Like `:edit`, `:find` does its completion from the start of the file name so `:find foo` will match `foobar.txt` but not `model_foo.txt`. Add a wildcard for an even more useful completion:
+Like `:edit`, `:find` does its completion from the start of the filename so `:find foo` will match `foobar.txt` but not `model_foo.txt`. Add a wildcard for an even more useful completion:
 
     :find *foo<Tab>
 
@@ -261,9 +261,9 @@ Let's replace the `:edit`-based mapping in our `vimrc` with the following:
 
 and move on to the next section...
 
-== Customizing file name completion and the "`wildmenu`"
+== Customizing filename completion and the "`wildmenu`"
 
-We can further customize the behavior of Vim's file name completion with a bunch of options that work for `:edit` _and_ `:find`:
+We can further customize the behavior of Vim's filename completion with a bunch of options that work for `:edit` _and_ `:find`:
 
     :help wildmode        " defines the behavior of the wildmenu
     :help wildignore      " tells Vim to ignore some patterns
@@ -373,6 +373,8 @@ or adding to it:
 == Conclusion
 
 Opening files for editing is neither complex nor hard but -- as with everything in Vim -- it can be made quicker and easier with a couple of settings and mappings. Make sure you have exhausted the built-in ways before installing the latest and greatest fuzzy gadget people rave about on Reddit, Twitter or Hacker News.
+
+But, now that we have a bunch of files to edit… how are we supposed to work with them?
 
 ++++
 <div id="front">

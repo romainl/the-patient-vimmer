@@ -1,3 +1,185 @@
+= Let the work flow
+:stylesdir: css
+:stylesheet: style.css
+:imagesdir: images
+:scriptsdir: javascript
+:linkcss:
+
+=== OLD STUFF
+
+Some of the basic commands may feel too complex or require too many keystrokes for your taste, though. But do yourself a favor and try to find native ways to work around those issues before going on a plugin safari. It's good for learning and good for startup time.
+
+Let's start Vim with two files and subsequently edit another file:
+
+    $ vim foo.txt bar.txt
+    :e baz.txt
+
+=== One command to…
+
+The first navigation-related command worth knowing is `:b`, short for `:buffer`.
+
+`:b` expects one argument which can be:
+
+* a buffer number,
+* a buffer name,
+* a buffer reference.
+
+`:b2`, `:b3` and `:b1` pretty much do what you would expect them to do and `:b baz.txt` too.
+
+==== Reference
+
+    :help :buffer
+
+=== Next/Previous buffer
+
+These commands let you cycle through your buffers without using numbers:
+
+    :bn[ext]
+    :bp[revious]
+
+or with numbers if you want an equivalent of the `FFWD` and `REW` buttons on your parents' VCR:
+
+    :5bn
+    :3bp
+
+As usual, you can map those commands to easier keys. These are my mappings, YMMV:
+
+    nnoremap <PageUp>   :bprevious<CR>
+    nnoremap <PageDown> :bnext<CR>
+
+Those two commands, remapped or not, are useful when your target buffer is relatively close or when the buffer list is short or, simply, when you just don't want to think but they won't help much if your target is 27 `:bn` away.
+
+==== Reference
+
+    :h :bnext
+    :h :bprevious
+
+=== Listing buffers
+
+Maintaining an up-to-date mental number-to-name-to-number map to move around sounds silly, I agree, but we don't really have to!
+
+We have three commands — all three synonyms — at our disposal for listing buffers:
+
+    :buffers
+    :files
+    :ls
+
+The output of `:ls`, the shortest one, should look like that:
+
+      1  h   "foo.txt"                      line 1
+      2 #h   "bar.txt"                      line 1
+      3 %a   "baz.txt"                      line 1
+    Press ENTER or type command to continue
+    
+The most immediately useful bits are the buffer number in the first column and its status in the second column.
+
+* the buffer number, useful for `:b<number>`,
+* the `%` in the status column means "`current buffer`", we are already familiar with it.
+
+That list is not interactive, though: we can not move around and select an item so what good is it?
+
+Hitting `<CR>` makes the list go away but — as hinted by "`or type command to continue`" — but hitting `:` gives us the usual command-line where we can type `:b2` to go to buffer number 2. Neat.
+
+The whole process is a bit too verbose, though, what if there was a way to shorten that sequence?
+
+    :ls<CR>
+    :b2<CR>
+
+It turns out there _is_ a way, and a very simple one at that! Behold the almighty mapping popularized by Barry Arthur, AKA bairui, AKA dahu in [this comic](http://2.bp.blogspot.com/-d1GaUBk-Y10/TyFhskmCYRI/AAAAAAAAARQ/CIEx1V7FLqg/s1600/vim-and-vigor-004-flying_is_faster_than_cycling.png):
+
+    :nnoremap <leader>b :ls<CR>:b<Space>
+
+It executes `:ls` and immediately puts `:b ` on the command-line, ready for us to type a number and hit `<CR>`:
+
+      1  h   "foo.txt"                      line 1
+      2 %a   "bar.txt"                      line 1
+      3 #h   "baz.txt"                      line 1
+    :b |
+
+With that mapping, we are down to 4 keystrokes:
+
+    <leader>b1<CR>
+
+Adding that mapping to our `~/.vimrc` sounds like a very good idea, doesn't it?
+
+==== Reference
+
+    :help :ls
+
+=== Our friend, the octothorpe
+
+Now is a good time to examine the output of `:ls` again…
+ 
+      1 %a   "foo.txt"                      line 1
+      2 #h   "bar.txt"                      line 1
+      3  h   "baz.txt"                      line 1
+
+`#`, which can be used exactly like `%` or a buffer number, marks the "`alternate file`", or the last file that was edited. In practical terms, the alternate file is usually synonymous with "`previous buffer`" and used like this:
+
+    :b#
+
+The current buffer is now `bar.txt` and its "`alternate file`" is the one we just left, `foo.txt`:
+
+      1 #h   "foo.txt"                      line 1
+      2 %a   "bar.txt"                      line 1
+      3  h   "baz.txt"                      line 1
+
+Until we edit another buffer, repeating `:b#` or the slightly more comfortable `<C-^>` will cycle between `foo.txt` and `bar.txt`. This doesn't sound like much but the ability to alternate between two commonly used buffers is an _extremely_ useful feature.
+
+Note: I find the "`file`" part of "`alternate file`" hard to reason about so I usually think in terms of previous and current "`buffer`". YMMV of course.
+
+==== Reference
+
+    :help alternate-file
+
+=== Command-line completion
+
+We have seen earlier that `:b` accepts a buffer name as argument but doing `:b models/foo-bar.js` seems slow and error-prone.
+
+Like with `:edit` and `:find`, we can complete buffer names with `<Tab>`, see a list of possible completions with `<C-d>` and take advantage of the wildmenu:
+
+    (screencast)
+
+There is a _big_ difference, though, the completion is done on any part of the buffer name so we can just use a small bit that we remember and get where we want to get to pretty quickly:
+
+    :b o<Tab><CR>
+
+==== Reference
+
+    :help cmdline-completion
+
+=== Mapping galore
+
+The `<leader>b` mapping we added to our arsenal earlier is a fine example of how Vim works. Vim gives us _many_ small, low-level, bricks — text primitives, common commands, etc. — and the means — mappings, macros, vimscript, count, motions, etc. — to combine them in order to create the higher-level commands we need. However specialized or generic we want them to be.
+
+What about a "`choose a buffer by partial name`" mapping? Taking inspiration from our `<leader>f`, `<leader>e` and `<leader>b` mappings we can experience with other keys and start with something like:
+
+    :nnoremap <leader>u :b<Space>
+
+What about listing the candidates too?
+
+    :nnoremap <leader>u :b<Space><C-d>
+
+Cool! Well… kind of. It would be even cooler if the completion (and the wildmenu) was started automatically. Let's try with a `<Tab>`:
+
+    :nnoremap <leader>u :b<Space><Tab>
+
+Huh… It looks like `<Tab>` doesn't work like we expected.
+
+No, what we need is another option, `'wildcharm'`:
+
+    :set wildcharm=<C-z>
+
+and a slight change in our mapping:
+
+    :nnoremap <leader>u :b<Space><C-z>
+
+Hoooooo… _that_ is good!
+
+==== Reference
+
+    :help 'wildcharm'
+
 In Vim, you always have *at least* one buffer, displayed in *at least* one Window, itself contained in *at least* one tab page. That's the bare minimum.
 
 But you can have one or more buffers.
@@ -6,27 +188,27 @@ And you can have one or more windows.
 
 And one or more tab pages.
 
-# Windows
+== Windows
 
 Simply put, a window is a *view* into whatever buffer you decide to display in that window. As such, windows can't be used as buffer proxies or, obviously, as file proxies.
 
 So what good are windows, then?
 
-## Using windows
+=== Using windows
 
-### Different views of the same file
+==== Different views of the same file
 
 Because a single buffer can be viewed trough more than one window it is possible to view the definition of a function — upper in the same buffer — and the portion of code you are currently working on in two windows, the latter below the former.
 
     (screenshot)
 
-### Work in one widow, refer to the other one
+==== Work in one widow, refer to the other one
 
 One could split the current tab page in two vertical windows, with the documentation on the right and his current code on the left. With such a setup, it becomes very easy to refer to the content of one buffer while writing in another one… using only our eyeballs.
 
     (screenshot)
 
-### Stay focused
+==== Stay focused
 
 Alternating between two files — HTML or code/test — is easy with `:b#` or `<C-^>` but the focus change *can* become distracting after a while: the whole screen is changed, we must adapt to the new content… this can be a flow-breaker.
 
@@ -34,7 +216,7 @@ Having your HTML in one window and your CSS in another makes it possible to refe
 
     (screenshot)
 
-## Creating a window
+=== Creating a window
 
 Creating a window is done by splitting the current window in two equal parts.
 
@@ -75,7 +257,7 @@ You can add the two options below to your `vimrc` to make this the default behav
      set splitbelow
      set splitright
 
-## Moving the cursor between windows
+=== Moving the cursor between windows
 
 Two windows make an easy layout: moving from one to the other is only a matter of mashing `<C-w>w`. But what if we have, say… six windows?
 
@@ -105,7 +287,7 @@ or cycle through every window:
 
 In any case, keep the nature of windows in mind to avoid confusing "moving to a window" and "moving to a buffer".
 
-## Moving windows around
+=== Moving windows around
 
 What if you opened an horizontal window instead of a vertical one? What if you would prefer that window at the top right to be on the left, between the top one and the bottom one?
 
@@ -113,7 +295,7 @@ Vim gives us a bunch of commands for moving windows around but, again, it is imp
 
 *Do I want to change my window layout or do I want to view this buffer in that window?*
 
-### I want to change the window layout
+==== I want to change the window layout
 
 You can try these:
 
@@ -131,7 +313,7 @@ You can try these:
     <C-w>r    rotate windows (clockwise)
     <C-w>R    rotate windows (counter-clockwise)
 
-### I want to view this buffer in that window
+==== I want to view this buffer in that window
 
 Because windows are *views* into arbitrary buffers, this task is better done by going to "that" window and displaying "this" buffer:
 
@@ -140,13 +322,13 @@ Because windows are *views* into arbitrary buffers, this task is better done by 
 
 Remember: while it is certainly a tempting shortcut, mentally associating a buffer and a window or a tab is counterproductive.
 
-## Closing windows
+=== Closing windows
 
 Closing a window doesn't remove the currently displayed buffer from the buffer list and removing a buffer from the buffer list doesn't necessarily close the window where it is currently displayed.
 
 If you want to 
 
-## Reference
+=== Reference
 
     :help :split
     :help :vsplit
@@ -159,7 +341,7 @@ If you want to
     :help window-move-cursor
     :help window-moving
 
-# Tab pages
+== Tab pages
 
 The discord around tab pages is as old as the feature and largely a confusion issue.
 
@@ -181,23 +363,23 @@ Naming issues, hostile defaults, poor UX choices… everything leads newcomers t
 
 Basically, reading the relevant documentation or listening to the advice of other seasoned vimmers are the only ways one could learn that, in fact, Vim's tab pages are *very* different from other editors tabs. And we know how people like to read documentation…
 
-## A truth so simple it hurts
+=== A truth so simple it hurts
 
 A tab page is a *workspace*, a place where we can organize any number of windows.
 
 Because they contain windows, tab pages inherit their most striking limitation: *no one-to-one relationship between a buffer and a window.* Since it is impossible to tie a specific buffer to a specific window in a specific tab pages it is therefore impossible to use tab pages as file proxies.
 
-## Using tab pages
+=== Using tab pages
 
-### Creating a tab page
+==== Creating a tab page
 
-### Moving between tab pages
+==== Moving between tab pages
 
-### Moving tab pages around
+==== Moving tab pages around
 
-### Closing tab pages
+==== Closing tab pages
 
-# Buffers vs windows vs tab pages
+== Buffers vs windows vs tab pages
 
 Let us go back to that famous "discord" I hinted at earlier.
 

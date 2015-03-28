@@ -1,4 +1,4 @@
-= An introduction
+= The Patient Vimmer — An introduction
 :stylesdir: css
 :stylesheet: style.css
 :linkcss:
@@ -432,4 +432,3 @@ I would say we are doing good, here.
 <script src="javascript/jquery-1.11.2.min.js"></script>
 <script src="javascript/behavior.js"></script>
 ++++
-+++

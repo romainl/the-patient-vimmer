@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.2">
+<title>Let the work flow</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Let the work flow</h1>
+</div>
+<div id="content">
+<div class="sect2">
+<h3 id="_old_stuff">OLD STUFF</h3>
+<div class="paragraph">
+<p>Some of the basic commands may feel too complex or require too many keystrokes for your taste, though. But do yourself a favor and try to find native ways to work around those issues before going on a plugin safari. It&#8217;s good for learning and good for startup time.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s start Vim with two files and subsequently edit another file:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ vim foo.txt bar.txt
+:e baz.txt</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_one_command_to">One command to…</h3>
+<div class="paragraph">
+<p>The first navigation-related command worth knowing is <code>:b</code>, short for <code>:buffer</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>:b</code> expects one argument which can be:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>a buffer number,</p>
+</li>
+<li>
+<p>a buffer name,</p>
+</li>
+<li>
+<p>a buffer reference.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><code>:b2</code>, <code>:b3</code> and <code>:b1</code> pretty much do what you would expect them to do and <code>:b baz.txt</code> too.</p>
+</div>
+<div class="sect3">
+<h4 id="_reference">Reference</h4>
+<div class="literalblock">
+<div class="content">
+<pre>:help :buffer</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_next_previous_buffer">Next/Previous buffer</h3>
+<div class="paragraph">
+<p>These commands let you cycle through your buffers without using numbers:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:bn[ext]
+:bp[revious]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or with numbers if you want an equivalent of the <code>FFWD</code> and <code>REW</code> buttons on your parents' VCR:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:5bn
+:3bp</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As usual, you can map those commands to easier keys. These are my mappings, YMMV:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>nnoremap &lt;PageUp&gt;   :bprevious&lt;CR&gt;
+nnoremap &lt;PageDown&gt; :bnext&lt;CR&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Those two commands, remapped or not, are useful when your target buffer is relatively close or when the buffer list is short or, simply, when you just don&#8217;t want to think but they won&#8217;t help much if your target is 27 <code>:bn</code> away.</p>
+</div>
+<div class="sect3">
+<h4 id="_reference_2">Reference</h4>
+<div class="literalblock">
+<div class="content">
+<pre>:h :bnext
+:h :bprevious</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_listing_buffers">Listing buffers</h3>
+<div class="paragraph">
+<p>Maintaining an up-to-date mental number-to-name-to-number map to move around sounds silly, I agree, but we don&#8217;t really have to!</p>
+</div>
+<div class="paragraph">
+<p>We have three commands — all three synonyms — at our disposal for listing buffers:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:buffers
+:files
+:ls</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output of <code>:ls</code>, the shortest one, should look like that:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>  1  h   "foo.txt"                      line 1
+  2 #h   "bar.txt"                      line 1
+  3 %a   "baz.txt"                      line 1
+Press ENTER or type command to continue</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The most immediately useful bits are the buffer number in the first column and its status in the second column.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the buffer number, useful for <code>:b&lt;number&gt;</code>,</p>
+</li>
+<li>
+<p>the <code>%</code> in the status column means &#8220;current buffer&#8221;, we are already familiar with it.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>That list is not interactive, though: we can not move around and select an item so what good is it?</p>
+</div>
+<div class="paragraph">
+<p>Hitting <code>&lt;CR&gt;</code> makes the list go away but — as hinted by &#8220;or type command to continue&#8221; — but hitting <code>:</code> gives us the usual command-line where we can type <code>:b2</code> to go to buffer number 2. Neat.</p>
+</div>
+<div class="paragraph">
+<p>The whole process is a bit too verbose, though, what if there was a way to shorten that sequence?</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:ls&lt;CR&gt;
+:b2&lt;CR&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It turns out there <em>is</em> a way, and a very simple one at that! Behold the almighty mapping popularized by Barry Arthur, AKA bairui, AKA dahu in [this comic](<a href="http://2.bp.blogspot.com/-d1GaUBk-Y10/TyFhskmCYRI/AAAAAAAAARQ/CIEx1V7FLqg/s1600/vim-and-vigor-004-flying_is_faster_than_cycling.png" class="bare">http://2.bp.blogspot.com/-d1GaUBk-Y10/TyFhskmCYRI/AAAAAAAAARQ/CIEx1V7FLqg/s1600/vim-and-vigor-004-flying_is_faster_than_cycling.png</a>):</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:nnoremap &lt;leader&gt;b :ls&lt;CR&gt;:b&lt;Space&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It executes <code>:ls</code> and immediately puts <code>:b ` on the command-line, ready for us to type a number and hit `&lt;CR&gt;</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>  1  h   "foo.txt"                      line 1
+  2 %a   "bar.txt"                      line 1
+  3 #h   "baz.txt"                      line 1
+:b |</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With that mapping, we are down to 4 keystrokes:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;leader&gt;b1&lt;CR&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Adding that mapping to our <code>~/.vimrc</code> sounds like a very good idea, doesn&#8217;t it?</p>
+</div>
+<div class="sect3">
+<h4 id="_reference_3">Reference</h4>
+<div class="literalblock">
+<div class="content">
+<pre>:help :ls</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_our_friend_the_octothorpe">Our friend, the octothorpe</h3>
+<div class="paragraph">
+<p>Now is a good time to examine the output of <code>:ls</code> again…</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>1 %a   "foo.txt"                      line 1
+2 #h   "bar.txt"                      line 1
+3  h   "baz.txt"                      line 1</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>#</code>, which can be used exactly like <code>%</code> or a buffer number, marks the &#8220;alternate file&#8221;, or the last file that was edited. In practical terms, the alternate file is usually synonymous with &#8220;previous buffer&#8221; and used like this:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:b#</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The current buffer is now <code>bar.txt</code> and its &#8220;alternate file&#8221; is the one we just left, <code>foo.txt</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>1 #h   "foo.txt"                      line 1
+2 %a   "bar.txt"                      line 1
+3  h   "baz.txt"                      line 1</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Until we edit another buffer, repeating <code>:b#</code> or the slightly more comfortable <code>&lt;C-^&gt;</code> will cycle between <code>foo.txt</code> and <code>bar.txt</code>. This doesn&#8217;t sound like much but the ability to alternate between two commonly used buffers is an <em>extremely</em> useful feature.</p>
+</div>
+<div class="paragraph">
+<p>Note: I find the &#8220;file&#8221; part of &#8220;alternate file&#8221; hard to reason about so I usually think in terms of previous and current &#8220;buffer&#8221;. YMMV of course.</p>
+</div>
+<div class="sect3">
+<h4 id="_reference_4">Reference</h4>
+<div class="literalblock">
+<div class="content">
+<pre>:help alternate-file</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_command_line_completion">Command-line completion</h3>
+<div class="paragraph">
+<p>We have seen earlier that <code>:b</code> accepts a buffer name as argument but doing <code>:b models/foo-bar.js</code> seems slow and error-prone.</p>
+</div>
+<div class="paragraph">
+<p>Like with <code>:edit</code> and <code>:find</code>, we can complete buffer names with <code>&lt;Tab&gt;</code>, see a list of possible completions with <code>&lt;C-d&gt;</code> and take advantage of the wildmenu:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(screencast)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There is a <em>big</em> difference, though, the completion is done on any part of the buffer name so we can just use a small bit that we remember and get where we want to get to pretty quickly:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:b o&lt;Tab&gt;&lt;CR&gt;</pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_reference_5">Reference</h4>
+<div class="literalblock">
+<div class="content">
+<pre>:help cmdline-completion</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_mapping_galore">Mapping galore</h3>
+<div class="paragraph">
+<p>The <code>&lt;leader&gt;b</code> mapping we added to our arsenal earlier is a fine example of how Vim works. Vim gives us <em>many</em> small, low-level, bricks — text primitives, common commands, etc. — and the means — mappings, macros, vimscript, count, motions, etc. — to combine them in order to create the higher-level commands we need. However specialized or generic we want them to be.</p>
+</div>
+<div class="paragraph">
+<p>What about a &#8220;choose a buffer by partial name&#8221; mapping? Taking inspiration from our <code>&lt;leader&gt;f</code>, <code>&lt;leader&gt;e</code> and <code>&lt;leader&gt;b</code> mappings we can experience with other keys and start with something like:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:nnoremap &lt;leader&gt;u :b&lt;Space&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>What about listing the candidates too?</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:nnoremap &lt;leader&gt;u :b&lt;Space&gt;&lt;C-d&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Cool! Well… kind of. It would be even cooler if the completion (and the wildmenu) was started automatically. Let&#8217;s try with a <code>&lt;Tab&gt;</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:nnoremap &lt;leader&gt;u :b&lt;Space&gt;&lt;Tab&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Huh… It looks like <code>&lt;Tab&gt;</code> doesn&#8217;t work like we expected.</p>
+</div>
+<div class="paragraph">
+<p>No, what we need is another option, <code>'wildcharm'</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:set wildcharm=&lt;C-z&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and a slight change in our mapping:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:nnoremap &lt;leader&gt;u :b&lt;Space&gt;&lt;C-z&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Hoooooo… <em>that</em> is good!</p>
+</div>
+<div class="sect3">
+<h4 id="_reference_6">Reference</h4>
+<div class="literalblock">
+<div class="content">
+<pre>:help 'wildcharm'</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In Vim, you always have <strong>at least</strong> one buffer, displayed in <strong>at least</strong> one Window, itself contained in <strong>at least</strong> one tab page. That&#8217;s the bare minimum.</p>
+</div>
+<div class="paragraph">
+<p>But you can have one or more buffers.</p>
+</div>
+<div class="paragraph">
+<p>And you can have one or more windows.</p>
+</div>
+<div class="paragraph">
+<p>And one or more tab pages.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_windows">Windows</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Simply put, a window is a <strong>view</strong> into whatever buffer you decide to display in that window. As such, windows can&#8217;t be used as buffer proxies or, obviously, as file proxies.</p>
+</div>
+<div class="paragraph">
+<p>So what good are windows, then?</p>
+</div>
+<div class="sect2">
+<h3 id="_using_windows">Using windows</h3>
+<div class="sect3">
+<h4 id="_different_views_of_the_same_file">Different views of the same file</h4>
+<div class="paragraph">
+<p>Because a single buffer can be viewed trough more than one window it is possible to view the definition of a function — upper in the same buffer — and the portion of code you are currently working on in two windows, the latter below the former.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(screenshot)</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_work_in_one_widow_refer_to_the_other_one">Work in one widow, refer to the other one</h4>
+<div class="paragraph">
+<p>One could split the current tab page in two vertical windows, with the documentation on the right and his current code on the left. With such a setup, it becomes very easy to refer to the content of one buffer while writing in another one… using only our eyeballs.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(screenshot)</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_stay_focused">Stay focused</h4>
+<div class="paragraph">
+<p>Alternating between two files — HTML or code/test — is easy with <code>:b#</code> or <code>&lt;C-^&gt;</code> but the focus change <strong>can</strong> become distracting after a while: the whole screen is changed, we must adapt to the new content… this can be a flow-breaker.</p>
+</div>
+<div class="paragraph">
+<p>Having your HTML in one window and your CSS in another makes it possible to refer to one when working in the other and avoids that split second of adjustment that can break our flow.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(screenshot)</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_creating_a_window">Creating a window</h3>
+<div class="paragraph">
+<p>Creating a window is done by splitting the current window in two equal parts.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The current window is split to obtain two horizontal views of the current buffer:</p>
+<div class="literalblock">
+<div class="content">
+<pre>:sp[lit]</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>or:</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;C-w&gt;s</pre>
+</div>
+</div>
+</li>
+<li>
+<p>The current window is split to obtain two vertical views of the current buffer:</p>
+<div class="literalblock">
+<div class="content">
+<pre>:vs[plit]</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>or:</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;C-w&gt;v</pre>
+</div>
+</div>
+</li>
+<li>
+<p>The current window is split but the new horizontal window contains a new, empty, unnamed buffer:</p>
+<div class="literalblock">
+<div class="content">
+<pre>:new</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>or:</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;C-w&gt;n</pre>
+</div>
+</div>
+</li>
+<li>
+<p>The current window is split but the new vertical window contains a new, empty, unnamed buffer:</p>
+<div class="literalblock">
+<div class="content">
+<pre>:vnew</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The somewhat unintuitive default is to open the new window on the top left of the current window. It is possible to tell Vim to do that on the bottom right by prepending <code>:sp</code>, <code>:vs</code>, :new and <code>:vnew</code> with <code>:botright</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:botright new</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can add the two options below to your <code>vimrc</code> to make this the default behavior:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>set splitbelow
+set splitright</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_moving_the_cursor_between_windows">Moving the cursor between windows</h3>
+<div class="paragraph">
+<p>Two windows make an easy layout: moving from one to the other is only a matter of mashing <code>&lt;C-w&gt;w</code>. But what if we have, say… six windows?</p>
+</div>
+<div class="paragraph">
+<p>That&#8217;s where windows start to become "complicated". One could move in the four cardinal directions with:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;C-w&gt;h or &lt;C-w&gt;&lt;Left&gt;
+&lt;C-w&gt;j or &lt;C-w&gt;&lt;Down&gt;
+&lt;C-w&gt;k or &lt;C-w&gt;&lt;Up&gt;
+&lt;C-w&gt;l or &lt;C-w&gt;&lt;Right&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or directly move to the first one, at the top left:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;C-w&gt;t ("top")</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or to the last one, at the bottom right:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;C-w&gt;b ("bottom")</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or to the previous window:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;C-w&gt;p</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or cycle through every window:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;C-w&gt;w (forward)
+&lt;C-w&gt;W (backward)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In any case, keep the nature of windows in mind to avoid confusing "moving to a window" and "moving to a buffer".</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_moving_windows_around">Moving windows around</h3>
+<div class="paragraph">
+<p>What if you opened an horizontal window instead of a vertical one? What if you would prefer that window at the top right to be on the left, between the top one and the bottom one?</p>
+</div>
+<div class="paragraph">
+<p>Vim gives us a bunch of commands for moving windows around but, again, it is important to stress out the <strong>fact</strong> that windows and buffers are not tied in any ways. Hence the question you should ask to yourself each time you want to "move a window":</p>
+</div>
+<div class="paragraph">
+<p><strong>Do I want to change my window layout or do I want to view this buffer in that window?</strong></p>
+</div>
+<div class="sect3">
+<h4 id="_i_want_to_change_the_window_layout">I want to change the window layout</h4>
+<div class="paragraph">
+<p>You can try these:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;C-w&gt;H    turn the current window into a vertical one
+          at the far left of the screen
+&lt;C-w&gt;J    turn the current window into an horizontal one
+          at the bottom of the screen
+&lt;C-w&gt;K    turn the current window into an horizontal one
+          at the top of the screen
+&lt;C-w&gt;L    turn the current window into a vertical one
+          at the far right of the screen</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;C-w&gt;x    switch the current window and the previous one</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;C-w&gt;r    rotate windows (clockwise)
+&lt;C-w&gt;R    rotate windows (counter-clockwise)</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_i_want_to_view_this_buffer_in_that_window">I want to view this buffer in that window</h4>
+<div class="paragraph">
+<p>Because windows are <strong>views</strong> into arbitrary buffers, this task is better done by going to "that" window and displaying "this" buffer:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>&lt;C-w&gt;l
+:b foo…</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Remember: while it is certainly a tempting shortcut, mentally associating a buffer and a window or a tab is counterproductive.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_closing_windows">Closing windows</h3>
+<div class="paragraph">
+<p>Closing a window doesn&#8217;t remove the currently displayed buffer from the buffer list and removing a buffer from the buffer list doesn&#8217;t necessarily close the window where it is currently displayed.</p>
+</div>
+<div class="paragraph">
+<p>If you want to</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_reference_7">Reference</h3>
+<div class="literalblock">
+<div class="content">
+<pre>:help :split
+:help :vsplit
+:help new
+:help vnew
+:help :botright
+:help 'splitbelow'
+:help 'splitleft'
+:help opening-window
+:help window-move-cursor
+:help window-moving</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_tab_pages">Tab pages</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The discord around tab pages is as old as the feature and largely a confusion issue.</p>
+</div>
+<div class="paragraph">
+<p>In IDEs and other editors, the file is viewed through a window attached to a "tab", itself sitting among other tabs in a "tabline". Because that tab is unambiguously tied to that window and to that file, the whole thing constitutes the de-facto file proxy people are used to. A somewhat reasonable convention that new vimmers often bring with them upon switching.</p>
+</div>
+<div class="paragraph">
+<p>They are more than that but, unfortunately, tab pages share quite a few important aspects with other editor&#8217;s tabs:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>their name, to begin with,</p>
+</li>
+<li>
+<p>their look and feel,</p>
+</li>
+<li>
+<p>their interaction model.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Indeed, Vim&#8217;s tab page is made of a view attached to a tab widget that contains some informative label and can be clicked, closed or move around. And yeah, it is called "tab" page.</p>
+</div>
+<div class="paragraph">
+<p>"Confusion", do you remember? Wait! I have more for you…</p>
+</div>
+<div class="paragraph">
+<p>Editing multiple files in vanilla Vim is admittedly not a fun experience because the <code>'hidden'</code> option is disabled by default, preventing us from moving to another buffer without saving the current one or <strong>abandoning our changes.</strong></p>
+</div>
+<div class="paragraph">
+<p>Naming issues, hostile defaults, poor UX choices… everything leads newcomers to tab pages… which they will invariably use as if they were the familiar file proxy they are so used to.</p>
+</div>
+<div class="paragraph">
+<p>Basically, reading the relevant documentation or listening to the advice of other seasoned vimmers are the only ways one could learn that, in fact, Vim&#8217;s tab pages are <strong>very</strong> different from other editors tabs. And we know how people like to read documentation…</p>
+</div>
+<div class="sect2">
+<h3 id="_a_truth_so_simple_it_hurts">A truth so simple it hurts</h3>
+<div class="paragraph">
+<p>A tab page is a <strong>workspace</strong>, a place where we can organize any number of windows.</p>
+</div>
+<div class="paragraph">
+<p>Because they contain windows, tab pages inherit their most striking limitation: <strong>no one-to-one relationship between a buffer and a window.</strong> Since it is impossible to tie a specific buffer to a specific window in a specific tab pages it is therefore impossible to use tab pages as file proxies.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_using_tab_pages">Using tab pages</h3>
+<div class="sect3">
+<h4 id="_creating_a_tab_page">Creating a tab page</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_moving_between_tab_pages">Moving between tab pages</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_moving_tab_pages_around">Moving tab pages around</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_closing_tab_pages">Closing tab pages</h4>
+
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_buffers_vs_windows_vs_tab_pages">Buffers vs windows vs tab pages</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Let us go back to that famous "discord" I hinted at earlier.</p>
+</div>
+<div class="paragraph">
+<p>When asking help on an obviously tab-centric workflow, new vimmers often get an answer that sounds like "don&#8217;t use tabs, use buffers instead" which sounds in turn like "tabs are useless, using buffers is the one true way of the vimmer".</p>
+</div>
+<div class="paragraph">
+<p>Of course, using tab pages as file proxies (the rookie vimmer) is just as wrong as ditching them by principle (the uptight netizen).</p>
+</div>
+<div class="paragraph">
+<p>To paraphrase [my lengthy answer](<a href="http://stackoverflow.com/a/26710166/546861" class="bare">http://stackoverflow.com/a/26710166/546861</a>) to [that dumb StackOverflow question](<a href="http://stackoverflow.com/q/26708822/546861" class="bare">http://stackoverflow.com/q/26708822/546861</a>), buffers, windows and tab pages are designed to serve different needs and should be used according to their respective strengths and weaknesses. Using only one is <strong>not</strong> the answer, whatever that "one" is.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Use buffers as what they are: file proxies.</p>
+</li>
+<li>
+<p>Use windows as what they are: views.</p>
+</li>
+<li>
+<p>Use tab pages as what they are: workspaces.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2015-03-22 23:08:14 CET
+</div>
+</div>
+</body>
+</html>

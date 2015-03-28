@@ -13,6 +13,7 @@ function playStop(event) {
 
     event.preventDefault();
 }
+
 function enterLeave(event) {
     var image = $(this).find("img");
 
@@ -27,6 +28,11 @@ function enterLeave(event) {
     event.preventDefault();
 }
 
+function adjustTitle() {
+    $("h1").html(document.title.split(" ").splice(4,document.title.split(" ").length).join(" "));
+}
+
 $(document).ready(function() {
-    $("body a.image").data("playing", 0).hover(enterLeave).click(playStop);
+    adjustTitle();
+    $("a.image").data("playing", 0).hover(enterLeave).click(playStop);
 });

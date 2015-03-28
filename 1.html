@@ -5,12 +5,12 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.2">
-<title>Lord of the files</title>
+<title>The Patient Vimmer — Lord of the files</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="article">
 <div id="header">
-<h1>Lord of the files</h1>
+<h1>The Patient Vimmer — Lord of the files</h1>
 </div>
 <div id="content">
 <div id="preamble">
@@ -65,7 +65,7 @@
 </div>
 </div>
 <div class="paragraph">
-<p>It is important to note that this command only accepts <em>one</em> file name as argument so you can forget these for the time being:</p>
+<p>It is important to note that this command only accepts <em>one</em> filename as argument so you can forget these for the time being:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -179,7 +179,7 @@
 <h2 id="_wildcards_up_our_sleeve">Wildcards up our sleeve</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Most of the time, though, the first two or three letters of a file name may not be enough&#8230;&#8203; or we only remember the end. That&#8217;s where the &#8220;star&#8221; wildcard comes in handy, just like in your shell:</p>
+<p>Most of the time, though, the first two or three letters of a filename may not be enough&#8230;&#8203; or we only remember the end. That&#8217;s where the &#8220;star&#8221; wildcard comes in handy, just like in your shell:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -245,7 +245,7 @@
 </div>
 </div>
 <div class="paragraph">
-<p>where <code>action</code> is what you want to happen when you press <code>key</code>; it could be a macro, an Ex command, calling a function&#8230;&#8203; The Sky Is The Limit!</p>
+<p>where <code>action</code> is what you want to happen when you press <code>key</code>; it could be a macro, an Ex command, a function call&#8230;&#8203;</p>
 </div>
 <div class="paragraph">
 <p>The command used to define your mapping can be any of the following:</p>
@@ -483,7 +483,7 @@ nnoremap &lt;leader&gt;e :edit **/*</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Like <code>:edit</code>, <code>:find</code> does its completion from the start of the file name so <code>:find foo</code> will match <code>foobar.txt</code> but not <code>model_foo.txt</code>. Add a wildcard for an even more useful completion:</p>
+<p>Like <code>:edit</code>, <code>:find</code> does its completion from the start of the filename so <code>:find foo</code> will match <code>foobar.txt</code> but not <code>model_foo.txt</code>. Add a wildcard for an even more useful completion:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -540,10 +540,10 @@ set path=.,**</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_customizing_file_name_completion_and_the_wildmenu">Customizing file name completion and the &#8220;wildmenu&#8221;</h2>
+<h2 id="_customizing_filename_completion_and_the_wildmenu">Customizing filename completion and the &#8220;wildmenu&#8221;</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>We can further customize the behavior of Vim&#8217;s file name completion with a bunch of options that work for <code>:edit</code> <em>and</em> <code>:find</code>:</p>
+<p>We can further customize the behavior of Vim&#8217;s filename completion with a bunch of options that work for <code>:edit</code> <em>and</em> <code>:find</code>:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -731,7 +731,6 @@ $ vim `find . -name '*.txt'`</pre>
 <pre>:argadd *.py</pre>
 </div>
 </div>
-</div>
 <div class="sect2">
 <h3 id="_reference_9">Reference</h3>
 <div class="literalblock">
@@ -751,6 +750,9 @@ $ vim `find . -name '*.txt'`</pre>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Opening files for editing is neither complex nor hard but&#8201;&#8212;&#8201;as with everything in Vim&#8201;&#8212;&#8201;it can be made quicker and easier with a couple of settings and mappings. Make sure you have exhausted the built-in ways before installing the latest and greatest fuzzy gadget people rave about on Reddit, Twitter or Hacker News.</p>
+</div>
+<div class="paragraph">
+<p>But, now that we have a bunch of files to edit… how are we supposed to work with them?</p>
 </div>
 <div id="front">
     <h6>The Patient Vimmer</h6>
@@ -795,7 +797,7 @@ $ vim `find . -name '*.txt'`</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-03-21 17:15:14 CET
+Last updated 2015-03-22 22:26:12 CET
 </div>
 </div>
 </body>
