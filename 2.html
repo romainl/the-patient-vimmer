@@ -155,7 +155,7 @@ Press ENTER or type command to continue</pre>
 <h2 id="_special_windows">Special Windows</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>(intro)</p>
+<p>Beyond normal windows, Vim uses a number of very useful specialized windows.</p>
 </div>
 <div class="sect2">
 <h3 id="_the_quickfix_window">The quickfix window</h3>
@@ -276,31 +276,197 @@ Press ENTER or type command to continue</pre>
 <div class="paragraph">
 <p>Phew! That was easy&#8230;&#8203;</p>
 </div>
+<div class="paragraph">
+<p>From there, one can configure many things to suit his needs: what program to run when doing <code>:make</code> or <code>:grep</code>, how to parse the output of those comands so that it can be used in the quickfix list, for what filetype to use what setting&#8230;&#8203;</p>
+</div>
 <div class="sect3">
 <h4 id="_reference">Reference</h4>
-
+<div class="literalblock">
+<div class="content">
+<pre>:help quickfix
+:help autocommand
+:help :silent</pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_the_preview_window">The preview window</h3>
-
+<div class="paragraph">
+<p>The preview window is a small window used to preview something, usually the signature of a function while we are working on its usage. It is a lot like a normal window except for these differences:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>opening the preview window doesn&#8217;t steal the focus from the current window,</p>
+</li>
+<li>
+<p>it can be closed even if it is not focused.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This window can be opened with a bunch of commands, among which these ones:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:ptag foo       " open tag 'foo' in a preview window
+&lt;C-w&gt;}          " open tag under the cursor in a preview window
+:psearch bar    " use include search to find 'bar' and open it in a preview window</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And closed with: <code>:pclose</code> or <code>&lt;C-w&gt;z</code>.</p>
+</div>
+<div class="paragraph">
+<p>Here is the preview window in action:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(gifcast)</pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_reference_2">Reference</h4>
+<div class="literalblock">
+<div class="content">
+<pre>:help preview-window</pre>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_the_command_line_window">The Command-line window</h3>
-
+<div class="paragraph">
+<p>The command-line is a handy way to input commands but it is not that good when it comes to editing the current command or recalling an old one and changing its parameters. This is, in my opinion, not a design flaw or an implementation issue: only a sane seperation of concerns that should appeal to anyone used to the concept of <strong>modal editing</strong>.</p>
+</div>
+<div class="paragraph">
+<p>You use insert mode to insert text and normal mode to edit text.</p>
+</div>
+<div class="paragraph">
+<p>You use command-line mode to issue commands and the command-line window to edit the current command and command history.</p>
+</div>
+<div class="paragraph">
+<p>Simple.</p>
+</div>
+<div class="paragraph">
+<p>Opening the command-line window from the current command-line mode is done with <code>&lt;C-f&gt;</code>. This will open the relevant command history in the command-line window, with the current command ready for you to edit on the last line.</p>
+</div>
+<div class="paragraph">
+<p>From normal mode, you can use <code>q:</code> to open the command-line history or <code>q/</code>/<code>q?</code> to open the search history. Press <code>&lt;CR&gt;</code> in normal mode to run the current command or <code>:q</code> to quit that window.</p>
+</div>
+<div class="paragraph">
+<p>Here is the command-line window in action:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(gifcast)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Some hardcore Ex commands users like to use the command-line window instead of the usual command-line. This can be done by overriding <code>:</code> in normal mode:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>nnoremap : q:i</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>I don&#8217;t recommend doing that, actually, but I think it is an interesting example of customization.</p>
+</div>
+<div class="sect3">
+<h4 id="_reference_3">Reference</h4>
+<div class="literalblock">
+<div class="content">
+<pre>:h cmdline-window</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_various_ui_elements">Various UI elements</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>In addition to windows, we have many UI elements at our disposal for displaying information and/or interacting with one feature or another.</p>
+</div>
 <div class="sect2">
 <h3 id="_the_tabline">The tabline</h3>
-
+<div class="literalblock">
+<div class="content">
+<pre>(picture)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The tabline is used to display a list of tabs, each associated with a tab page and showing some information and a "Close" button&#8201;&#8212;&#8201;the <code>X</code> at the end&#8201;&#8212;&#8201;for the current tab page. The number of windows contained in each tab page is indicated whenever there is more than one and a <code>+</code> is added whenever one of the buffers displayed in one of the windows is "dirty".</p>
+</div>
+<div class="paragraph">
+<p>If you have enabled mouse support in your <code>vimrc</code> and your terminal emulator supports that feature, you can use your mouse to switch to a tab page, reorder the tabs or close the current tab page by clicking on the <code>X</code> at the end of the tabline.</p>
+</div>
+<div class="paragraph">
+<p>When to show a tabline can be defined with the <code>showtabline</code> option and what information to display depends on the <code>tabline</code> option.</p>
+</div>
+<div class="paragraph">
+<p>While Vim&#8217;s <em>tab pages</em> are definitely not equivalent to other editor&#8217;s <em>tabs</em>, Vim&#8217;s <em>tabline</em> looks and works a lot like its counterparts and suffers from the same usability issues.</p>
+</div>
+<div class="paragraph">
+<p>The main issue is that tabs are used to display filenames and filenames take up a lot of horizontal space. An horizontal space that is physically limited and thus incapable of displaying more than a few tabs. Many solutions exist to remedy that problem: wrapping the tabline to form a second one, adding scrolling widgets at both ends of the tabline, grouping tabs, truncating filenames&#8230;&#8203; The harsh reality is that none of those "solutions" is free of annoying side effects which, ultimately, turn an otherwise good idea into an unusable gyzmo.</p>
+</div>
+<div class="paragraph">
+<p>The tabline and tab pages still have their use, mind you, but it is important to not think about them as you would in other editors.</p>
+</div>
+<div class="sect3">
+<h4 id="_reference_4">Reference</h4>
+<div class="literalblock">
+<div class="content">
+<pre>:help 'showtabline'
+:help 'tabline'
+:help setting-tabline</pre>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_the_statusline">The statusline</h3>
-
+<div class="literalblock">
+<div class="content">
+<pre>(picture)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The statusline is that "bar", at the bottom of windows, used to show informations on the window itself or the buffer currently displayed in that window. It can also be used to resize windows if mouse support is enabled.</p>
+</div>
+<div class="paragraph">
+<p>By default, the statusline is shown only when there is more than one window but it can be changed with the <code>laststatus</code> option.</p>
+</div>
+<div class="paragraph">
+<p>The default content of the statusline&#8201;&#8212;&#8201;the filename and a status indicator&#8201;&#8212;&#8201;is not exactly thrilling but it&#8217;s possible to beef it up by enabling the <code>ruler</code> option that shows the line and colum of the cursor and tells how much of the buffer is currently visible.</p>
+</div>
+<div class="paragraph">
+<p>It is very common, though, to customize it a bit further by playing with the <code>statusline</code> option that gives more control over the statusline&#8217;s content and appearance.</p>
+</div>
+<div class="paragraph">
+<p>This is how I define the statusline shown in the picture above:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>set statusline=%&lt;\ %f\ %m%r%y%w%=\ L:\ \%l\/\%L\ C:\ \%c\</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It is also possible to define colors for specific parts but I&#8217;d recommend measure, here: the statusline is an information device, not a decorative apparatus.</p>
+</div>
+<div class="sect3">
+<h4 id="_reference_5">Reference</h4>
+<div class="literalblock">
+<div class="content">
+<pre>:help 'statusline'
+:help 'laststatus'
+:help 'ruler'</pre>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_line_numbers">Line numbers</h3>
@@ -327,7 +493,7 @@ Press ENTER or type command to continue</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-03-29 00:47:19 CET
+Last updated 2015-03-29 21:40:12 CEST
 </div>
 </div>
 </body>

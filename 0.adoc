@@ -1,4 +1,4 @@
-= The Patient Vimmer — An introduction
+= An introduction
 :stylesdir: css
 :stylesheet: style.css
 :linkcss:

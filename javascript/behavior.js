@@ -1,13 +1,13 @@
 function playStop(event) {
-    var gif_url = $(this).attr("href");
-    var png_url = "images/gifcast_off.png";
-    var image = $(this).find("img");
+    var gif_url    = $(this).attr("href");
+    var png_url    = "images/gifcast_off.png";
+    var this_image = $(this).find("img");
 
     if ($(this).data("playing") === 1) {
-        image.attr("src", png_url).load();
+        this_image.attr("src", png_url).load();
         $(this).data("playing", 0);
     } else {
-        image.attr("src", gif_url).load();
+        this_image.attr("src", gif_url).load();
         $(this).data("playing", 1);
     }
 
@@ -15,24 +15,20 @@ function playStop(event) {
 }
 
 function enterLeave(event) {
-    var image = $(this).find("img");
+    var this_image = $(this).find("img");
 
     if ($(this).data("playing") === 0) {
         if (event.type === "mouseenter") {
-            image.attr("src", "images/gifcast_on.png").load();
+            this_image.attr("src", "images/gifcast_on.png").load();
         } else {
-            image.attr("src", "images/gifcast_off.png").load();
+            this_image.attr("src", "images/gifcast_off.png").load();
         }
     }
 
     event.preventDefault();
 }
 
-function adjustTitle() {
-    $("h1").html(document.title.split(" ").splice(4,document.title.split(" ").length).join(" "));
-}
-
 $(document).ready(function() {
-    adjustTitle();
+    document.title = "The Patient Vimmer — " + $("h1").html();
     $("a.image").data("playing", 0).hover(enterLeave).click(playStop);
 });

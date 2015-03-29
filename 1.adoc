@@ -1,4 +1,4 @@
-= The Patient Vimmer — Lord of the files
+= Lord of the files
 :stylesdir: css
 :stylesheet: style.css
 :imagesdir: images

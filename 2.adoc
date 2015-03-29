@@ -82,7 +82,7 @@ Here is how it looks:
 
 == Special Windows
 
-(intro)
+Beyond normal windows, Vim uses a number of very useful specialized windows.
 
 === The quickfix window
 
@@ -144,17 +144,114 @@ Scrolling through the list at `:help autocommand-events` we find `BufWritePost` 
 
 Phew! That was easy...
 
+From there, one can configure many things to suit his needs: what program to run when doing `:make` or `:grep`, how to parse the output of those comands so that it can be used in the quickfix list, for what filetype to use what setting...
+
 ==== Reference
+
+    :help quickfix
+    :help autocommand
+    :help :silent
 
 === The preview window
 
+The preview window is a small window used to preview something, usually the signature of a function while we are working on its usage. It is a lot like a normal window except for these differences:
+
+* opening the preview window doesn't steal the focus from the current window,
+* it can be closed even if it is not focused.
+
+This window can be opened with a bunch of commands, among which these ones:
+
+    :ptag foo       " open tag 'foo' in a preview window
+    <C-w>}          " open tag under the cursor in a preview window
+    :psearch bar    " use include search to find 'bar' and open it in a preview window
+
+And closed with: `:pclose` or `<C-w>z`.
+
+Here is the preview window in action:
+
+    (gifcast)
+
+==== Reference
+
+    :help preview-window
+
 === The Command-line window
+
+The command-line is a handy way to input commands but it is not that good when it comes to editing the current command or recalling an old one and changing its parameters. This is, in my opinion, not a design flaw or an implementation issue: only a sane seperation of concerns that should appeal to anyone used to the concept of *modal editing*.
+
+You use insert mode to insert text and normal mode to edit text.
+
+You use command-line mode to issue commands and the command-line window to edit the current command and command history.
+
+Simple.
+
+Opening the command-line window from the current command-line mode is done with `<C-f>`. This will open the relevant command history in the command-line window, with the current command ready for you to edit on the last line.
+
+From normal mode, you can use `q:` to open the command-line history or `q/`/`q?` to open the search history. Press `<CR>` in normal mode to run the current command or `:q` to quit that window.
+
+Here is the command-line window in action:
+
+    (gifcast)
+
+Some hardcore Ex commands users like to use the command-line window instead of the usual command-line. This can be done by overriding `:` in normal mode:
+
+    nnoremap : q:i
+
+I don't recommend doing that, actually, but I think it is an interesting example of customization.
+
+==== Reference
+
+    :h cmdline-window
 
 == Various UI elements
 
+In addition to windows, we have many UI elements at our disposal for displaying information and/or interacting with one feature or another.
+
 === The tabline
 
+   (picture)
+
+The tabline is used to display a list of tabs, each associated with a tab page and showing some information and a "Close" button -- the `X` at the end -- for the current tab page. The number of windows contained in each tab page is indicated whenever there is more than one and a `+` is added whenever one of the buffers displayed in one of the windows is "dirty".
+
+If you have enabled mouse support in your `vimrc` and your terminal emulator supports that feature, you can use your mouse to switch to a tab page, reorder the tabs or close the current tab page by clicking on the `X` at the end of the tabline.
+
+When to show a tabline can be defined with the `showtabline` option and what information to display depends on the `tabline` option.
+
+While Vim's _tab pages_ are definitely not equivalent to other editor's _tabs_, Vim's _tabline_ looks and works a lot like its counterparts and suffers from the same usability issues.
+
+The main issue is that tabs are used to display filenames and filenames take up a lot of horizontal space. An horizontal space that is physically limited and thus incapable of displaying more than a few tabs. Many solutions exist to remedy that problem: wrapping the tabline to form a second one, adding scrolling widgets at both ends of the tabline, grouping tabs, truncating filenames... The harsh reality is that none of those "solutions" is free of annoying side effects which, ultimately, turn an otherwise good idea into an unusable gyzmo.
+
+The tabline and tab pages still have their use, mind you, but it is important to not think about them as you would in other editors.
+
+==== Reference
+
+    :help 'showtabline'
+    :help 'tabline'
+    :help setting-tabline
+
 === The statusline
+
+    (picture)
+
+The statusline is that "bar", at the bottom of windows, used to show informations on the window itself or the buffer currently displayed in that window. It can also be used to resize windows if mouse support is enabled.
+
+By default, the statusline is shown only when there is more than one window but it can be changed with the `laststatus` option.
+
+The default content of the statusline -- the filename and a status indicator -- is not exactly thrilling but it's possible to beef it up by enabling the `ruler` option that shows the line and colum of the cursor and tells how much of the buffer is currently visible.
+
+It is very common, though, to customize it a bit further by playing with the `statusline` option that gives more control over the statusline's content and appearance.
+
+This is how I define the statusline shown in the picture above:
+
+    set statusline=%<\ %f\ %m%r%y%w%=\ L:\ \%l\/\%L\ C:\ \%c\ 
+
+It is also possible to define colors for specific parts but I'd recommend measure, here: the statusline is an information device, not a decorative apparatus.
+
+==== Reference
+
+    :help 'statusline'
+    :help 'laststatus'
+    :help 'ruler'
 
 === Line numbers
 
