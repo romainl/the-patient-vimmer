@@ -413,6 +413,5 @@ But, now that we have a bunch of files to edit… how are we supposed to work wi
         <p>Copyleft 2015</p>
     </div>
 </div>
-<script src="javascript/jquery-1.11.2.min.js"></script>
 <script src="javascript/behavior.js"></script>
 ++++

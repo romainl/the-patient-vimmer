@@ -574,11 +574,12 @@ table tr td p {
 a {
     color: #007f00;
 }
-a.image {
+.imageblock {
     background-color: #262626;
-}
-img {
     border: 4px solid #262626;
     border-radius: 4px 4px 4px 4px;
+}
+img {
+    background-color: #262626;
     max-width: 100%;
 }

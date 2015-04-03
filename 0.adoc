@@ -429,6 +429,5 @@ I would say we are doing good, here.
         <p>Copyleft 2015</p>
     </div>
 </div>
-<script src="javascript/jquery-1.11.2.min.js"></script>
 <script src="javascript/behavior.js"></script>
 ++++

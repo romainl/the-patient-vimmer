@@ -1,34 +1,42 @@
 function playStop(event) {
-    var gif_url    = $(this).attr("href");
+    var gif_url    = this.href;
     var png_url    = "images/gifcast_off.png";
-    var this_image = $(this).find("img");
+    var this_image = this.firstChild;
 
-    if ($(this).data("playing") === 1) {
-        this_image.attr("src", png_url).load();
-        $(this).data("playing", 0);
+    if (this.className === "image playing") {
+        this_image.src = png_url;
+        this.className = "image";
     } else {
-        this_image.attr("src", gif_url).load();
-        $(this).data("playing", 1);
+        this_image.src = gif_url;
+        this.className = "image playing";
     }
 
     event.preventDefault();
 }
 
-function enterLeave(event) {
-    var this_image = $(this).find("img");
+function overOut(event) {
+    var this_image = this.firstChild;
 
-    if ($(this).data("playing") === 0) {
-        if (event.type === "mouseenter") {
-            this_image.attr("src", "images/gifcast_on.png").load();
+    if (this.className !== "image playing") {
+        if (event.type === "mouseover") {
+            this_image.src = "images/gifcast_on.png";
         } else {
-            this_image.attr("src", "images/gifcast_off.png").load();
+            this_image.src = "images/gifcast_off.png";
         }
     }
 
     event.preventDefault();
 }
 
-$(document).ready(function() {
-    document.title = "The Patient Vimmer — " + $("h1").html();
-    $("a.image").data("playing", 0).hover(enterLeave).click(playStop);
-});
+window.addEventListener('load', function() {
+    document.title = "The Patient Vimmer — " + document.getElementsByTagName("h1")[0].innerHTML;
+
+    var images = document.getElementsByClassName("image");
+    for (var i = 0, len = images.length; i < len; i++) {
+        if (images[i].className === "image") {
+            images[i].addEventListener('mouseover', overOut, false);
+            images[i].addEventListener('mouseout', overOut, false);
+            images[i].addEventListener('click', playStop, false);
+        }
+    }
+}, false);
