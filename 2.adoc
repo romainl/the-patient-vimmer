@@ -144,7 +144,21 @@ Scrolling through the list at `:help autocommand-events` we find `BufWritePost` 
 
 Phew! That was easy...
 
-From there, one can configure many things to suit his needs: what program to run when doing `:make` or `:grep`, how to parse the output of those comands so that it can be used in the quickfix list, for what filetype to use what setting...
+But we are not finished with autocommands yet. The way that feature is implemented makes it easy for autocommands to "`pile up`" when we source our `vimrc` during a session and provoke performance issues. To avoid side effects, we should wrap our autocommands in an `augroup` and empty it before define our actual autocommands. The whole boilerplate looks like this:
+
+    augroup groupname
+        autocmd!
+        autocmd event pattern command
+    augroup END
+
+So...
+
+    augroup c
+        autocmd!
+        autocmd BufWritePost *.c silent make|cwindow
+    augroup END
+
+From there, one can configure many things to suit his needs: what program to run when doing `:make` or `:grep`, how to parse the output of those comands so that it can be used in the quickfix list, for what filetype to use what setting... but that will be the subject of another chapter.
 
 ==== Reference
 
@@ -157,6 +171,7 @@ From there, one can configure many things to suit his needs: what program to run
 The preview window is a small window used to preview something, usually the signature of a function while we are working on its usage. It is a lot like a normal window except for these differences:
 
 * opening the preview window doesn't steal the focus from the current window,
+* there is only one preview window per tab page,
 * it can be closed even if it is not focused.
 
 This window can be opened with a bunch of commands, among which these ones:
@@ -177,7 +192,7 @@ Here is the preview window in action:
 
 === The Command-line window
 
-The command-line is a handy way to input commands but it is not that good when it comes to editing the current command or recalling an old one and changing its parameters. This is, in my opinion, not a design flaw or an implementation issue: only a sane seperation of concerns that should appeal to anyone used to the concept of *modal editing*.
+The command-line is a handy way to input commands but it is not that good when it comes to editing the current command or recalling an old one and changing its parameters. This is not a design flaw or an implementation issue, though: only sane seperation of concerns that should appeal to anyone used to the concept of *modal editing*.
 
 You use insert mode to insert text and normal mode to edit text.
 
@@ -187,7 +202,7 @@ Simple.
 
 Opening the command-line window from the current command-line mode is done with `<C-f>`. This will open the relevant command history in the command-line window, with the current command ready for you to edit on the last line.
 
-From normal mode, you can use `q:` to open the command-line history or `q/`/`q?` to open the search history. Press `<CR>` in normal mode to run the current command or `:q` to quit that window.
+From normal mode, you can use `q:` to open the command-line history or `q/`/`q?` to open the search history, with the cursor in an empty line. Press `<CR>` in normal mode to run the current command or `:q` to quit that window.
 
 Here is the command-line window in action:
 
@@ -211,7 +226,7 @@ In addition to windows, we have many UI elements at our disposal for displaying 
 
    (picture)
 
-The tabline is used to display a list of tabs, each associated with a tab page and showing some information and a "Close" button -- the `X` at the end -- for the current tab page. The number of windows contained in each tab page is indicated whenever there is more than one and a `+` is added whenever one of the buffers displayed in one of the windows is "dirty".
+The tabline is used to display a list of tabs, each associated with a tab page and showing some information, and a "Close" button -- the `X` at the end -- for the current tab page. The number of windows contained in each tab page is indicated whenever there is more than one and a `+` is added whenever one of the buffers displayed in one of the windows is "dirty".
 
 If you have enabled mouse support in your `vimrc` and your terminal emulator supports that feature, you can use your mouse to switch to a tab page, reorder the tabs or close the current tab page by clicking on the `X` at the end of the tabline.
 
@@ -233,9 +248,11 @@ The tabline and tab pages still have their use, mind you, but it is important to
 
     (picture)
 
-The statusline is that "bar", at the bottom of windows, used to show informations on the window itself or the buffer currently displayed in that window. It can also be used to resize windows if mouse support is enabled.
+The statusline is that "bar", at the bottom of windows, used to show information on the window itself or the buffer currently displayed in that window. It can also be used to resize windows if mouse support is enabled.
 
-By default, the statusline is shown only when there is more than one window but it can be changed with the `laststatus` option.
+By default, the statusline is shown only when there is more than one window but this can be changed with the `laststatus` option:
+
+    set laststatus=2
 
 The default content of the statusline -- the filename and a status indicator -- is not exactly thrilling but it's possible to beef it up by enabling the `ruler` option that shows the line and colum of the cursor and tells how much of the buffer is currently visible.
 
@@ -245,7 +262,7 @@ This is how I define the statusline shown in the picture above:
 
     set statusline=%<\ %f\ %m%r%y%w%=\ L:\ \%l\/\%L\ C:\ \%c\ 
 
-It is also possible to define colors for specific parts but I'd recommend measure, here: the statusline is an information device, not a decorative apparatus.
+It is also possible to define colors for specific parts but I'd recommend measure, here: the statusline is an information device, not a decorative widget.
 
 ==== Reference
 
@@ -254,6 +271,10 @@ It is also possible to define colors for specific parts but I'd recommend measur
     :help 'ruler'
 
 === Line numbers
+
+Line numbers are disabled by default but we already enabled them in a previous chapter. They are a fairly straightforward feature that doesn't warrant much explanation. One enables it with `:set number`, disables it with `:set nonumber` and decides how much room they take with `:set numberwidth=6`.
+
+But we are not limited to absolute line numbers. We can use relative line numbers to see how far a line is from the current line.
 
 === The foldcolumn
 
