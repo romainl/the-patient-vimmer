@@ -95,14 +95,14 @@ The quickfix is a handy list that we can populate and navigate at will. It actua
 
 That list is global. This means that you can't have more than one active list at a time. One could recall previous lists with `:colder` but I honestly never had to so... YMMV.
 
-Vim comes with a bunch of commands that populate the quickfix list like `:grep` or `:vimgrep`, used for searching text in your project, and `:make`, used to build your program or pass them through a syntax checker. Once the quickfix is populated with valid entries, one can use a number of relatively intitively named commands to navigate the list:
+Vim comes with a lot of commands that populate the quickfix list, like `:grep` or `:vimgrep`, used for searching text in your project, and `:make`, used to build your program or pass them through a syntax checker. Once the quickfix is populated with valid entries, one can use a number of relatively intitively named commands to navigate the list:
 
     :cfirst
     :clast
     :cnext
     :cprevious
 
-or use `:copen` -- or the slightly smarter `:cwindow` -- to open the interactive "`quickfix window`":
+or use `:copen` to open the interactive "`quickfix window`", or -- even better -- `:cwindow`:
 
     (gifcast)
 
@@ -119,7 +119,7 @@ Now, repeating the `:w` & `:mak` & `:cw` dance over and over doesn't sound fun. 
 
     :w|mak|cw
 
-and recalled with `<Up>` so that's not big of a deal but there is still room for improvement, here, because:
+and recalled with `<Up>` so that's not such a big deal but there is still room for improvement, here:
 
 * we have too many `<Enter>` to press,
 * some kind of automation would be better.
@@ -128,43 +128,32 @@ Let's address the first issue by telling Vim to shut up with the `:silent` comma
 
     :w|silent mak|cw
 
-And take advantage of a great feature called "`autocommands`" for... the automation part.
+A simple mapping would be a perfect alternative to all that typing. Let's try with `<F5>`, a shortcut often used in IDEs to compile the project, both in insert mode and normal mode:
 
-Autocommands are Vim's way of executing arbitrary commands when specific events happen. Entering a window, quitting insert mode, loading a buffer with a specific filetype are some of the many events available.
+    inoremap <F5> <Esc>:write|silent make|cwindow<CR>
+    nnoremap <F5> :write|silent make|cwindow<CR>
 
-An autocommand usually looks like that:
+Hmm... It looks like Vim doesn't like bars in mappings. That's understandable, actually: bars are used to separate commands but `inoremap <F5> <Esc>:write|silent make|cwindow<CR>` is _one_ command and the parts between bars don't really make sense on their own. So what can we do? Escape those bars?
 
-    autocmd event pattern command
+Well yes:
 
-where `autocmd` is the command that defines an autocommand, `event` can be a single event or a comma-separated list of events, `pattern` is a simple pattern describing what [todo] and `command` is what we want to happen.
+    inoremap <F5> <Esc>:write\|silent make\|cwindow<CR>
+    nnoremap <F5> :write\|silent make\|cwindow<CR>
 
-Scrolling through the list at `:help autocommand-events` we find `BufWritePost` which looks like it can be used after `:w` to `:make` and `:cwindow`. Let's try it:
+or we can use `<Bar>`:
 
-    autocmd BufWritePost *.c silent make|cwindow
+    inoremap <F5> <Esc>:write<Bar>silent make<Bar>cwindow<CR>
+    nnoremap <F5> :write<Bar>silent make<Bar>cwindow<CR>
 
-Phew! That was easy...
+Let's see how it looks:
 
-But we are not finished with autocommands yet. The way that feature is implemented makes it easy for autocommands to "`pile up`" when we source our `vimrc` during a session and provoke performance issues. To avoid side effects, we should wrap our autocommands in an `augroup` and empty it before define our actual autocommands. The whole boilerplate looks like this:
-
-    augroup groupname
-        autocmd!
-        autocmd event pattern command
-    augroup END
-
-So...
-
-    augroup c
-        autocmd!
-        autocmd BufWritePost *.c silent make|cwindow
-    augroup END
-
-From there, one can configure many things to suit his needs: what program to run when doing `:make` or `:grep`, how to parse the output of those comands so that it can be used in the quickfix list, for what filetype to use what setting... but that will be the subject of another chapter.
+    (gifcast)
 
 ==== Reference
 
     :help quickfix
-    :help autocommand
     :help :silent
+    :help map_bar
 
 === The preview window
 
@@ -226,7 +215,11 @@ In addition to windows, we have many UI elements at our disposal for displaying 
 
    (picture)
 
-The tabline is used to display a list of tabs, each associated with a tab page and showing some information, and a "Close" button -- the `X` at the end -- for the current tab page. The number of windows contained in each tab page is indicated whenever there is more than one and a `+` is added whenever one of the buffers displayed in one of the windows is "dirty".
+The tabline is a list of tabs working as proxies for tab pages. Each tab shows some information on its associated tab page:
+
+* the name of the buffer currently displayed in the currently focused window,
+* the number of windows contained in the tab page when there is more than one,
+* a `+` if one of the buffers displayed in one of the windows is "dirty".
 
 If you have enabled mouse support in your `vimrc` and your terminal emulator supports that feature, you can use your mouse to switch to a tab page, reorder the tabs or close the current tab page by clicking on the `X` at the end of the tabline.
 
@@ -258,28 +251,46 @@ The default content of the statusline -- the filename and a status indicator -- 
 
 It is very common, though, to customize it a bit further by playing with the `statusline` option that gives more control over the statusline's content and appearance.
 
-This is how I define the statusline shown in the picture above:
+This is how I define the statusline shown in the picture above, the explanation for each item can be found in `:help 'statusline'`:
 
     set statusline=%<\ %f\ %m%r%y%w%=\ L:\ \%l\/\%L\ C:\ \%c\ 
 
-It is also possible to define colors for specific parts but I'd recommend measure, here: the statusline is an information device, not a decorative widget.
+It is also possible to define colors for specific parts or use functions to display dynamic information not provided by Vim but I recommend measure, here: the statusline is an information device, not a decorative widget.
 
 ==== Reference
 
-    :help 'statusline'
     :help 'laststatus'
     :help 'ruler'
+    :help 'statusline'
 
 === Line numbers
 
-Line numbers are disabled by default but we already enabled them in a previous chapter. They are a fairly straightforward feature that doesn't warrant much explanation. One enables it with `:set number`, disables it with `:set nonumber` and decides how much room they take with `:set numberwidth=6`.
+Line numbers are a fairly straightforward feature that doesn't warrant much explanation. One enables it with `:set number`, disables it with `:set nonumber` and decides how much room they take with `:set numberwidth=6`.
 
-But we are not limited to absolute line numbers. We can use relative line numbers to see how far a line is from the current line.
+But we are not limited to absolute line numbers. We can use relative line numbers to see how far a line is from the current line:
+
+    (screenshot)
+
+Relative numbers are useful for things like `6j`, for example, and can be enabled with `set relativenumber`.
+
+==== Reference
+
+    :help 'number'
+    :help 'numberwidth'
+    :help 'relativenumber'
 
 === The foldcolumn
 
+==== Reference
+
 === The signcolumn
+
+==== Reference
 
 === The completion menu
 
+==== Reference
+
 === The command-line
+
+==== Reference

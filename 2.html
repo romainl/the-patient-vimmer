@@ -182,7 +182,7 @@ Press ENTER or type command to continue</pre>
 <p>That list is global. This means that you can&#8217;t have more than one active list at a time. One could recall previous lists with <code>:colder</code> but I honestly never had to so&#8230;&#8203; YMMV.</p>
 </div>
 <div class="paragraph">
-<p>Vim comes with a bunch of commands that populate the quickfix list like <code>:grep</code> or <code>:vimgrep</code>, used for searching text in your project, and <code>:make</code>, used to build your program or pass them through a syntax checker. Once the quickfix is populated with valid entries, one can use a number of relatively intitively named commands to navigate the list:</p>
+<p>Vim comes with a lot of commands that populate the quickfix list, like <code>:grep</code> or <code>:vimgrep</code>, used for searching text in your project, and <code>:make</code>, used to build your program or pass them through a syntax checker. Once the quickfix is populated with valid entries, one can use a number of relatively intitively named commands to navigate the list:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -193,7 +193,7 @@ Press ENTER or type command to continue</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>or use <code>:copen</code>&#8201;&#8212;&#8201;or the slightly smarter <code>:cwindow</code>&#8201;&#8212;&#8201;to open the interactive &#8220;quickfix window&#8221;:</p>
+<p>or use <code>:copen</code> to open the interactive &#8220;quickfix window&#8221;, or&#8201;&#8212;&#8201;even better&#8201;&#8212;&#8201;<code>:cwindow</code>:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -228,7 +228,7 @@ Press ENTER or type command to continue</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>and recalled with <code>&lt;Up&gt;</code> so that&#8217;s not big of a deal but there is still room for improvement, here, because:</p>
+<p>and recalled with <code>&lt;Up&gt;</code> so that&#8217;s not such a big deal but there is still room for improvement, here:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -249,65 +249,50 @@ Press ENTER or type command to continue</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>And take advantage of a great feature called &#8220;autocommands&#8221; for&#8230;&#8203; the automation part.</p>
-</div>
-<div class="paragraph">
-<p>Autocommands are Vim&#8217;s way of executing arbitrary commands when specific events happen. Entering a window, quitting insert mode, loading a buffer with a specific filetype are some of the many events available.</p>
-</div>
-<div class="paragraph">
-<p>An autocommand usually looks like that:</p>
+<p>A simple mapping would be a perfect alternative to all that typing. Let&#8217;s try with <code>&lt;F5&gt;</code>, a shortcut often used in IDEs to compile the project, both in insert mode and normal mode:</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>autocmd event pattern command</pre>
+<pre>inoremap &lt;F5&gt; &lt;Esc&gt;:write|silent make|cwindow&lt;CR&gt;
+nnoremap &lt;F5&gt; :write|silent make|cwindow&lt;CR&gt;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>where <code>autocmd</code> is the command that defines an autocommand, <code>event</code> can be a single event or a comma-separated list of events, <code>pattern</code> is a simple pattern describing what [todo] and <code>command</code> is what we want to happen.</p>
+<p>Hmm&#8230;&#8203; It looks like Vim doesn&#8217;t like bars in mappings. That&#8217;s understandable, actually: bars are used to separate commands but <code>inoremap &lt;F5&gt; &lt;Esc&gt;:write|silent make|cwindow&lt;CR&gt;</code> is <em>one</em> command and the parts between bars don&#8217;t really make sense on their own. So what can we do? Escape those bars?</p>
 </div>
 <div class="paragraph">
-<p>Scrolling through the list at <code>:help autocommand-events</code> we find <code>BufWritePost</code> which looks like it can be used after <code>:w</code> to <code>:make</code> and <code>:cwindow</code>. Let&#8217;s try it:</p>
+<p>Well yes:</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>autocmd BufWritePost *.c silent make|cwindow</pre>
+<pre>inoremap &lt;F5&gt; &lt;Esc&gt;:write\|silent make\|cwindow&lt;CR&gt;
+nnoremap &lt;F5&gt; :write\|silent make\|cwindow&lt;CR&gt;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Phew! That was easy&#8230;&#8203;</p>
-</div>
-<div class="paragraph">
-<p>But we are not finished with autocommands yet. The way that feature is implemented makes it easy for autocommands to &#8220;pile up&#8221; when we source our <code>vimrc</code> during a session and provoke performance issues. To avoid side effects, we should wrap our autocommands in an <code>augroup</code> and empty it before define our actual autocommands. The whole boilerplate looks like this:</p>
+<p>or we can use <code>&lt;Bar&gt;</code>:</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>augroup groupname
-    autocmd!
-    autocmd event pattern command
-augroup END</pre>
+<pre>inoremap &lt;F5&gt; &lt;Esc&gt;:write&lt;Bar&gt;silent make&lt;Bar&gt;cwindow&lt;CR&gt;
+nnoremap &lt;F5&gt; :write&lt;Bar&gt;silent make&lt;Bar&gt;cwindow&lt;CR&gt;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>So&#8230;&#8203;</p>
+<p>Let&#8217;s see how it looks:</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>augroup c
-    autocmd!
-    autocmd BufWritePost *.c silent make|cwindow
-augroup END</pre>
+<pre>(gifcast)</pre>
 </div>
-</div>
-<div class="paragraph">
-<p>From there, one can configure many things to suit his needs: what program to run when doing <code>:make</code> or <code>:grep</code>, how to parse the output of those comands so that it can be used in the quickfix list, for what filetype to use what setting&#8230;&#8203; but that will be the subject of another chapter.</p>
 </div>
 <div class="sect3">
 <h4 id="_reference">Reference</h4>
 <div class="literalblock">
 <div class="content">
 <pre>:help quickfix
-:help autocommand
-:help :silent</pre>
+:help :silent
+:help map_bar</pre>
 </div>
 </div>
 </div>
@@ -424,7 +409,20 @@ augroup END</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The tabline is used to display a list of tabs, each associated with a tab page and showing some information, and a "Close" button&#8201;&#8212;&#8201;the <code>X</code> at the end&#8201;&#8212;&#8201;for the current tab page. The number of windows contained in each tab page is indicated whenever there is more than one and a <code>+</code> is added whenever one of the buffers displayed in one of the windows is "dirty".</p>
+<p>The tabline is a list of tabs working as proxies for tab pages. Each tab shows some information on its associated tab page:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the name of the buffer currently displayed in the currently focused window,</p>
+</li>
+<li>
+<p>the number of windows contained in the tab page when there is more than one,</p>
+</li>
+<li>
+<p>a <code>+</code> if one of the buffers displayed in one of the windows is "dirty".</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>If you have enabled mouse support in your <code>vimrc</code> and your terminal emulator supports that feature, you can use your mouse to switch to a tab page, reorder the tabs or close the current tab page by clicking on the <code>X</code> at the end of the tabline.</p>
@@ -477,7 +475,7 @@ augroup END</pre>
 <p>It is very common, though, to customize it a bit further by playing with the <code>statusline</code> option that gives more control over the statusline&#8217;s content and appearance.</p>
 </div>
 <div class="paragraph">
-<p>This is how I define the statusline shown in the picture above:</p>
+<p>This is how I define the statusline shown in the picture above, the explanation for each item can be found in <code>:help 'statusline'</code>:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -485,15 +483,15 @@ augroup END</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>It is also possible to define colors for specific parts but I&#8217;d recommend measure, here: the statusline is an information device, not a decorative widget.</p>
+<p>It is also possible to define colors for specific parts or use functions to display dynamic information not provided by Vim but I recommend measure, here: the statusline is an information device, not a decorative widget.</p>
 </div>
 <div class="sect3">
 <h4 id="_reference_5">Reference</h4>
 <div class="literalblock">
 <div class="content">
-<pre>:help 'statusline'
-:help 'laststatus'
-:help 'ruler'</pre>
+<pre>:help 'laststatus'
+:help 'ruler'
+:help 'statusline'</pre>
 </div>
 </div>
 </div>
@@ -501,34 +499,64 @@ augroup END</pre>
 <div class="sect2">
 <h3 id="_line_numbers">Line numbers</h3>
 <div class="paragraph">
-<p>Line numbers are disabled by default but we already enabled them in a previous chapter. They are a fairly straightforward feature that doesn&#8217;t warrant much explanation. One enables it with <code>:set number</code>, disables it with <code>:set nonumber</code> and decides how much room they take with <code>:set numberwidth=6</code>.</p>
+<p>Line numbers are a fairly straightforward feature that doesn&#8217;t warrant much explanation. One enables it with <code>:set number</code>, disables it with <code>:set nonumber</code> and decides how much room they take with <code>:set numberwidth=6</code>.</p>
 </div>
 <div class="paragraph">
-<p>But we are not limited to absolute line numbers. We can use relative line numbers to see how far a line is from the current line.</p>
+<p>But we are not limited to absolute line numbers. We can use relative line numbers to see how far a line is from the current line:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(screenshot)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Relative numbers are useful for things like <code>6j</code>, for example, and can be enabled with <code>set relativenumber</code>.</p>
+</div>
+<div class="sect3">
+<h4 id="_reference_6">Reference</h4>
+<div class="literalblock">
+<div class="content">
+<pre>:help 'number'
+:help 'numberwidth'
+:help 'relativenumber'</pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_the_foldcolumn">The foldcolumn</h3>
+<div class="sect3">
+<h4 id="_reference_7">Reference</h4>
 
+</div>
 </div>
 <div class="sect2">
 <h3 id="_the_signcolumn">The signcolumn</h3>
+<div class="sect3">
+<h4 id="_reference_8">Reference</h4>
 
+</div>
 </div>
 <div class="sect2">
 <h3 id="_the_completion_menu">The completion menu</h3>
+<div class="sect3">
+<h4 id="_reference_9">Reference</h4>
 
+</div>
 </div>
 <div class="sect2">
 <h3 id="_the_command_line">The command-line</h3>
+<div class="sect3">
+<h4 id="_reference_10">Reference</h4>
 
+</div>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-04-07 17:01:50 CEST
+Last updated 2015-04-08 23:27:15 CEST
 </div>
 </div>
 </body>

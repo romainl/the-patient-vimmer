@@ -392,3 +392,46 @@ To paraphrase [my lengthy answer](http://stackoverflow.com/a/26710166/546861) to
 * Use buffers as what they are: file proxies.
 * Use windows as what they are: views.
 * Use tab pages as what they are: workspaces.
+
+
+
+
+
+
+And take advantage of a great feature called "`autocommands`" for... the automation part.
+
+Autocommands are Vim's way of executing arbitrary commands when specific events happen. Entering a window, quitting insert mode, loading a buffer with a specific filetype are some of the many events available.
+
+An autocommand usually looks like that:
+
+    autocmd event pattern command
+
+where `autocmd` is the command that defines an autocommand, `event` can be a single event or a comma-separated list of events, `pattern` is a simple pattern describing what [todo] and `command` is what we want to happen.
+
+Scrolling through the list at `:help autocommand-events` we find `BufWritePost` which looks like it can be used after `:w` to `:make` and `:cwindow`. Let's try it:
+
+    autocmd BufWritePost *.c silent make|cwindow
+
+Phew! That was easy...
+
+But we are not finished with autocommands yet. The way that feature is implemented makes it easy for autocommands to "`pile up`" when we source our `vimrc` during a session and provoke performance issues. To avoid side effects, we should wrap our autocommands in an `augroup` and empty it before define our actual autocommands. The whole boilerplate looks like this:
+
+    augroup groupname
+        autocmd!
+        autocmd event pattern command
+    augroup END
+
+So...
+
+    augroup c
+        autocmd!
+        autocmd BufWritePost *.c silent make|cwindow
+    augroup END
+
+From there, one can configure many things to suit his needs: what program to run when doing `:make` or `:grep`, how to parse the output of those comands so that it can be used in the quickfix list, for what filetype to use what setting... but that will be the subject of another chapter.
+
+==== Reference
+
+    :help quickfix
+    :help autocommand
+    :help :silent

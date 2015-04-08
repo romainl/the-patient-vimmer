@@ -715,12 +715,75 @@ set splitright</pre>
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>And take advantage of a great feature called &#8220;autocommands&#8221; for&#8230;&#8203; the automation part.</p>
+</div>
+<div class="paragraph">
+<p>Autocommands are Vim&#8217;s way of executing arbitrary commands when specific events happen. Entering a window, quitting insert mode, loading a buffer with a specific filetype are some of the many events available.</p>
+</div>
+<div class="paragraph">
+<p>An autocommand usually looks like that:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>autocmd event pattern command</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where <code>autocmd</code> is the command that defines an autocommand, <code>event</code> can be a single event or a comma-separated list of events, <code>pattern</code> is a simple pattern describing what [todo] and <code>command</code> is what we want to happen.</p>
+</div>
+<div class="paragraph">
+<p>Scrolling through the list at <code>:help autocommand-events</code> we find <code>BufWritePost</code> which looks like it can be used after <code>:w</code> to <code>:make</code> and <code>:cwindow</code>. Let&#8217;s try it:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>autocmd BufWritePost *.c silent make|cwindow</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Phew! That was easy&#8230;&#8203;</p>
+</div>
+<div class="paragraph">
+<p>But we are not finished with autocommands yet. The way that feature is implemented makes it easy for autocommands to &#8220;pile up&#8221; when we source our <code>vimrc</code> during a session and provoke performance issues. To avoid side effects, we should wrap our autocommands in an <code>augroup</code> and empty it before define our actual autocommands. The whole boilerplate looks like this:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>augroup groupname
+    autocmd!
+    autocmd event pattern command
+augroup END</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>So&#8230;&#8203;</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>augroup c
+    autocmd!
+    autocmd BufWritePost *.c silent make|cwindow
+augroup END</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>From there, one can configure many things to suit his needs: what program to run when doing <code>:make</code> or <code>:grep</code>, how to parse the output of those comands so that it can be used in the quickfix list, for what filetype to use what setting&#8230;&#8203; but that will be the subject of another chapter.</p>
+</div>
+<div class="sect3">
+<h4 id="_reference_8">Reference</h4>
+<div class="literalblock">
+<div class="content">
+<pre>:help quickfix
+:help autocommand
+:help :silent</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-03-22 23:08:14 CET
+Last updated 2015-04-08 22:26:53 CEST
 </div>
 </div>
 </body>
