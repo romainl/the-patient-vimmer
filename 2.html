@@ -524,21 +524,57 @@ nnoremap &lt;F5&gt; :write&lt;Bar&gt;silent make&lt;Bar&gt;cwindow&lt;CR&gt;</pr
 </div>
 </div>
 <div class="sect2">
-<h3 id="_the_foldcolumn">The foldcolumn</h3>
+<h3 id="_the_fold_column">The fold column</h3>
+<div class="literalblock">
+<div class="content">
+<pre>(picture)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The "fold column" is disabled by default but can be enabled by setting the <code>foldcolumn</code> option to a number between 1 and 12. It is used to show information about the folds in your buffer and let you open and close them with the mouse if mouse support is enabled.</p>
+</div>
+<div class="paragraph">
+<p>Open folds are marked with a clickable <code>-</code>, lines belonging to a fold are marked with a <code>|</code> and closed folds are marked with a clickable <code>+</code>.</p>
+</div>
 <div class="sect3">
 <h4 id="_reference_7">Reference</h4>
-
+<div class="literalblock">
+<div class="content">
+<pre>:h fold-foldcolumn
+:h 'foldcolumn'</pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_the_signcolumn">The signcolumn</h3>
+<h3 id="_the_sign_column">The sign column</h3>
+<div class="literalblock">
+<div class="content">
+<pre>(picture)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The "sign column" can&#8217;t be shown or hidden manually: Vim shows it when you have one or more signs in your buffer and removes it when there&#8217;s no sign anymore.</p>
+</div>
+<div class="paragraph">
+<p>The color and content of individual signs is usually defined by plugin authors whereas the background of the column is the responsibility of your colorscheme.</p>
+</div>
 <div class="sect3">
 <h4 id="_reference_8">Reference</h4>
-
+<div class="literalblock">
+<div class="content">
+<pre>:help signs</pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_the_completion_menu">The completion menu</h3>
+<div class="literalblock">
+<div class="content">
+<pre>(picture)</pre>
+</div>
+</div>
 <div class="sect3">
 <h4 id="_reference_9">Reference</h4>
 
@@ -556,7 +592,7 @@ nnoremap &lt;F5&gt; :write&lt;Bar&gt;silent make&lt;Bar&gt;cwindow&lt;CR&gt;</pr
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-04-08 23:27:15 CEST
+Last updated 2015-04-09 14:09:57 CEST
 </div>
 </div>
 </body>
