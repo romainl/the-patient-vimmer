@@ -265,9 +265,9 @@ It is also possible to define colors for specific parts or use functions to disp
 
 === Line numbers
 
-Line numbers are a fairly straightforward feature that doesn't warrant much explanation. One enables it with `:set number`, disables it with `:set nonumber` and decides how much room they take with `:set numberwidth=6`.
+Line numbers are a fairly straightforward feature that doesn't deserve much explanation. One enables it with `:set number`, disables it with `:set nonumber` and decides how much room they take with `:set numberwidth=6`.
 
-But we are not limited to absolute line numbers. We can use relative line numbers to see how far a line is from the current line:
+But we are not limited to absolute line numbers, though: we can use relative line numbers to see how far a line is from the current line.
 
     (screenshot)
 
@@ -308,8 +308,58 @@ The color and content of individual signs is usually defined by plugin authors w
 
     (picture)
 
+The completion menu is 
+
 ==== Reference
 
 === The command-line
 
+    (picture)
+
+(to be written)
+
 ==== Reference
+
+== Conclusion
+
+(to be written)
+
+++++
+<div id="front">
+    <h6>The Patient Vimmer</h6>
+    <ul>
+        <li>
+            <a href="0.html">0&nbsp;&nbsp;&nbsp;An introduction</a>
+        </li>
+        <li>
+            <a href="1.html">1&nbsp;&nbsp;&nbsp;Lord of the files</a>
+        </li>
+        <li class="current">
+            <a href="2.html">2&nbsp;&nbsp;&nbsp;Your workspace</a>
+        </li>
+        <li>
+            <a href="3.html">3&nbsp;&nbsp;&nbsp;Title pending</a>
+        </li>
+        <li>
+            <a href="4.html">4&nbsp;&nbsp;&nbsp;Title pending</a>
+        </li>
+        <li>
+            <a href="5.html">5&nbsp;&nbsp;&nbsp;Title pending</a>
+        </li>
+        <li>
+            <a href="6.html">6&nbsp;&nbsp;&nbsp;Title pending</a>
+        </li>
+        <li>
+            <a href="7.html">7&nbsp;&nbsp;&nbsp;Title pending</a>
+        </li>
+        <li>
+            <a href="8.html">8&nbsp;&nbsp;&nbsp;Title pending</a>
+        </li>
+    </ul>
+    <div id="bottom">
+        <p>Written by <a href="https://github.com/romainl">Romain Lafourcade</a>, with help from <a href="https://github.com/dahu/">Barry Arthur</a> and the #vim community.</p>
+        <p>Copyleft 2015</p>
+    </div>
+</div>
+<script src="javascript/behavior.js"></script>
+++++

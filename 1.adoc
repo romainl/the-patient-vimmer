@@ -165,12 +165,12 @@ It's really quite simple...
 * `nmap key command` means that pressing `key` in normal mode will execute `command` _with its current meaning_. This form is _only_ useful when we want to use another mapping in our mapping; it is called "`recursive mapping`". Example:
 
     :nmap b B        " change 'b' to work like 'B'
-    :nmap <F5> dB    " '<F5>' works like 'BD', not like 'dB'
+    :nmap <F5> db    " '<F5>' works like 'dB', not like 'db'
 
 * `nnoremap key command` means that pressing `key` in normal mode will execute `command` _with its default meaning_. This form is usually the one we want, it is called "`non-recursive mapping`". Example:
 
     :nmap b B            " change 'b' to work like 'B'
-    :nnoremap <F5> dB    " '<F5>' works like 'bD'
+    :nnoremap <F5> dB    " '<F5>' works like 'dB'
 
 Our mappings _have_ to be solid because they will serve as the foundation of our workflow. Non-recursive mappings are the safest choice:
 
@@ -387,7 +387,7 @@ But, now that we have a bunch of files to edit… how are we supposed to work wi
             <a href="1.html">1&nbsp;&nbsp;&nbsp;Lord of the files</a>
         </li>
         <li>
-            <a href="2.html">2&nbsp;&nbsp;&nbsp;Title pending</a>
+            <a href="2.html">2&nbsp;&nbsp;&nbsp;Your workspace</a>
         </li>
         <li>
             <a href="3.html">3&nbsp;&nbsp;&nbsp;Title pending</a>
