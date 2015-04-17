@@ -215,7 +215,7 @@ In addition to windows, we have many UI elements at our disposal for displaying 
 
    (picture)
 
-The tabline is a list of tabs working as proxies for tab pages. Each tab shows some information on its associated tab page:
+The tabline is a list of "tabs" working as proxies for tab pages. Each tab shows some information on its associated tab page:
 
 * the name of the buffer currently displayed in the currently focused window,
 * the number of windows contained in the tab page when there is more than one,
@@ -267,11 +267,26 @@ It is also possible to define colors for specific parts or use functions to disp
 
 Line numbers are a fairly straightforward feature that doesn't deserve much explanation. One enables it with `:set number`, disables it with `:set nonumber` and decides how much room they take with `:set numberwidth=6`.
 
-But we are not limited to absolute line numbers, though: we can use relative line numbers to see how far a line is from the current line.
+In most editors or IDEs, line numbers are only used directly by users in two ways: to communicate with other people who work on the same code and to jump to a specific line.
+
+In addition, Vim allows us to use line numbers to define the range and/or the address for many Ex commands:
+
+    33G          " go to line 33
+    V13G         " linewise visual selection from here to line 13
+    :2t24        " copy line 2 after line 24
+    :m12         " move current line after line 12
+    :8,17d       " delete lines 8 to 17
+    :46put=@f    " put content of register f after line 46
+
+But we are not limited to absolute line numbers: we can use relative line numbers to see how far a line is from the current line.
 
     (screenshot)
 
-Relative numbers are useful for things like `6j`, for example, and can be enabled with `set relativenumber`.
+Relative numbers can be enabled with `set relativenumber` and used in the same way as absolute line numbers:
+
+    6j           " go down 6 lines
+    V5k          " linewise visual selection from here to 5 lines above
+    :-2,+6m45    " move lines from 2 lines above to 6 lines below after line 45
 
 ==== Reference
 
@@ -283,7 +298,7 @@ Relative numbers are useful for things like `6j`, for example, and can be enable
 
     (picture)
 
-The "fold column" is disabled by default but can be enabled by setting the `foldcolumn` option to a number between 1 and 12. It is used to show information about the folds in your buffer and let you open and close them with the mouse if mouse support is enabled.
+The `"fold column"` is disabled by default but can be enabled by setting the `foldcolumn` option to a number between 1 and 12. It is used to show information about the folds in your buffer and let you open and close them with the mouse if mouse support is enabled.
 
 Open folds are marked with a clickable `-`, lines belonging to a fold are marked with a `|` and closed folds are marked with a clickable `+`.
 
@@ -308,15 +323,19 @@ The color and content of individual signs is usually defined by plugin authors w
 
     (picture)
 
-The completion menu is 
+The completion menu comes up when you press one of the many key-combinations affected to insert mode completion and there is at least one or more possible completions. In pure "modal" fashion, once the menu is displayed, some keys acquire a new meaning to allow cursor movement and selection but the general pattern stays consistent with the general Vim UI and works more or less how we expect.
+
+problems and solutions (to be written)
 
 ==== Reference
+
+    :help ins-completion-menu
 
 === The command-line
 
     (picture)
 
-(to be written)
+The command-line is Vim's main interface. Like the prompt of your computer's shell, it is used to send commands to Vim and for feedback if necessary.
 
 ==== Reference
 
