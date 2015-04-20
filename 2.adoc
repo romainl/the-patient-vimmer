@@ -15,7 +15,7 @@ A buffer is the internal representation of the content of a file. Because you wo
 
 As Vim's core file proxies, buffers are (or should be) at the core of your workflow and you owe it to yourself to know how to work with them to achieve reasonable efficiency.
 
-=== The buffer list
+=== Working with buffers
 
 Every buffer created in Vim via `:edit`, `:find`, `:args`, any of their relatives or simply `$ vim filename` is added to the _buffer list_ where it is assigned a number that will never change until it is explicitely wiped out from the list. Beside that number, a buffer associated with a file will be named after that file, giving us a second way to address that buffer.
 
@@ -62,27 +62,39 @@ Here is how it looks:
 
     (gifcast)
 
-=== Working with buffers
-
 == Windows
 
 (intro)
-
-=== The life cycle of a window
 
 === Working with windows
 
 == Tab pages
 
-(intro)
+Tab pages -- too often referred to as "`tabs`" -- have been a neverending source of confusion since their appearance in Vim 7.x. Despite their name and how the <<_the_tabline,"`tabline`">> is implemented, Vim's _tab pages_ are not like other editor's _tabs_.
 
-=== The life cycle of a tab page
+In other editors, "`tabs`" serve as a proxies for documents. This means that the editor's "`tabline`" -- a list of tabs -- is effectively a list of documents and the user is can use it to navigate from one tab to another and thus from one document to another. A "`tab`" _is_ for all intent and purpose a _document_ and there is no need to separate the tab _widget_ from the document it is associated to.
+
+Switching to a "`tab`" is exactly like switching to a document.
+
+In Vim, "`tab pages`" are _workspaces_, associated with "`tab`" widgets, themselves listed in a "`tabline`". The "`tab`" and "`tabline`" widgets work just like their counterparts in other editors but the _huge_ difference lies in the _workspace_ bit.
+
+A workspace is a place where you arrange one or more windows displaying one or more buffers. But we have seen earlier that buffers are _global_ so, while it is entirely possible to have a single buffer displayed in a single window in a single tab page, it is impossible to have a one-to-one relationship between that buffer and that tab page without devising our own buffer/window/tab management paradigm.
+
+Because "`tab`" widgets are not associated with specific buffers/files we simply can't use them as document proxies.
+
+As collections of windows, tab pages offer a pretty good way to manage workspaces. They are ideal for scenarios where we need to have multiple pairs of files displayed side-by-side, or where we suddenly need to open a file from outside the current project...
+
+Just like windows, the place of tab pages in our workflow depends largely on our needs. Using tab pages as file proxies is wrong, but refusing to use them altogether in the name of some imaginary purity is just as wrong. If not _more_.
+
+So... how do we use them?
 
 === Working with tab pages
 
+
+
 == Special Windows
 
-Beyond normal windows, Vim uses a number of very useful specialized windows.
+Beyond the "`normal`" windows described above, Vim uses a number of very useful specialized windows.
 
 === The quickfix window
 
@@ -93,9 +105,9 @@ The quickfix is a handy list that we can populate and navigate at will. It actua
 * an optional column number,
 * some text associated with the current item.
 
-That list is global. This means that you can't have more than one active list at a time. One could recall previous lists with `:colder` but I honestly never had to so... YMMV.
+That list is global. This means that you can't have more than one active list at a time. One could recall previous lists with `:colder`, though, but I honestly never had to... so YMMV.
 
-Vim comes with a lot of commands that populate the quickfix list, like `:grep` or `:vimgrep`, used for searching text in your project, and `:make`, used to build your program or pass them through a syntax checker. Once the quickfix is populated with valid entries, one can use a number of relatively intitively named commands to navigate the list:
+Vim comes with a lot of commands that populate the quickfix list, like `:grep` or `:vimgrep`, used for searching text in your project, and `:make`, used to build your program or pass them through a syntax checker. Once the quickfix is populated with valid entries, one can use a number of relatively intuitively named commands to navigate the list:
 
     :cfirst
     :clast
@@ -227,7 +239,7 @@ When to show a tabline can be defined with the `showtabline` option and what inf
 
 While Vim's _tab pages_ are definitely not equivalent to other editor's _tabs_, Vim's _tabline_ looks and works a lot like its counterparts and suffers from the same usability issues.
 
-The main issue is that tabs are used to display filenames and filenames take up a lot of horizontal space. An horizontal space that is physically limited and thus incapable of displaying more than a few tabs. Many solutions exist to remedy that problem: wrapping the tabline to form a second one, adding scrolling widgets at both ends of the tabline, grouping tabs, truncating filenames... The harsh reality is that none of those "solutions" is free of annoying side effects which, ultimately, turn an otherwise good idea into an unusable gyzmo.
+The main issue is that tabs are used to display filenames and filenames take up a lot of horizontal space. An horizontal space that is physically limited and thus incapable of displaying more than a few tabs. Many solutions exist to remedy that problem: wrapping the tabline to form a second one, adding scrolling widgets at both ends of the tabline, grouping tabs, truncating filenames... The harsh reality is that none of those "solutions" is free of annoying side effects which, ultimately, can turn an otherwise good idea into an unusable gyzmo.
 
 The tabline and tab pages still have their use, mind you, but it is important to not think about them as you would in other editors.
 
@@ -311,7 +323,7 @@ Open folds are marked with a clickable `-`, lines belonging to a fold are marked
 
     (picture)
 
-The "sign column" can't be shown or hidden manually: Vim shows it when you have one or more signs in your buffer and removes it when there's no sign anymore.
+The "sign column" can't be shown or hidden easily: Vim shows it when you have one or more signs in your buffer and removes it when there's no sign anymore.
 
 The color and content of individual signs is usually defined by plugin authors whereas the background of the column is the responsibility of your colorscheme.
 
