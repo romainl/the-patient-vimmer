@@ -1,6 +1,6 @@
 = Your workspace
 :stylesdir: css
-:stylesheet: style.css
+:stylesheet: style2.css
 :imagesdir: images
 :scriptsdir: javascript
 :linkcss:
@@ -89,7 +89,6 @@ Just like windows, the place of tab pages in our workflow depends largely on our
 So... how do we use them?
 
 === Working with tab pages
-
 
 
 == Special Windows
@@ -357,7 +356,7 @@ The command-line is Vim's main interface. Like the prompt of your computer's she
 
 ++++
 <div id="front">
-    <h6>The Patient Vimmer</h6>
+    <a href="#" id="open-close">...</a>
     <ul>
         <li>
             <a href="0.html">0&nbsp;&nbsp;&nbsp;An introduction</a>
@@ -387,10 +386,11 @@ The command-line is Vim's main interface. Like the prompt of your computer's she
             <a href="8.html">8&nbsp;&nbsp;&nbsp;Title pending</a>
         </li>
     </ul>
-    <div id="bottom">
-        <p>Written by <a href="https://github.com/romainl">Romain Lafourcade</a>, with help from <a href="https://github.com/dahu/">Barry Arthur</a> and the #vim community.</p>
-        <p>Copyleft 2015</p>
-    </div>
+</div>
+<h6>The Patient Vimmer</h6>
+<div id="bottom">
+    <p>Written by <a href="https://github.com/romainl">Romain Lafourcade</a>, with help from <a href="https://github.com/dahu/">Barry Arthur</a> and the #vim community.</p>
+<p>Copyleft 2015</p>
 </div>
 <script src="javascript/behavior.js"></script>
 ++++

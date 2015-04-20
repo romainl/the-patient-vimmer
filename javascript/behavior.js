@@ -28,8 +28,22 @@ function overOut(event) {
     event.preventDefault();
 }
 
+function openClose(event) {
+    var nav = document.getElementById("front");
+
+    if (nav.className !== "open") {
+        nav.className = "open";
+    } else {
+        nav.className = "";
+    }
+
+    event.preventDefault();
+}
+
 window.addEventListener('load', function() {
     document.title = "The Patient Vimmer — " + document.getElementsByTagName("h1")[0].innerHTML;
+
+    document.getElementById("open-close").addEventListener('click', openClose, false);
 
     var images = document.getElementsByClassName("image");
     for (var i = 0, len = images.length; i < len; i++) {
