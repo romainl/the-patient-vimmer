@@ -1,13 +1,18 @@
 function playStop(event) {
-    var gif_url    = this.href;
-    var png_url    = "images/gifcast_off.png";
-    var this_image = this.firstChild;
+    var gif_url = this.href;
+    var png_url = "images/gifcast_off.png";
+    var images  = document.getElementsByClassName("playing");
+
+    for (var i = 0, len = images.length; i < len; i++) {
+        images[i].firstChild.src = png_url;
+        images[i].className = "image";
+    }
 
     if (this.className === "image playing") {
-        this_image.src = png_url;
+        this.firstChild.src = png_url;
         this.className = "image";
     } else {
-        this_image.src = gif_url;
+        this.firstChild.src = gif_url;
         this.className = "image playing";
     }
 
@@ -15,13 +20,11 @@ function playStop(event) {
 }
 
 function overOut(event) {
-    var this_image = this.firstChild;
-
     if (this.className !== "image playing") {
         if (event.type === "mouseover") {
-            this_image.src = "images/gifcast_on.png";
+            this.firstChild.src = "images/gifcast_on.png";
         } else {
-            this_image.src = "images/gifcast_off.png";
+            this.firstChild.src = "images/gifcast_off.png";
         }
     }
 
