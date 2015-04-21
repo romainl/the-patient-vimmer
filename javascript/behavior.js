@@ -43,7 +43,10 @@ function openClose(event) {
 window.addEventListener('load', function() {
     document.title = "The Patient Vimmer — " + document.getElementsByTagName("h1")[0].innerHTML;
 
-    document.getElementById("open-close").addEventListener('click', openClose, false);
+    try {
+        document.getElementById("open-close").addEventListener('click', openClose, false);
+    }
+    catch(e) {}
 
     var images = document.getElementsByClassName("image");
     for (var i = 0, len = images.length; i < len; i++) {
