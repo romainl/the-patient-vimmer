@@ -5,18 +5,36 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.2">
-<title>Your workspace</title>
+<title>Your screen</title>
 <link rel="stylesheet" href="css/style2.css">
 </head>
 <body class="article">
 <div id="header">
-<h1>Your workspace</h1>
+<h1>Your screen</h1>
 </div>
 <div id="content">
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>TODO (texte d&#8217;intro)</p>
+<p>Vim&#8217;s screen may have a number of secondary UI elements such as a &#8220;tabline&#8221; or line numbers but it <strong>always</strong> contains <em>at least</em> the following elements:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>a tab page, always containing at least&#8230;&#8203;</p>
+</li>
+<li>
+<p>a window, always displaying&#8230;&#8203;</p>
+</li>
+<li>
+<p>a buffer.</p>
+<div class="literalblock">
+<div class="content">
+<pre>(more intro to be written)</pre>
+</div>
+</div>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -27,7 +45,7 @@
 <p>Like Word or Photoshop, Vim lets us create, delete and&#8201;&#8212;&#8201;of course&#8201;&#8212;&#8201;edit &#8220;documents&#8221;, whether they are associated to an actual file or not. Those documents are called &#8220;buffers&#8221;.</p>
 </div>
 <div class="paragraph">
-<p>A buffer is the internal representation of the content of a file. Because you work on a representation of that file, your changes will not be written to the corresponding file unless you instruct Vim to do so with <code>:write</code> or <code>:update</code>.</p>
+<p>A buffer is the internal representation of the content of a file. Because you work on a representation of that file, your changes will not be written to disk unless you instruct Vim to do so with <code>:write</code> or <code>:update</code>.</p>
 </div>
 <div class="paragraph">
 <p>As Vim&#8217;s core file proxies, buffers are (or should be) at the core of your workflow and you owe it to yourself to know how to work with them to achieve reasonable efficiency.</p>
@@ -119,7 +137,13 @@ Press ENTER or type command to continue</pre>
 <h2 id="_windows">Windows</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>(intro)</p>
+<p>Vim gives us the ability to split our workspace in multiple windows&#8201;&#8212;&#8201;often called &#8220;splits&#8221;&#8201;&#8212;&#8201;to display different buffers or parts of a buffer. The exact mechanism is quite simple: the current window is split in two equal parts along the desired axis, <em>vertical</em> or <em>horizontal</em>, and the cursor is placed in the new window.</p>
+</div>
+<div class="paragraph">
+<p>The purpose of a window is to provide a view into a buffer. It can be created, moved around and closed but it is important to remember that windows and buffers are <strong>totally</strong> separated.</p>
+</div>
+<div class="paragraph">
+<p>By default, the splitting is done to the left, which can be very intuitive.</p>
 </div>
 <div class="sect2">
 <h3 id="_working_with_windows">Working with windows</h3>
@@ -159,7 +183,82 @@ Press ENTER or type command to continue</pre>
 </div>
 <div class="sect2">
 <h3 id="_working_with_tab_pages">Working with tab pages</h3>
-
+<div class="paragraph">
+<p>Creating a tab page is easy:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:tabnew          " creates a new tab page containing one window
+                 " displaying a new, unnamed, empty buffer.
+:tabedit file    " creates a new tab page containing one window
+                 " displaying a buffer associated with 'file'.
+:tabfind file    " works similarly as the previous one but uses
+                 " ':find' instead of ':edit'.</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The commands above can&#8217;t be easily shortened so one could very well create custom mappings along the same line as the ones we created earlier:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>nnoremap &lt;leader&gt;tn :tabnew&lt;CR&gt;
+nnoremap &lt;leader&gt;te :tabedit **/*
+nnoremap &lt;leader&gt;tf :tabfind *</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Closing a tab page is just as easy:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:tabclose      " closes the current tab page,
+:tabclose 3    " closes tab page number 3,
+:tabonly       " closes all tab pages except the current one.</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that closing a tab page also closes its windows but <em>it doesn&#8217;t delete the buffers currently displayed in those windows.</em></p>
+</div>
+<div class="paragraph">
+<p>Switching to another tab page is also well covered and pretty intuitive:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:tabfirst
+:tabnext
+:tabprevious
+:tablast</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In normal mode, <code>gt</code> is the equivalent of <code>:tabnext</code> and <code>gT</code> is the equivalent of <code>:tabprevious</code>.</p>
+</div>
+<div class="paragraph">
+<p>Here are a few example usages:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(pic)</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(pic)</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(pic)</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(gifcast)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Like with buffers and windows, it is also possible to execute a command in each tab page: <code>:tabdo command</code>.</p>
+</div>
 </div>
 </div>
 </div>
@@ -691,7 +790,7 @@ V5k          " linewise visual selection from here to 5 lines above
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-04-20 20:50:43 CEST
+Last updated 2015-04-21 12:25:04 CEST
 </div>
 </div>
 </body>

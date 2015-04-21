@@ -1,17 +1,23 @@
-= Your workspace
+= Your screen
 :stylesdir: css
 :stylesheet: style2.css
 :imagesdir: images
 :scriptsdir: javascript
 :linkcss:
 
-TODO (texte d'intro)
+Vim's screen may have a number of secondary UI elements such as a "`tabline`" or line numbers but it **always** contains _at least_ the following elements:
+
+* a tab page, always containing at least...
+* a window, always displaying...
+* a buffer.
+
+    (more intro to be written)
 
 == Buffers
 
 Like Word or Photoshop, Vim lets us create, delete and -- of course -- edit "`documents`", whether they are associated to an actual file or not. Those documents are called "`buffers`".
 
-A buffer is the internal representation of the content of a file. Because you work on a representation of that file, your changes will not be written to the corresponding file unless you instruct Vim to do so with `:write` or `:update`.
+A buffer is the internal representation of the content of a file. Because you work on a representation of that file, your changes will not be written to disk unless you instruct Vim to do so with `:write` or `:update`.
 
 As Vim's core file proxies, buffers are (or should be) at the core of your workflow and you owe it to yourself to know how to work with them to achieve reasonable efficiency.
 
@@ -64,7 +70,11 @@ Here is how it looks:
 
 == Windows
 
-(intro)
+Vim gives us the ability to split our workspace in multiple windows -- often called "`splits`" -- to display different buffers or parts of a buffer. The exact mechanism is quite simple: the current window is split in two equal parts along the desired axis, _vertical_ or _horizontal_, and the cursor is placed in the new window.
+
+The purpose of a window is to provide a view into a buffer. It can be created, moved around and closed but it is important to remember that windows and buffers are **totally** separated.
+
+By default, the splitting is done to the left, which can be very intuitive.
 
 === Working with windows
 
@@ -90,6 +100,49 @@ So... how do we use them?
 
 === Working with tab pages
 
+Creating a tab page is easy:
+
+    :tabnew          " creates a new tab page containing one window
+                     " displaying a new, unnamed, empty buffer.
+    :tabedit file    " creates a new tab page containing one window
+                     " displaying a buffer associated with 'file'.
+    :tabfind file    " works similarly as the previous one but uses
+                     " ':find' instead of ':edit'.
+
+The commands above can't be easily shortened so one could very well create custom mappings along the same line as the ones we created earlier:
+
+    nnoremap <leader>tn :tabnew<CR>
+    nnoremap <leader>te :tabedit **/*
+    nnoremap <leader>tf :tabfind *
+
+Closing a tab page is just as easy:
+
+    :tabclose      " closes the current tab page,
+    :tabclose 3    " closes tab page number 3,
+    :tabonly       " closes all tab pages except the current one.
+
+Note that closing a tab page also closes its windows but _it doesn't delete the buffers currently displayed in those windows._
+
+Switching to another tab page is also well covered and pretty intuitive:
+
+    :tabfirst
+    :tabnext
+    :tabprevious
+    :tablast
+
+In normal mode, `gt` is the equivalent of `:tabnext` and `gT` is the equivalent of `:tabprevious`.
+
+Here are a few example usages:
+
+    (pic)
+
+    (pic)
+
+    (pic)
+
+    (gifcast)
+
+Like with buffers and windows, it is also possible to execute a command in each tab page: `:tabdo command`.
 
 == Special Windows
 
