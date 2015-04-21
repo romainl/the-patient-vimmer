@@ -23,9 +23,9 @@ As Vim's core file proxies, buffers are (or should be) at the core of your workf
 
 === Working with buffers
 
-Every buffer created in Vim via `:edit`, `:find`, `:args`, any of their relatives or simply `$ vim filename` is added to the _buffer list_ where it is assigned a number that will never change until it is explicitely wiped out from the list. Beside that number, a buffer associated with a file will be named after that file, giving us a second way to address that buffer.
+Every buffer created in Vim via `:edit`, `:find`, `:args`, any of their relatives or simply `$ vim filename` is added to the _buffer list_ where it is assigned a number that will never change until it is explicitly wiped out from the list. Beside that number, a buffer associated with a file will be named after that file, giving us a second way to address that buffer.
 
-A typical Vim session could be short and only consist of editing a single file -- and thus a single buffer -- or it could go for weeks and consist of dozens and dozens of buffers. Keeping track of so many buffers would be daunting if Vim didn't gave us not one, not two, but _three_ commands for listing buffers:
+A typical Vim session could be short and only consist of editing a single file -- and thus a single buffer -- or it could go for weeks and consist of dozens and dozens of buffers. Keeping track of so many buffers would be daunting if Vim didn't give us not one, not two, but _three_ commands for listing buffers:
 
     :buffers
     :files
@@ -82,7 +82,7 @@ By default, the splitting is done to the left, which can be very intuitive.
 
 Tab pages -- too often referred to as "`tabs`" -- have been a neverending source of confusion since their appearance in Vim 7.x. Despite their name and how the <<_the_tabline,"`tabline`">> is implemented, Vim's _tab pages_ are not like other editor's _tabs_.
 
-In other editors, "`tabs`" serve as a proxies for documents. This means that the editor's "`tabline`" -- a list of tabs -- is effectively a list of documents and the user is can use it to navigate from one tab to another and thus from one document to another. A "`tab`" _is_ for all intent and purpose a _document_ and there is no need to separate the tab _widget_ from the document it is associated to.
+In other editors, "`tabs`" serve as proxies for documents. This means that the editor's "`tabline`" -- a list of tabs -- is effectively a list of documents and the user can use it to navigate from one tab to another and thus from one document to another. A "`tab`" _is_ for all intents and purposes a _document_ and there is no need to separate the tab _widget_ from the document it is associated to.
 
 Switching to a "`tab`" is exactly like switching to a document.
 
@@ -245,7 +245,7 @@ Here is the preview window in action:
 
 === The Command-line window
 
-The command-line is a handy way to input commands but it is not that good when it comes to editing the current command or recalling an old one and changing its parameters. This is not a design flaw or an implementation issue, though: only sane seperation of concerns that should appeal to anyone used to the concept of *modal editing*.
+The command-line is a handy way to input commands but it is not that good when it comes to editing the current command or recalling an old one and changing its parameters. This is not a design flaw or an implementation issue, though: only sane separation of concerns that should appeal to anyone used to the concept of *modal editing*.
 
 You use insert mode to insert text and normal mode to edit text.
 
@@ -291,7 +291,7 @@ When to show a tabline can be defined with the `showtabline` option and what inf
 
 While Vim's _tab pages_ are definitely not equivalent to other editor's _tabs_, Vim's _tabline_ looks and works a lot like its counterparts and suffers from the same usability issues.
 
-The main issue is that tabs are used to display filenames and filenames take up a lot of horizontal space. An horizontal space that is physically limited and thus incapable of displaying more than a few tabs. Many solutions exist to remedy that problem: wrapping the tabline to form a second one, adding scrolling widgets at both ends of the tabline, grouping tabs, truncating filenames... The harsh reality is that none of those "solutions" is free of annoying side effects which, ultimately, can turn an otherwise good idea into an unusable gyzmo.
+The main issue is that tabs are used to display filenames and filenames take up a lot of horizontal space. A horizontal space that is physically limited and thus incapable of displaying more than a few tabs. Many solutions exist to remedy that problem: wrapping the tabline to form a second one, adding scrolling widgets at both ends of the tabline, grouping tabs, truncating filenames... The harsh reality is that none of those "solutions" is free of annoying side effects which, ultimately, can turn an otherwise good idea into an unusable gizmo.
 
 The tabline and tab pages still have their use, mind you, but it is important to not think about them as you would in other editors.
 
@@ -317,7 +317,7 @@ It is very common, though, to customize it a bit further by playing with the `st
 
 This is how I define the statusline shown in the picture above, the explanation for each item can be found in `:help 'statusline'`:
 
-    set statusline=%<\ %f\ %m%r%y%w%=\ L:\ \%l\/\%L\ C:\ \%c\ 
+    set statusline=%<\ %f\ %m%r%y%w%=\ L:\ \%l\/\%L\ C:\ \%c\
 
 It is also possible to define colors for specific parts or use functions to display dynamic information not provided by Vim but I recommend measure, here: the statusline is an information device, not a decorative widget.
 
