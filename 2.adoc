@@ -4,6 +4,7 @@
 :imagesdir: images
 :scriptsdir: javascript
 :linkcss:
+:toc: macro
 
 Vim's screen may have a number of secondary UI elements such as a "`tabline`" or line numbers but it **always** contains _at least_ the following elements:
 
@@ -60,7 +61,7 @@ Of course, it is not necessary to do `:ls` before doing `:b24` but who wants to 
 
 One way to avoid thinking too much about your buffers is to mash `:bn[ext]` and `:bp[revious]` until you get where you want. Your destination might be sixteen buffers away, though, so cycling is not a silver bullet.
 
-But that boring `:ls`, then `<CR>`, then `:b`, then `24`, then `<CR>`, routine looks like a good candidate for a custom mapping:
+But that boring `:ls`, then `<CR>`, then `:b`, then `24`, then `<CR>` routine looks like a good candidate for a custom mapping:
 
     nnoremap <leader>b :ls<CR>:b
 
@@ -68,21 +69,25 @@ Here is how it looks:
 
     (gifcast)
 
+=== Reference
+
 == Windows
 
 Vim gives us the ability to split our workspace in multiple windows -- often called "`splits`" -- to display different buffers or parts of a buffer. The exact mechanism is quite simple: the current window is split in two equal parts along the desired axis, _vertical_ or _horizontal_, and the cursor is placed in the new window.
 
 The purpose of a window is to provide a view into a buffer. It can be created, moved around and closed but it is important to remember that windows and buffers are **totally** separated.
 
-By default, the splitting is done to the left, which can be very intuitive.
+By default, the splitting is done to the left, which can be very counter-intuitive.
 
 === Working with windows
+
+=== Reference
 
 == Tab pages
 
 Tab pages -- too often referred to as "`tabs`" -- have been a neverending source of confusion since their appearance in Vim 7.x. Despite their name and how the <<_the_tabline,"`tabline`">> is implemented, Vim's _tab pages_ are not like other editor's _tabs_.
 
-In other editors, "`tabs`" serve as a proxies for documents. This means that the editor's "`tabline`" -- a list of tabs -- is effectively a list of documents and the user is can use it to navigate from one tab to another and thus from one document to another. A "`tab`" _is_ for all intent and purpose a _document_ and there is no need to separate the tab _widget_ from the document it is associated to.
+In other editors, "`tabs`" serve as a proxies for documents. This means that the editor's "`tabline`" -- a list of tabs -- is effectively a list of documents that is used to navigate from one tab to another and thus from one document to another. A "`tab`" _is_ for all intent and purpose a _document_ and there is no need to separate the tab _widget_ from the document it is associated to.
 
 Switching to a "`tab`" is exactly like switching to a document.
 
@@ -102,12 +107,12 @@ So... how do we use them?
 
 Creating a tab page is easy:
 
-    :tabnew          " creates a new tab page containing one window
-                     " displaying a new, unnamed, empty buffer.
-    :tabedit file    " creates a new tab page containing one window
-                     " displaying a buffer associated with 'file'.
-    :tabfind file    " works similarly as the previous one but uses
-                     " ':find' instead of ':edit'.
+    :tabnew            " creates a new tab page containing one window
+                       " displaying a new, unnamed, empty buffer.
+    :tabe[dit] file    " creates a new tab page containing one window
+                       " displaying a buffer associated with 'file'.
+    :tabf[ind] file    " works similarly as the previous one but uses
+                       " ':find' instead of ':edit'.
 
 The commands above can't be easily shortened so one could very well create custom mappings along the same line as the ones we created earlier:
 
@@ -117,18 +122,18 @@ The commands above can't be easily shortened so one could very well create custo
 
 Closing a tab page is just as easy:
 
-    :tabclose      " closes the current tab page,
-    :tabclose 3    " closes tab page number 3,
-    :tabonly       " closes all tab pages except the current one.
+    :tabc[lose]      " closes the current tab page,
+    :tabc[lose] 3    " closes tab page number 3,
+    :tabo[nly]       " closes all tab pages except the current one.
 
-Note that closing a tab page also closes its windows but _it doesn't delete the buffers currently displayed in those windows._
+Note that closing a tab page also closes its windows but _it doesn't delete the buffers currently displayed in those windows._ Remember : windows are _views_ and tab pages are _assemblages_ of windows.
 
 Switching to another tab page is also well covered and pretty intuitive:
 
-    :tabfirst
-    :tabnext
-    :tabprevious
-    :tablast
+    :tabfir[st]
+    :tabn[ext]
+    :tabp[revious]
+    :tabl[ast]
 
 In normal mode, `gt` is the equivalent of `:tabnext` and `gT` is the equivalent of `:tabprevious`.
 
@@ -142,7 +147,13 @@ Here are a few example usages:
 
     (gifcast)
 
-Like with buffers and windows, it is also possible to execute a command in each tab page: `:tabdo command`.
+Like with buffers and windows, it is also possible to execute a command in each tab page: `:tabdo command`:
+
+    (gifcast)
+
+=== Reference
+
+    :help tab-page
 
 == Special Windows
 
@@ -419,6 +430,9 @@ The command-line is Vim's main interface. Like the prompt of your computer's she
         </li>
         <li class="current">
             <a href="2.html">2&nbsp;&nbsp;&nbsp;Your workspace</a>
+++++
+toc::[]
+++++
         </li>
         <li>
             <a href="3.html">3&nbsp;&nbsp;&nbsp;Title pending</a>

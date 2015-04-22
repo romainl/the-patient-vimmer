@@ -115,7 +115,7 @@ Press ENTER or type command to continue</pre>
 <p>One way to avoid thinking too much about your buffers is to mash <code>:bn[ext]</code> and <code>:bp[revious]</code> until you get where you want. Your destination might be sixteen buffers away, though, so cycling is not a silver bullet.</p>
 </div>
 <div class="paragraph">
-<p>But that boring <code>:ls</code>, then <code>&lt;CR&gt;</code>, then <code>:b</code>, then <code>24</code>, then <code>&lt;CR&gt;</code>, routine looks like a good candidate for a custom mapping:</p>
+<p>But that boring <code>:ls</code>, then <code>&lt;CR&gt;</code>, then <code>:b</code>, then <code>24</code>, then <code>&lt;CR&gt;</code> routine looks like a good candidate for a custom mapping:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -131,6 +131,10 @@ Press ENTER or type command to continue</pre>
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_reference">Reference</h3>
+
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -143,10 +147,14 @@ Press ENTER or type command to continue</pre>
 <p>The purpose of a window is to provide a view into a buffer. It can be created, moved around and closed but it is important to remember that windows and buffers are <strong>totally</strong> separated.</p>
 </div>
 <div class="paragraph">
-<p>By default, the splitting is done to the left, which can be very intuitive.</p>
+<p>By default, the splitting is done to the left, which can be very counter-intuitive.</p>
 </div>
 <div class="sect2">
 <h3 id="_working_with_windows">Working with windows</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_reference_2">Reference</h3>
 
 </div>
 </div>
@@ -158,7 +166,7 @@ Press ENTER or type command to continue</pre>
 <p>Tab pages&#8201;&#8212;&#8201;too often referred to as &#8220;tabs&#8221;&#8201;&#8212;&#8201;have been a neverending source of confusion since their appearance in Vim 7.x. Despite their name and how the <a href="#_the_tabline">&#8220;tabline&#8221;</a> is implemented, Vim&#8217;s <em>tab pages</em> are not like other editor&#8217;s <em>tabs</em>.</p>
 </div>
 <div class="paragraph">
-<p>In other editors, &#8220;tabs&#8221; serve as a proxies for documents. This means that the editor&#8217;s &#8220;tabline&#8221;&#8201;&#8212;&#8201;a list of tabs&#8201;&#8212;&#8201;is effectively a list of documents and the user is can use it to navigate from one tab to another and thus from one document to another. A &#8220;tab&#8221; <em>is</em> for all intent and purpose a <em>document</em> and there is no need to separate the tab <em>widget</em> from the document it is associated to.</p>
+<p>In other editors, &#8220;tabs&#8221; serve as a proxies for documents. This means that the editor&#8217;s &#8220;tabline&#8221;&#8201;&#8212;&#8201;a list of tabs&#8201;&#8212;&#8201;is effectively a list of documents that is used to navigate from one tab to another and thus from one document to another. A &#8220;tab&#8221; <em>is</em> for all intent and purpose a <em>document</em> and there is no need to separate the tab <em>widget</em> from the document it is associated to.</p>
 </div>
 <div class="paragraph">
 <p>Switching to a &#8220;tab&#8221; is exactly like switching to a document.</p>
@@ -188,12 +196,12 @@ Press ENTER or type command to continue</pre>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>:tabnew          " creates a new tab page containing one window
-                 " displaying a new, unnamed, empty buffer.
-:tabedit file    " creates a new tab page containing one window
-                 " displaying a buffer associated with 'file'.
-:tabfind file    " works similarly as the previous one but uses
-                 " ':find' instead of ':edit'.</pre>
+<pre>:tabnew            " creates a new tab page containing one window
+                   " displaying a new, unnamed, empty buffer.
+:tabe[dit] file    " creates a new tab page containing one window
+                   " displaying a buffer associated with 'file'.
+:tabf[ind] file    " works similarly as the previous one but uses
+                   " ':find' instead of ':edit'.</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -211,23 +219,23 @@ nnoremap &lt;leader&gt;tf :tabfind *</pre>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>:tabclose      " closes the current tab page,
-:tabclose 3    " closes tab page number 3,
-:tabonly       " closes all tab pages except the current one.</pre>
+<pre>:tabc[lose]      " closes the current tab page,
+:tabc[lose] 3    " closes tab page number 3,
+:tabo[nly]       " closes all tab pages except the current one.</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Note that closing a tab page also closes its windows but <em>it doesn&#8217;t delete the buffers currently displayed in those windows.</em></p>
+<p>Note that closing a tab page also closes its windows but <em>it doesn&#8217;t delete the buffers currently displayed in those windows.</em> Remember : windows are <em>views</em> and tab pages are <em>assemblages</em> of windows.</p>
 </div>
 <div class="paragraph">
 <p>Switching to another tab page is also well covered and pretty intuitive:</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>:tabfirst
-:tabnext
-:tabprevious
-:tablast</pre>
+<pre>:tabfir[st]
+:tabn[ext]
+:tabp[revious]
+:tabl[ast]</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -257,7 +265,20 @@ nnoremap &lt;leader&gt;tf :tabfind *</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Like with buffers and windows, it is also possible to execute a command in each tab page: <code>:tabdo command</code>.</p>
+<p>Like with buffers and windows, it is also possible to execute a command in each tab page: <code>:tabdo command</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(gifcast)</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_reference_3">Reference</h3>
+<div class="literalblock">
+<div class="content">
+<pre>:help tab-page</pre>
+</div>
 </div>
 </div>
 </div>
@@ -398,7 +419,7 @@ nnoremap &lt;F5&gt; :write&lt;Bar&gt;silent make&lt;Bar&gt;cwindow&lt;CR&gt;</pr
 </div>
 </div>
 <div class="sect3">
-<h4 id="_reference">Reference</h4>
+<h4 id="_reference_4">Reference</h4>
 <div class="literalblock">
 <div class="content">
 <pre>:help quickfix
@@ -448,7 +469,7 @@ nnoremap &lt;F5&gt; :write&lt;Bar&gt;silent make&lt;Bar&gt;cwindow&lt;CR&gt;</pr
 </div>
 </div>
 <div class="sect3">
-<h4 id="_reference_2">Reference</h4>
+<h4 id="_reference_5">Reference</h4>
 <div class="literalblock">
 <div class="content">
 <pre>:help preview-window</pre>
@@ -496,7 +517,7 @@ nnoremap &lt;F5&gt; :write&lt;Bar&gt;silent make&lt;Bar&gt;cwindow&lt;CR&gt;</pr
 <p>I don&#8217;t recommend doing that, actually, but I think it is an interesting example of customization.</p>
 </div>
 <div class="sect3">
-<h4 id="_reference_3">Reference</h4>
+<h4 id="_reference_6">Reference</h4>
 <div class="literalblock">
 <div class="content">
 <pre>:h cmdline-window</pre>
@@ -551,7 +572,7 @@ nnoremap &lt;F5&gt; :write&lt;Bar&gt;silent make&lt;Bar&gt;cwindow&lt;CR&gt;</pr
 <p>The tabline and tab pages still have their use, mind you, but it is important to not think about them as you would in other editors.</p>
 </div>
 <div class="sect3">
-<h4 id="_reference_4">Reference</h4>
+<h4 id="_reference_7">Reference</h4>
 <div class="literalblock">
 <div class="content">
 <pre>:help 'showtabline'
@@ -597,7 +618,7 @@ nnoremap &lt;F5&gt; :write&lt;Bar&gt;silent make&lt;Bar&gt;cwindow&lt;CR&gt;</pr
 <p>It is also possible to define colors for specific parts or use functions to display dynamic information not provided by Vim but I recommend measure, here: the statusline is an information device, not a decorative widget.</p>
 </div>
 <div class="sect3">
-<h4 id="_reference_5">Reference</h4>
+<h4 id="_reference_8">Reference</h4>
 <div class="literalblock">
 <div class="content">
 <pre>:help 'laststatus'
@@ -647,7 +668,7 @@ V5k          " linewise visual selection from here to 5 lines above
 </div>
 </div>
 <div class="sect3">
-<h4 id="_reference_6">Reference</h4>
+<h4 id="_reference_9">Reference</h4>
 <div class="literalblock">
 <div class="content">
 <pre>:help 'number'
@@ -671,7 +692,7 @@ V5k          " linewise visual selection from here to 5 lines above
 <p>Open folds are marked with a clickable <code>-</code>, lines belonging to a fold are marked with a <code>|</code> and closed folds are marked with a clickable <code>+</code>.</p>
 </div>
 <div class="sect3">
-<h4 id="_reference_7">Reference</h4>
+<h4 id="_reference_10">Reference</h4>
 <div class="literalblock">
 <div class="content">
 <pre>:h fold-foldcolumn
@@ -694,7 +715,7 @@ V5k          " linewise visual selection from here to 5 lines above
 <p>The color and content of individual signs is usually defined by plugin authors whereas the background of the column is the responsibility of your colorscheme.</p>
 </div>
 <div class="sect3">
-<h4 id="_reference_8">Reference</h4>
+<h4 id="_reference_11">Reference</h4>
 <div class="literalblock">
 <div class="content">
 <pre>:help signs</pre>
@@ -716,7 +737,7 @@ V5k          " linewise visual selection from here to 5 lines above
 <p>problems and solutions (to be written)</p>
 </div>
 <div class="sect3">
-<h4 id="_reference_9">Reference</h4>
+<h4 id="_reference_12">Reference</h4>
 <div class="literalblock">
 <div class="content">
 <pre>:help ins-completion-menu</pre>
@@ -735,7 +756,7 @@ V5k          " linewise visual selection from here to 5 lines above
 <p>The command-line is Vim&#8217;s main interface. Like the prompt of your computer&#8217;s shell, it is used to send commands to Vim and for feedback if necessary.</p>
 </div>
 <div class="sect3">
-<h4 id="_reference_10">Reference</h4>
+<h4 id="_reference_13">Reference</h4>
 
 </div>
 </div>
@@ -758,6 +779,48 @@ V5k          " linewise visual selection from here to 5 lines above
         </li>
         <li class="current">
             <a href="2.html">2&nbsp;&nbsp;&nbsp;Your workspace</a>
+<div id="toc" class="toc">
+<div id="toctitle" class="title">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_buffers">Buffers</a>
+<ul class="sectlevel2">
+<li><a href="#_working_with_buffers">Working with buffers</a></li>
+<li><a href="#_reference">Reference</a></li>
+</ul>
+</li>
+<li><a href="#_windows">Windows</a>
+<ul class="sectlevel2">
+<li><a href="#_working_with_windows">Working with windows</a></li>
+<li><a href="#_reference_2">Reference</a></li>
+</ul>
+</li>
+<li><a href="#_tab_pages">Tab pages</a>
+<ul class="sectlevel2">
+<li><a href="#_working_with_tab_pages">Working with tab pages</a></li>
+<li><a href="#_reference_3">Reference</a></li>
+</ul>
+</li>
+<li><a href="#_special_windows">Special Windows</a>
+<ul class="sectlevel2">
+<li><a href="#_the_quickfix_window">The quickfix window</a></li>
+<li><a href="#_the_preview_window">The preview window</a></li>
+<li><a href="#_the_command_line_window">The Command-line window</a></li>
+</ul>
+</li>
+<li><a href="#_various_ui_elements">Various UI elements</a>
+<ul class="sectlevel2">
+<li><a href="#_the_tabline">The tabline</a></li>
+<li><a href="#_the_statusline">The statusline</a></li>
+<li><a href="#_line_numbers">Line numbers</a></li>
+<li><a href="#_the_fold_column">The fold column</a></li>
+<li><a href="#_the_sign_column">The sign column</a></li>
+<li><a href="#_the_completion_menu">The completion menu</a></li>
+<li><a href="#_the_command_line">The command-line</a></li>
+</ul>
+</li>
+<li><a href="#_conclusion">Conclusion</a></li>
+</ul>
+</div>
         </li>
         <li>
             <a href="3.html">3&nbsp;&nbsp;&nbsp;Title pending</a>
@@ -790,7 +853,7 @@ V5k          " linewise visual selection from here to 5 lines above
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-04-21 12:25:04 CEST
+Last updated 2015-04-22 11:24:35 CEST
 </div>
 </div>
 </body>
