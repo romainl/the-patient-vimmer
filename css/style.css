@@ -547,6 +547,9 @@ h6 {
 #front ul li.current a:hover {
     background-color: #ffffff;
 }
+#front ul li ul {
+    background-color: #ffffff;
+}
 #front #bottom {
     background-color: #cccccc;
     color: #262626;
