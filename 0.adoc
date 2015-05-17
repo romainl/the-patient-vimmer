@@ -45,9 +45,8 @@ You may need slightly different packages depending on your Desktop Environment o
 
 ==== Arch
 
-    $ sudo pacman -Sy
-    $ sudo pacman -R vim
-    $ sudo pacman -S gvim
+    $ sudo pacman -Syy
+    $ sudo pacman -S vim gvim # vim pkg includes huge features, gvim optional
 
 ==== Debian
 
