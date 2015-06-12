@@ -58,7 +58,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Vim&#8217;s screen may have a number of secondary UI elements such as a &#8220;tabline&#8221; or line numbers but it <strong>always</strong> contains <em>at least</em> the following elements:</p>
+<p>Vim&#8217;s screen <strong>always</strong> contains <em>at least</em> the following elements:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -69,12 +69,20 @@
 <p>one window, always displaying&#8230;&#8203;</p>
 </li>
 <li>
+<<<<<<< HEAD
 <p>one buffer.</p>
+=======
+<p>a buffer.</p>
+>>>>>>> ee1583feb0cc3aabb196020d12031a779d206eaa
 </li>
 </ul>
 </div>
 <div class="paragraph">
+<<<<<<< HEAD
 <p>At the root of the tree&#8201;&#8212;&#8201;and at the center of Vim&#8217;s design&#8201;&#8212;&#8201;is the buffer; a little higher on the abstraction ladder is the window and, higher again, is the tab page. Vim will quit when you delete the last buffer, close the last window or close the last tab page.</p>
+=======
+<p>It may have a number of secondary UI elements such as a &#8220;tabline&#8221; or line numbers, though. The purpose of this chapter is to help you feel at home within that environment.</p>
+>>>>>>> ee1583feb0cc3aabb196020d12031a779d206eaa
 </div>
 </div>
 </div>
@@ -82,7 +90,14 @@
 <h2 id="_buffers">Buffers</h2>
 <div class="sectionbody">
 <div class="paragraph">
+<<<<<<< HEAD
 <p>Like Word or Photoshop, Vim lets us create, delete and&#8201;&#8212;&#8201;of course&#8201;&#8212;&#8201;edit &#8220;buffers&#8221; (Vim&#8217;s lingo for &#8220;documents&#8221;). Like in Word or Photoshop, those buffers can be associated with an actual file or not and your changes will not be written to disk unless you instruct Vim to do so with <code>:write</code> or <code>:update</code>. Like Word or Photoshop, Vim will tell you when you are trying to quit without saving&#8230;&#8203; No, Vim is not <em>that</em> weird, after all.</p>
+=======
+<p>Like Word or Photoshop, Vim lets us create, delete and&#8201;&#8212;&#8201;of course&#8201;&#8212;&#8201;edit &#8220;documents&#8221;, whether they are associated to an actual file or not. Those documents are called &#8220;buffers&#8221;.</p>
+</div>
+<div class="paragraph">
+<p>A buffer is the internal representation of the content of a file. Because you work on a representation of that file, your changes will not be written to disk unless you instruct Vim to do so.</p>
+>>>>>>> ee1583feb0cc3aabb196020d12031a779d206eaa
 </div>
 <div class="paragraph">
 <p>As Vim&#8217;s core file proxies, buffers are (or should be) at the core of your workflow and you owe it to yourself to know how to work with them to achieve reasonable efficiency.</p>
@@ -90,15 +105,29 @@
 <div class="sect2">
 <h3 id="_working_with_buffers">Working with buffers</h3>
 <div class="paragraph">
+<<<<<<< HEAD
 <p>Every buffer created in Vim via <code>:edit</code>, <code>:find</code>, <code>:args</code>, any similar command or simply <code>$ vim filename</code> is added to the <em>buffer list</em> where it is assigned a number that will never change until it is explicitely wiped out. Beside that number, each buffer may have a name:</p>
+=======
+<p>Every buffer created in Vim via <code>:edit</code>, <code>:find</code>, <code>:args</code>, or any of their relatives, or simply <code>$ vim filename</code>, is added to the <em>buffer list</em> where it is assigned a number that will <strong>never</strong> change until it is explicitely wiped out from the list. When started without arguments, Vim will create an empty buffer by default so there&#8217;s really always <em>at least</em> one buffer to work with.</p>
+</div>
+<div class="paragraph">
+<p>Beside that number, buffers are named after the file they are associated with. This gives us two ways to address a buffer:</p>
+>>>>>>> ee1583feb0cc3aabb196020d12031a779d206eaa
 </div>
 <div class="ulist">
 <ul>
 <li>
+<<<<<<< HEAD
 <p>when it is associated with a file, the buffer is named after that file,</p>
 </li>
 <li>
 <p>when it was created with a command like <code>:e foobar</code>, and there&#8217;s no file named <code>foobar</code> in the working directory, the buffer is named <code>foobar</code></p>
+=======
+<p>by its number,</p>
+</li>
+<li>
+<p>by its name.</p>
+>>>>>>> ee1583feb0cc3aabb196020d12031a779d206eaa
 </li>
 </ul>
 </div>
@@ -173,11 +202,20 @@ Press ENTER or type command to continue</pre>
 </div>
 </div>
 <div class="paragraph">
+<<<<<<< HEAD
 <p>Here is a nice jet-pack for our arsenal:</p>
 </div>
 <div class="literalblock">
 <div class="content">
 <pre>nnoremap gb :ls&lt;CR&gt;:b&lt;Space&gt;</pre>
+=======
+<p>But that boring <code>:ls</code>, then <code>&lt;CR&gt;</code>, then <code>:b</code>, then <code>24</code>, then <code>&lt;CR&gt;</code> routine looks like a good candidate for a nice, mnemonic, custom mapping:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>" g-o to b-uffer
+nnoremap gb :ls&lt;CR&gt;:b</pre>
+>>>>>>> ee1583feb0cc3aabb196020d12031a779d206eaa
 </div>
 </div>
 <div class="paragraph">
@@ -189,6 +227,7 @@ Press ENTER or type command to continue</pre>
 </div>
 </div>
 <div class="paragraph">
+<<<<<<< HEAD
 <p>Neat!</p>
 </div>
 <div class="paragraph">
@@ -211,6 +250,39 @@ Press ENTER or type command to continue</pre>
 :bufdo set number</pre>
 </div>
 </div>
+=======
+<p>Not bad at all! But there&#8217;s one problem with numbers, though: the file-number mapping is not very intuitive and can be very hard to follow and forces us to pull up a list if we want to go that way.</p>
+</div>
+<div class="paragraph">
+<p>Humans being humans, we are naturally better at names than numbers so the second way to address buffers, <strong>names,</strong> may have a lot of potential. The commands we used before&#8201;&#8212;&#8201;<code>:b</code>, <code>:bd</code>&#8201;&#8212;&#8201;can take &#8220;completable&#8221; partial names as argument which makes it easy and very close to frictionless to switch to a buffer, especially with the wildmenu:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(gifcast)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Again, we can create a convenient mapping to save a bunch of keystrokes:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>nnoremap &lt;leader&gt;b :buffer *</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>I hope you noticed the similarity with the <code>&lt;leader&gt;f</code> mapping we added to our <code>vimrc</code> in the previous chapter. We have two commands with a similar purpose that work exactly the same way and follow the same naming pattern:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>f</code> for &#8220;file&#8221;,</p>
+</li>
+<li>
+<p><code>b</code> for &#8220;buffer&#8221;.</p>
+</li>
+</ul>
+</div>
+>>>>>>> ee1583feb0cc3aabb196020d12031a779d206eaa
 </div>
 <div class="sect2">
 <h3 id="_reference">Reference</h3>
@@ -231,6 +303,7 @@ Press ENTER or type command to continue</pre>
 <h2 id="_windows">Windows</h2>
 <div class="sectionbody">
 <div class="paragraph">
+<<<<<<< HEAD
 <p>As briefly mentioned in the introduction, we <em>always</em> have at least one window in Vim, that <em>always</em> displays one buffer.</p>
 </div>
 <div class="paragraph">
@@ -241,13 +314,21 @@ Press ENTER or type command to continue</pre>
 </div>
 <div class="paragraph">
 <p>An interesting feature of Vim is the ability to split our workspace in multiple windows&#8201;&#8212;&#8201;often called &#8220;splits&#8221;&#8201;&#8212;&#8201;to display different buffers or parts of a buffer. The exact mechanism is quite simple: the current window is split in two equal parts along the desired axis, <em>vertical</em> or <em>horizontal</em>, and the cursor is placed in the new window.</p>
+=======
+<p>Just like you always have <em>at least</em> one buffer, that buffer is always displayed in <em>at least</em> one window but Vim gives us the ability to split our workspace in multiple windows&#8201;&#8212;&#8201;often called &#8220;splits&#8221;&#8201;&#8212;&#8201;to display different buffers or parts of a buffer.</p>
+>>>>>>> ee1583feb0cc3aabb196020d12031a779d206eaa
 </div>
 <div class="paragraph">
-<p>By default, the splitting is done to the left, which can be very counter-intuitive.</p>
+<p>The exact mechanism is quite simple: the current window is split in two equal parts along the desired axis, <em>vertical</em> or <em>horizontal</em>, and the cursor is placed in the new window. By default, the splitting is done to the left, which can be quite counter-intuitive.</p>
 </div>
 <div class="sect2">
 <h3 id="_working_with_windows">Working with windows</h3>
-
+<div class="paragraph">
+<p>The purpose of a window is thus to provide a view into a buffer. It can be created, moved around and closed but it is important to remember that windows and buffers are <strong>totally</strong> separated.</p>
+</div>
+<div class="paragraph">
+<p>If buffers and windows had a one-to-one relationship, listing windows would make just as much sense as listing buffers for navigation purpose. Addressing them by name would certainly be useful too. But they don&#8217;t and</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_reference_2">Reference</h3>
@@ -908,7 +989,11 @@ V5k          " linewise visual selection from here to 5 lines above
 </div>
 <div id="footer">
 <div id="footer-text">
+<<<<<<< HEAD
 Last updated 2015-05-14 22:26:45 CEST
+=======
+Last updated 2015-06-12 11:21:18 CEST
+>>>>>>> ee1583feb0cc3aabb196020d12031a779d206eaa
 </div>
 </div>
 </body>

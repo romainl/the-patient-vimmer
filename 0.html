@@ -37,10 +37,7 @@
 <p>But what kind of involvement are we talking about? Is it the kind that requires us to commit all of <a href="http://www.viemu.com/vi-vim-cheat-sheet.gif">that meaningless garbage</a> to memory?</p>
 </div>
 <div class="paragraph">
-<p>No. <a href="http://www.moolenaar.net/habits.html">Like Vim&#8217;s author</a>, I don&#8217;t believe &#8220;knowing all of Vim&#8221; or &#8220;being a Vim guru&#8221; should be anyone&#8217;s goal. Those are <em>consequences</em> of using Vim daily for 10 or 20 years, maybe. But the real <em>goal</em> is, in my opinion, much less visible; much less quantifiable: we should learn Vim because it helps us become better at what we do, not because we want to reach a grand goal. And, well&#8230;&#8203; I don&#8217;t even believe anybody <em>should</em> learn Vim at all.</p>
-</div>
-<div class="paragraph">
-<p>Learning Vim is a long journey where the destination doesn&#8217;t really matter. What happens along the way and the positive changes it causes in us is all that counts.</p>
+<p>No. <a href="http://www.moolenaar.net/habits.html">Like Vim&#8217;s author</a>, I don&#8217;t believe &#8220;knowing all of Vim&#8221; or &#8220;being a Vim guru&#8221; should be anyone&#8217;s goal. Those are <em>consequences</em> of using Vim daily for 10 or 20 years, maybe, but we shouldn&#8217;t keep our eyes too focused on that target. Learning Vim is a long journey where the destination doesn&#8217;t really matter. What happens along the way and the positive changes it causes in us is all that counts.</p>
 </div>
 <div class="paragraph">
 <p>You are playing in your own Tolkien trilogy, goddammit!</p>
@@ -59,7 +56,7 @@
 <p>that you are comfortable with the command-line, our primary environment for the whole guide,</p>
 </li>
 <li>
-<p>that you have already followed <code>vimtutor</code> and have a bit of firsthand experience with Vim,</p>
+<p>that you have already followed <code>vimtutor</code> at least a couple of times and that you have at least a bit of firsthand experience with Vim,</p>
 </li>
 <li>
 <p>that you have access to a reasonably up-to-date Vim build.</p>
@@ -70,12 +67,12 @@
 <p>The default Vim on your system&#8201;&#8212;&#8201;if you have one&#8201;&#8212;&#8201;is usually a very small build that lacks useful features for serious usage. While this isn&#8217;t a huge deal in principle, those missing features can be a source of frustration if you intend to use Vim <em>seriously</em>, as your main text editor.</p>
 </div>
 <div class="paragraph">
-<p>I therefore recommend you upgrade to a more up-to-date and full-featured build. How to do that depends on your platform.</p>
+<p>I therefore recommend you upgrade to a more up-to-date and full-featured build. How to do that depends on your platform&#8230;&#8203;</p>
 </div>
 <div class="sect2">
 <h3 id="_on_linux_bsd">On Linux/BSD</h3>
 <div class="paragraph">
-<p>On Linux/BSD systems, the trick is generally to install the more featured &#8220;gvim&#8221; package, which gives you both a <code>vim</code> command for terminal usage and a <code>gvim</code> command for GUI usage.</p>
+<p>On Linux/BSD systems, the trick is generally to install the more featured &#8220;gvim&#8221; package, which generally gives you both a <code>vim</code> command for terminal usage and a <code>gvim</code> command for GUI usage.</p>
 </div>
 <div class="paragraph">
 <p>You may need slightly different packages depending on your Desktop Environment or even distribution variant. There are too many possibilities so&#8230;&#8203; use your package manager and common-sense to decide what to install. For any issue, refer to your package manager&#8217;s documentation.</p>
@@ -125,9 +122,6 @@ $ sudo yum install vim-enhanced</pre>
 $ sudo slackpkg install-new vim-gvim</pre>
 </div>
 </div>
-<div class="paragraph">
-<p>TODO TODO TODO</p>
-</div>
 </div>
 <div class="sect3">
 <h4 id="_openbsd">OpenBSD</h4>
@@ -143,9 +137,6 @@ $ sudo slackpkg install-new vim-gvim</pre>
 <div class="content">
 <pre>$ sudo pkg install editors/vim</pre>
 </div>
-</div>
-<div class="paragraph">
-<p>TODO TODO TODO</p>
 </div>
 </div>
 </div>
@@ -201,7 +192,7 @@ $ sudo port install macvim</pre>
 <div class="sect2">
 <h3 id="_on_windows">On Windows</h3>
 <div class="paragraph">
-<p>There is no Vim on your machine by default so you are forced to install it anyway. The default download from <a href="http://wwww.vim.org">vim.org</a> is OK but slightly outdated. You can get more up-to-date and complete builds from this project:</p>
+<p>There is no Vim on your system by default so you are forced to install it anyway. The default download from <a href="http://wwww.vim.org">vim.org</a> is OK but slightly outdated. You can get more up-to-date and complete builds from this project:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -217,7 +208,7 @@ $ sudo port install macvim</pre>
 <h2 id="_the_mother_of_all_commands">The mother of all commands</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Every complex piece of software comes with extensive documentation and Vim is no stranger to that rule. Learning how to use that documentation is the first and most important step on your way to &#8220;editing at the speed of thought&#8221; or &#8220;becoming a Vim ninja&#8221; or making your editor look like a Christmas tree in Las Vegas.</p>
+<p>Every complex piece of software comes with an extensive documentation and Vim is no stranger to that rule. Learning how to use that documentation is the first and most important step on your way to &#8220;editing at the speed of thought&#8221; or &#8220;becoming a Vim ninja&#8221; or making your editor look like a Christmas tree in Las Vegas.</p>
 </div>
 <div class="paragraph">
 <p>Learning how to use the documentation makes you self-reliant. With self-reliance comes confidence and with confidence comes efficiency.</p>
@@ -361,6 +352,18 @@ Search for help:
 <div class="paragraph">
 <p>every time we start Vim to set <code>'cpoptions'</code> and many other options to their &#8220;Vim&#8221; value.</p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<code>compatible</code> is a boolean option enabled with <code>:set compatible</code> and disabled with <code>:set nocompatible</code>. Every boolean option in Vim follows the same pattern.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>The second way consists of using a command-line flag to tell Vim to start in &#8220;nocompatible mode&#8221;:</p>
 </div>
@@ -369,8 +372,20 @@ Search for help:
 <pre>$ vim -N</pre>
 </div>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Like most CLI programs, Vim tells you what flags can be used to change its behavior at startup when started with the <code>--help</code> argument. Go on, it&#8217;s an interesting read.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
-<p>The two solutions above may be OK for infrequent, quick sessions but we are trying to use Vim as our main editor so they rather obviously don&#8217;t scale. Let&#8217;s see a third way: creating our very own <code>vimrc</code>.</p>
+<p>The two solutions above may be OK for infrequent, quick, sessions but we are trying to use Vim as our main editor so they rather obviously don&#8217;t scale. Let&#8217;s see a third way: creating our very own <code>vimrc</code>.</p>
 </div>
 <div class="paragraph">
 <p>Vim&#8217;s user-level configuration file is called <code>.vimrc</code> on Unix-like systems and <code>_vimrc</code> on Windows. During the startup procedure, Vim looks for that file in a couple of standard locations; as soon as it is found, the <code>'compatible'</code> option is disabled, just like if you typed <code>:set nocompatible</code>.</p>
@@ -438,8 +453,17 @@ $ vim .vimrc          C:vim _vimrc</pre>
 <pre>:source %</pre>
 </div>
 </div>
-<div class="paragraph">
-<p>When used as an argument for an Ex command, <code>%</code> is replaced before execution by the current file name so <code>:source %</code> is exactly the same as <code>:source ~/.vimrc</code>, except a lot shorter <em>and</em> generic. That will certainly come in handy!</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+When used as an argument for an Ex command, <code>%</code> is replaced before execution by the current file name so <code>:source %</code> is exactly the same as <code>:source ~/.vimrc</code>, except a lot shorter <em>and</em> generic. That will certainly come in handy!
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
@@ -488,11 +512,17 @@ $ vim .vimrc          C:vim _vimrc</pre>
 <pre>:so %</pre>
 </div>
 </div>
-<div class="paragraph">
-<p>Most Ex commands and options can be shortened to a couple of letters. This undoubtedly make things easier to type as short names are a must on the command-line!</p>
-</div>
-<div class="paragraph">
-<p>In configuration files and scripts, though, the short form can be hard to read and doesn&#8217;t provide any benefit over the long form so don&#8217;t use it; your future self will thank you.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Most Ex commands and options can be shortened to a couple of letters. This undoubtedly make things easier to type as short names are a must on the command-line! In configuration files and scripts, though, the short form can be hard to read and doesn&#8217;t provide any benefit over the long form so don&#8217;t use it; your future self will thank you.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
@@ -530,8 +560,17 @@ $ vim .vimrc          C:vim _vimrc</pre>
 <pre>:w|so %</pre>
 </div>
 </div>
-<div class="paragraph">
-<p>In Vim&#8217;s command-line, the vertical bar allows us to chain Ex commands. While it looks the same, the &#8220;bar&#8221; is <em>not</em> the equivalent of a Unix &#8220;pipe&#8221;, if only because no data is sent from one command to the next. It is more akin to &#8220;;&#8221; in C.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+In Vim&#8217;s command-line, the vertical bar allows us to chain Ex commands. While it looks the same, the &#8220;bar&#8221; is <em>not</em> the equivalent of a Unix &#8220;pipe&#8221;, if only because no data is sent from one command to the next. It is more akin to &#8220;;&#8221; in C.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
@@ -563,7 +602,19 @@ $ vim .vimrc          C:vim _vimrc</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>and&#8230;&#8203; type <code>:</code> then press the <code>&lt;Up&gt;</code> key to recall the latest Ex command. Vim remembers 20 commands by default so I know someone who will fall in love with his/her <code>&lt;Up&gt;</code> key&#8230;&#8203;</p>
+<p>and&#8230;&#8203; type <code>:</code> then press the <code>&lt;Up&gt;</code> key to recall the latest Ex command.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Vim remembers 20 commands by default so I know someone who will fall in love with his/her <code>&lt;Up&gt;</code> key&#8230;&#8203;
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
@@ -625,8 +676,17 @@ let &amp;softtabstop = &amp;shiftwidth</pre>
 <pre>set expandtab</pre>
 </div>
 </div>
-<div class="paragraph">
-<p>There are two ways to "set" an option in Vim. The <code>:set</code> command is the simplest and most restrictive but we can also use <code>:let</code> which allows us to use an expression on the right hand side of the operator. Here, we reuse the value of <code>'shiftwidth'</code> for <code>'softtabstop'</code>.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+There are two ways to &#8220;set&#8221; an option in Vim. The <code>:set</code> command is the simplest and most restrictive but we can also use <code>:let</code> which allows us to use an expression on the right hand side of the operator. Here, we reuse the value of <code>'shiftwidth'</code> for <code>'softtabstop'</code>.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
@@ -720,7 +780,11 @@ let &amp;softtabstop = &amp;shiftwidth</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
+<<<<<<< HEAD
 Last updated 2015-05-14 14:36:23 CEST
+=======
+Last updated 2015-06-09 12:19:58 CEST
+>>>>>>> ee1583feb0cc3aabb196020d12031a779d206eaa
 </div>
 </div>
 </body>
