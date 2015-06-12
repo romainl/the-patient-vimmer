@@ -574,6 +574,31 @@ table tr td {
 table tr td p {
     text-align: left;
 }
+.note {
+    background-color: #007F00;
+    border-radius: 4px;
+    padding: 12px;
+    color: #ffffff;
+    font-size: 0.8em;
+}
+.note table tr th {
+    width: 1;
+    border-bottom: none;
+}
+.note table tr td {
+    border-bottom: none;
+    width: 1;
+}
+.note table tr td p {
+    text-align: left;
+}
+.note table tr td.icon {
+    width: 3em;
+    vertical-align: top;
+}
+.note table tr td.content {
+    font-style: italic;
+}
 a {
     color: #007f00;
 }

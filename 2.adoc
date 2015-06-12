@@ -6,25 +6,30 @@
 :linkcss:
 :toc: macro
 
-Vim's screen may have a number of secondary UI elements such as a "`tabline`" or line numbers but it **always** contains _at least_ the following elements:
+Vim's screen **always** contains _at least_ the following elements:
 
 * a tab page, always containing at least...
 * a window, always displaying...
 * a buffer.
 
-    (more intro to be written)
+It may have a number of secondary UI elements such as a "`tabline`" or line numbers, though. The purpose of this chapter is to help you feel at home within that environment.
 
 == Buffers
 
 Like Word or Photoshop, Vim lets us create, delete and -- of course -- edit "`documents`", whether they are associated to an actual file or not. Those documents are called "`buffers`".
 
-A buffer is the internal representation of the content of a file. Because you work on a representation of that file, your changes will not be written to disk unless you instruct Vim to do so with `:write` or `:update`.
+A buffer is the internal representation of the content of a file. Because you work on a representation of that file, your changes will not be written to disk unless you instruct Vim to do so.
 
 As Vim's core file proxies, buffers are (or should be) at the core of your workflow and you owe it to yourself to know how to work with them to achieve reasonable efficiency.
 
 === Working with buffers
 
-Every buffer created in Vim via `:edit`, `:find`, `:args`, any of their relatives or simply `$ vim filename` is added to the _buffer list_ where it is assigned a number that will never change until it is explicitely wiped out from the list. Beside that number, a buffer associated with a file will be named after that file, giving us a second way to address that buffer.
+Every buffer created in Vim via `:edit`, `:find`, `:args`, or any of their relatives, or simply `$ vim filename`, is added to the _buffer list_ where it is assigned a number that will *never* change until it is explicitely wiped out from the list. When started without arguments, Vim will create an empty buffer by default so there's really always _at least_ one buffer to work with.
+
+Beside that number, buffers are named after the file they are associated with. This gives us two ways to address a buffer:
+
+* by its number,
+* by its name.
 
 A typical Vim session could be short and only consist of editing a single file -- and thus a single buffer -- or it could go for weeks and consist of dozens and dozens of buffers. Keeping track of so many buffers would be daunting if Vim didn't gave us not one, not two, but _three_ commands for listing buffers:
 
@@ -61,25 +66,43 @@ Of course, it is not necessary to do `:ls` before doing `:b24` but who wants to 
 
 One way to avoid thinking too much about your buffers is to mash `:bn[ext]` and `:bp[revious]` until you get where you want. Your destination might be sixteen buffers away, though, so cycling is not a silver bullet.
 
-But that boring `:ls`, then `<CR>`, then `:b`, then `24`, then `<CR>` routine looks like a good candidate for a custom mapping:
+But that boring `:ls`, then `<CR>`, then `:b`, then `24`, then `<CR>` routine looks like a good candidate for a nice, mnemonic, custom mapping:
 
-    nnoremap <leader>b :ls<CR>:b
+    " g-o to b-uffer
+    nnoremap gb :ls<CR>:b
 
 Here is how it looks:
 
     (gifcast)
 
+Not bad at all! But there's one problem with numbers, though: the file-number mapping is not very intuitive and can be very hard to follow and forces us to pull up a list if we want to go that way.
+
+Humans being humans, we are naturally better at names than numbers so the second way to address buffers, *names,* may have a lot of potential. The commands we used before -- `:b`, `:bd` -- can take "`completable`" partial names as argument which makes it easy and very close to frictionless to switch to a buffer, especially with the wildmenu:
+
+    (gifcast)
+
+Again, we can create a convenient mapping to save a bunch of keystrokes:
+
+    nnoremap <leader>b :buffer *
+
+I hope you noticed the similarity with the `<leader>f` mapping we added to our `vimrc` in the previous chapter. We have two commands with a similar purpose that work exactly the same way and follow the same naming pattern:
+
+* `f` for "`file`",
+* `b` for "`buffer`".
+
 === Reference
 
 == Windows
 
-Vim gives us the ability to split our workspace in multiple windows -- often called "`splits`" -- to display different buffers or parts of a buffer. The exact mechanism is quite simple: the current window is split in two equal parts along the desired axis, _vertical_ or _horizontal_, and the cursor is placed in the new window.
+Just like you always have _at least_ one buffer, that buffer is always displayed in _at least_ one window but Vim gives us the ability to split our workspace in multiple windows -- often called "`splits`" -- to display different buffers or parts of a buffer.
 
-The purpose of a window is to provide a view into a buffer. It can be created, moved around and closed but it is important to remember that windows and buffers are **totally** separated.
-
-By default, the splitting is done to the left, which can be very counter-intuitive.
+The exact mechanism is quite simple: the current window is split in two equal parts along the desired axis, _vertical_ or _horizontal_, and the cursor is placed in the new window. By default, the splitting is done to the left, which can be quite counter-intuitive.
 
 === Working with windows
+
+The purpose of a window is thus to provide a view into a buffer. It can be created, moved around and closed but it is important to remember that windows and buffers are **totally** separated.
+
+If buffers and windows had a one-to-one relationship, listing windows would make just as much sense as listing buffers for navigation purpose. Addressing them by name would certainly be useful too. But they don't and 
 
 === Reference
 
