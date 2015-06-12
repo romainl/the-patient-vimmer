@@ -13,7 +13,7 @@ The rest are lucky/crazy enough to see the potential behind the weirdness and de
 
 This guide is directed toward that third group. Picking up where `vimtutor` left off, it will hopefully give your Vim experience the right kind of foundations: deep and dependable.
 
-Vim does a lot and thus requires quite a bit of learning as well as a significant amount of will and _patience_. In that respect, it isn't worse than Photoshop, any serious 3D modeling software, font editor or digital audio workstation: you can quickly learn the basics needed for performing simple tasks but you can't honestly put "`ProTools`" on your resumé after a tutorial or two. It takes years to master Photoshop and it will take you ynd me years to master Vim.
+Vim does a lot and thus requires quite a bit of learning as well as a significant amount of will and _patience_. In that respect, it isn't worse than Photoshop, any serious 3D modeling software, font editor or digital audio workstation: you can quickly learn the basics needed for performing simple tasks but you can't honestly put "`ProTools`" on your resumé after a tutorial or two. It takes years to master Photoshop and it will take you and me years to master Vim.
 
 But what kind of involvement are we talking about? Is it the kind that requires us to commit all of http://www.viemu.com/vi-vim-cheat-sheet.gif[that meaningless garbage] to memory?
 
@@ -121,7 +121,7 @@ So, without further ado, let me introduce you to Vim's amazing...
 
     :help
 
-The introduction is short, factual and chock-full of important information; let me print here the most useful parts:
+The introduction is short, factual and chock-full of important information; let me print the most useful parts here:
 
 ....
 Jump to a subject:
@@ -154,7 +154,7 @@ Search for help:
     Or use ":helpgrep word".
 ....
 
-That's it! You are now capable of searching Vim's documentation for anything and ready to explore a few interesting areas. Again, the focus of this guide is _not_ on rote learning. Skim these sections, get a feel for how they are organized, of the vocabulary, of the extent of Vim's features... but don't force everything into your brain; there's absolutely no point doing that.
+That's it! You are now capable of searching Vim's documentation for anything and ready to explore a few interesting areas. Again, the focus of this guide is _not_ on rote learning. Skim these sections, get a feel for how they are organized, the vocabulary, the extent of Vim's features... but don't force everything into your brain; there's absolutely no point doing that.
 
 * **Keys**
 
