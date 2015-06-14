@@ -12,39 +12,22 @@ Vim's screen **always** contains _at least_ the following elements:
 * one window, always displaying...
 * one buffer.
 
-<<<<<<< HEAD
 At the root of the tree -- and at the center of Vim's design -- is the buffer; a little higher on the abstraction ladder is the window and, higher again, is the tab page. Vim will quit when you delete the last buffer, close the last window or close the last tab page.
 
 == Buffers
 
 Like Word or Photoshop, Vim lets us create, delete and -- of course -- edit "`buffers`" (Vim's lingo for "`documents`"). Like in Word or Photoshop, those buffers can be associated with an actual file or not and your changes will not be written to disk unless you instruct Vim to do so with `:write` or `:update`. Like Word or Photoshop, Vim will tell you when you are trying to quit without saving... No, Vim is not _that_ weird, after all.
-=======
-It may have a number of secondary UI elements such as a "`tabline`" or line numbers, though. The purpose of this chapter is to help you feel at home within that environment.
-
-== Buffers
-
-Like Word or Photoshop, Vim lets us create, delete and -- of course -- edit "`documents`", whether they are associated to an actual file or not. Those documents are called "`buffers`".
-
-A buffer is the internal representation of the content of a file. Because you work on a representation of that file, your changes will not be written to disk unless you instruct Vim to do so.
->>>>>>> ee1583feb0cc3aabb196020d12031a779d206eaa
 
 As Vim's core file proxies, buffers are (or should be) at the core of your workflow and you owe it to yourself to know how to work with them to achieve reasonable efficiency.
 
 === Working with buffers
 
-<<<<<<< HEAD
-Every buffer created in Vim via `:edit`, `:find`, `:args`, any similar command or simply `$ vim filename` is added to the _buffer list_ where it is assigned a number that will never change until it is explicitely wiped out. Beside that number, each buffer may have a name:
-
-* when it is associated with a file, the buffer is named after that file,
-* when it was created with a command like `:e foobar`, and there's no file named `foobar` in the working directory, the buffer is named `foobar`
-=======
 Every buffer created in Vim via `:edit`, `:find`, `:args`, or any of their relatives, or simply `$ vim filename`, is added to the _buffer list_ where it is assigned a number that will *never* change until it is explicitely wiped out from the list. When started without arguments, Vim will create an empty buffer by default so there's really always _at least_ one buffer to work with.
 
 Beside that number, buffers are named after the file they are associated with. This gives us two ways to address a buffer:
 
 * by its number,
 * by its name.
->>>>>>> ee1583feb0cc3aabb196020d12031a779d206eaa
 
 We therefore have two ways to address buffers: by number and by name.
 
@@ -83,39 +66,15 @@ Of course, it is not necessary to do `:ls` before doing `:b24` but who wants to 
 
 One way to avoid thinking too much about your buffers would be to mash `:bn[ext]` and `:bp[revious]` until you get where you want. Your destination might be sixteen buffers away, though, so cycling is not a silver bullet.
 
-But that boring `:ls`, then `<CR>`, then `:b`, then `24`, then `<CR>` routine looks like a good candidate for a custom mapping. http://of-vim-and-vigor.blogspot.fr/p/vim-vigor-comic.html[Flying is faster than cycling], right?
-
-<<<<<<< HEAD
-image::flying.png[link="http://of-vim-and-vigor.blogspot.fr/p/vim-vigor-comic.html"]
-
-Here is a nice jet-pack for our arsenal:
-=======
-But that boring `:ls`, then `<CR>`, then `:b`, then `24`, then `<CR>` routine looks like a good candidate for a nice, mnemonic, custom mapping:
+But that boring `:ls`, then `<CR>`, then `:b`, then `24`, then `<CR>` routine looks like a good candidate for a nice, mnemonic, custom mapping. http://of-vim-and-vigor.blogspot.fr/p/vim-vigor-comic.html[Flying is faster than cycling], right?
 
     " g-o to b-uffer
-    nnoremap gb :ls<CR>:b
->>>>>>> ee1583feb0cc3aabb196020d12031a779d206eaa
-
     nnoremap gb :ls<CR>:b<Space>
 
 Now, pressing `gb` in normal mode (`gb` for "`goto buffer`") opens the buffer list like `:ls` and populates the prompt with `:b`, ready for us to perform an operation on one or more listed buffers:
 
     (gifcast)
 
-<<<<<<< HEAD
-Neat!
-
-As demonstrated above, buffers can be addressed by their number but also by their name. Just like with `:edit` and `:find`, we can tab-complete buffer names on the command-line and -- why not? -- add yet another mapping to our `vimrc`:
-
-    nnoremap <leader>b :b<Space>
-
-With `<leader>e`, `<leader>f` and now `<leader>b` we have a nice collection of easy-to-remember navigation mappings that behave exactly the same way -- exactly the kind of mapping we need -- and another one, `gb`, which simply demonstrates another way to approach the same problem. Vim is a large and complex piece of software and it offers so many ways to skin a cat... Not taking any opportunity to use that power to our advantage would be borderline criminal.
-
-We shouldn't be concerned by buffers only for navigation, though: Vim allows us to perform actions _on each buffer in the buffer list_ with the `:bufdo` command which can be a powerful tool:
-
-    :bufdo %s/foo/bar/g
-    :bufdo set number
-=======
 Not bad at all! But there's one problem with numbers, though: the file-number mapping is not very intuitive and can be very hard to follow and forces us to pull up a list if we want to go that way.
 
 Humans being humans, we are naturally better at names than numbers so the second way to address buffers, *names,* may have a lot of potential. The commands we used before -- `:b`, `:bd` -- can take "`completable`" partial names as argument which makes it easy and very close to frictionless to switch to a buffer, especially with the wildmenu:
@@ -130,7 +89,13 @@ I hope you noticed the similarity with the `<leader>f` mapping we added to our `
 
 * `f` for "`file`",
 * `b` for "`buffer`".
->>>>>>> ee1583feb0cc3aabb196020d12031a779d206eaa
+
+With `<leader>e`, `<leader>f` and now `<leader>b` we have a nice collection of easy-to-remember navigation mappings that behave exactly the same way -- exactly the kind of mapping we need -- and another one, `gb`, which simply demonstrates another way to approach the same problem. Vim is a large and complex piece of software and it offers so many ways to skin a cat... Not taking any opportunity to use that power to our advantage would be borderline criminal.
+
+We shouldn't be concerned by buffers only for navigation, though: Vim allows us to perform actions _on each buffer in the buffer list_ with the `:bufdo` command which can be a powerful tool:
+
+    :bufdo %s/foo/bar/g
+    :bufdo set number
 
 === Reference
 
@@ -143,7 +108,6 @@ I hope you noticed the similarity with the `<leader>f` mapping we added to our `
 
 == Windows
 
-<<<<<<< HEAD
 As briefly mentioned in the introduction, we _always_ have at least one window in Vim, that _always_ displays one buffer.
 
 The purpose of a window is to provide a view into a buffer. It can be created, moved around and closed but it is important to remember that windows and buffers are not coupled **at all**.
@@ -153,11 +117,6 @@ Since any buffer could end up being displayed in any given window it is plain wr
 An interesting feature of Vim is the ability to split our workspace in multiple windows -- often called "`splits`" -- to display different buffers or parts of a buffer. The exact mechanism is quite simple: the current window is split in two equal parts along the desired axis, _vertical_ or _horizontal_, and the cursor is placed in the new window.
 
 By default, the splitting is done to the left, which can be very counter-intuitive.
-=======
-Just like you always have _at least_ one buffer, that buffer is always displayed in _at least_ one window but Vim gives us the ability to split our workspace in multiple windows -- often called "`splits`" -- to display different buffers or parts of a buffer.
-
-The exact mechanism is quite simple: the current window is split in two equal parts along the desired axis, _vertical_ or _horizontal_, and the cursor is placed in the new window. By default, the splitting is done to the left, which can be quite counter-intuitive.
->>>>>>> ee1583feb0cc3aabb196020d12031a779d206eaa
 
 === Working with windows
 
