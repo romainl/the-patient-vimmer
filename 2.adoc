@@ -12,11 +12,11 @@ Vim's screen **always** contains _at least_ the following elements:
 * one window, always displaying...
 * one buffer.
 
-At the root of the tree -- and at the center of Vim's design -- is the buffer; a little higher on the abstraction ladder is the window and, higher again, is the tab page. Vim will quit when you delete the last buffer, close the last window or close the last tab page.
+At the root of the tree -- and at the center of Vim's design -- is the buffer; a little higher on the abstraction ladder comes the window and, higher again, is the tab page. Vim will quit when you delete the last buffer, close the last window or close the last tab page.
 
 == Buffers
 
-Like Word or Photoshop, Vim lets us create, delete and -- of course -- edit "`buffers`" (Vim's lingo for "`documents`"). Like in Word or Photoshop, those buffers can be associated with an actual file or not and your changes will not be written to disk unless you instruct Vim to do so with `:write` or `:update`. Like Word or Photoshop, Vim will tell you when you are trying to quit without saving... No, Vim is not _that_ weird, after all.
+Like Word or Photoshop, Vim lets us create, delete and -- of course -- edit "`buffers`" (Vim's lingo for "`documents`"). Like in Word or Photoshop, those buffers can be associated with an actual file or not and your changes will not be written to disk unless you instruct Vim to do so with `:write` or `:update`. Smilarly, Vim will tell you when you are trying to quit without saving... No, Vim is not _that_ weird, after all.
 
 As Vim's core file proxies, buffers are (or should be) at the core of your workflow and you owe it to yourself to know how to work with them to achieve reasonable efficiency.
 
@@ -62,22 +62,26 @@ Because of their central role, buffers come with _a lot_ of navigation and manag
 
 Unlike some other more "`modern`" editors, Vim doesn't have a built-in way of displaying a permanent list of loaded buffers. This may feel like a limitation if you are used to that feature but think about it for a moment... do you _really_ need that list when you are not trying to jump to another buffer?
 
+So, the most basic way to switch to another _specific_ buffer looks is a two steps process:
+
+    :ls
+    :b24
+
 Of course, it is not necessary to do `:ls` before doing `:b24` but who wants to actively maintain a list of buffers in his head? Well... I certainly don't.
 
-One way to avoid thinking too much about your buffers would be to mash `:bn[ext]` and `:bp[revious]` until you get where you want. Your destination might be sixteen buffers away, though, so cycling is not a silver bullet.
+One way to avoid thinking too much about your buffers would be to mash `:bn[ext]` and `:bp[revious]` until you get where you want. Because the buffer list is one-dimensional, you are sure to get to the right buffer but... your destination might be sixteen buffers away, so cycling is not really _the_ silver bullet.
 
-But that boring `:ls`, then `<CR>`, then `:b`, then `24`, then `<CR>` routine looks like a good candidate for a nice, mnemonic, custom mapping. http://of-vim-and-vigor.blogspot.fr/p/vim-vigor-comic.html[Flying is faster than cycling], right?
+Let's go back to that boring `:ls`, then `<CR>`, then `:b`, then `24`, then `<CR>` routine which looks like a good candidate for a nice, mnemonic, custom mapping. http://of-vim-and-vigor.blogspot.fr/p/vim-vigor-comic.html[Flying is faster than cycling], right?
 
-    " g-o to b-uffer
     nnoremap gb :ls<CR>:b<Space>
 
 Now, pressing `gb` in normal mode (`gb` for "`goto buffer`") opens the buffer list like `:ls` and populates the prompt with `:b`, ready for us to perform an operation on one or more listed buffers:
 
     (gifcast)
 
-Not bad at all! But there's one problem with numbers, though: the file-number mapping is not very intuitive and can be very hard to follow and forces us to pull up a list if we want to go that way.
+Not bad at all!
 
-Humans being humans, we are naturally better at names than numbers so the second way to address buffers, *names,* may have a lot of potential. The commands we used before -- `:b`, `:bd` -- can take "`completable`" partial names as argument which makes it easy and very close to frictionless to switch to a buffer, especially with the wildmenu:
+There's one problem with numbers, though: the file-to-number mapping is not very intuitive. Humans being humans, we are naturally better at names than numbers so the second way to address buffers, *names,* may have a lot of potential. The commands we used before -- `:b`, `:bd` -- can take a partial name as argument which makes it easy and very close to frictionless to switch to a buffer, especially with tab-completion and the wildmenu:
 
     (gifcast)
 
@@ -85,17 +89,19 @@ Again, we can create a convenient mapping to save a bunch of keystrokes:
 
     nnoremap <leader>b :buffer *
 
-I hope you noticed the similarity with the `<leader>f` mapping we added to our `vimrc` in the previous chapter. We have two commands with a similar purpose that work exactly the same way and follow the same naming pattern:
+I hope you noticed the similarity with the `<leader>f` mapping we added to our `vimrc` in the previous chapter. We have two commands with a similar purpose that work exactly the same way and follow the same naming convention:
 
 * `f` for "`file`",
 * `b` for "`buffer`".
 
 With `<leader>e`, `<leader>f` and now `<leader>b` we have a nice collection of easy-to-remember navigation mappings that behave exactly the same way -- exactly the kind of mapping we need -- and another one, `gb`, which simply demonstrates another way to approach the same problem. Vim is a large and complex piece of software and it offers so many ways to skin a cat... Not taking any opportunity to use that power to our advantage would be borderline criminal.
 
-We shouldn't be concerned by buffers only for navigation, though: Vim allows us to perform actions _on each buffer in the buffer list_ with the `:bufdo` command which can be a powerful tool:
+We shouldn't be concerned by buffers only for navigation, of course: Vim allows us to perform actions _on each buffer in the buffer list_ with the `:bufdo` command:
 
     :bufdo %s/foo/bar/g
     :bufdo set number
+
+`:bufdo` can be used to perform an identical edit on every listed buffer, set a local option or do whatever complex thing you need. Since the content of a buffer can be different from the content of its associated file -- if there's one -- `:bufdo` constitutes a very powerful feature.
 
 === Reference
 
@@ -108,11 +114,9 @@ We shouldn't be concerned by buffers only for navigation, though: Vim allows us 
 
 == Windows
 
-As briefly mentioned in the introduction, we _always_ have at least one window in Vim, that _always_ displays one buffer.
+As briefly mentioned in the introduction, we _always_ have at least one window in Vim. A Window that _always_ displays one buffer.
 
-The purpose of a window is to provide a view into a buffer. It can be created, moved around and closed but it is important to remember that windows and buffers are not coupled **at all**.
-
-Since any buffer could end up being displayed in any given window it is plain wrong to assume "`switching to a window`" to be the same as "`switching to a buffer`", let alone "`switching to a file`".
+The purpose of a window is to provide a view into a buffer. It can be created, moved around and closed but it is important to remember that windows and buffers are not coupled **at all**. Since any buffer could end up being displayed in any window it is plain wrong to assume "`switching to a window`" to be the same as "`switching to a buffer`", let alone "`switching to a file`".
 
 An interesting feature of Vim is the ability to split our workspace in multiple windows -- often called "`splits`" -- to display different buffers or parts of a buffer. The exact mechanism is quite simple: the current window is split in two equal parts along the desired axis, _vertical_ or _horizontal_, and the cursor is placed in the new window.
 
@@ -120,29 +124,35 @@ By default, the splitting is done to the left, which can be very counter-intuiti
 
 === Working with windows
 
-The purpose of a window is thus to provide a view into a buffer. It can be created, moved around and closed but it is important to remember that windows and buffers are **totally** separated.
-
 If buffers and windows had a one-to-one relationship, listing windows would make just as much sense as listing buffers for navigation purpose. Addressing them by name would certainly be useful too. But they don't and 
+
+creating window
+
+moving the cursor between windows
+
+moving and resizing windows
+
+closing windows
 
 === Reference
 
 == Tab pages
 
-Tab pages -- too often referred to as "`tabs`" -- have been a neverending source of confusion since their appearance in Vim 7.x. Despite their name and how the <<_the_tabline,"`tabline`">> is implemented, Vim's _tab pages_ are not like other editor's _tabs_.
+Tab pages -- too often called "`tabs`" -- have been a neverending source of confusion since their appearance in Vim 7.x. Despite their name and how the <<_the_tabline,"`tabline`">> is implemented, Vim's _tab pages_ are not like other editor's _tabs_.
 
-In other editors, "`tabs`" serve as a proxies for documents. This means that the editor's "`tabline`" -- a list of tabs -- is effectively a list of documents that is used to navigate from one tab to another and thus from one document to another. A "`tab`" _is_ for all intent and purpose a _document_ and there is no need to separate the tab _widget_ from the document it is associated to.
+In other editors, "`tabs`" serve as proxies for documents. This means that the editor's "`tabline`" -- a list of tabs -- is effectively a list of documents: one navigates from one tab to another and thus from one document to another. A "`tab`" _is_ for all intent and purpose a _document_ and there is no need to separate the tab _widget_ from its associated "`panel`" and thus from the document it is associated to.
 
 Switching to a "`tab`" is exactly like switching to a document.
 
 In Vim, "`tab pages`" are _workspaces_, associated with "`tab`" widgets, themselves listed in a "`tabline`". The "`tab`" and "`tabline`" widgets work just like their counterparts in other editors but the _huge_ difference lies in the _workspace_ bit.
 
-A workspace is a place where you arrange one or more windows displaying one or more buffers. But we have seen earlier that buffers are _global_ so, while it is entirely possible to have a single buffer displayed in a single window in a single tab page, it is impossible to have a one-to-one relationship between that buffer and that tab page without devising our own buffer/window/tab management paradigm.
+A workspace is a place where you arrange one or more windows displaying one or more buffers. But we have seen earlier that buffers are _global_ so, while it is entirely possible to have a single buffer displayed in a single window in a single tab page, it is impossible to have an actual one-to-one relationship between that buffer and that tab page without devising our own buffer/window/tab management paradigm.
 
-Because "`tab`" widgets are not associated with specific buffers/files we simply can't use them as document proxies.
+Because "`tab`" widgets are not associated with specific buffers we simply can't use them as document proxies.
 
-As collections of windows, tab pages offer a pretty good way to manage workspaces. They are ideal for scenarios where we need to have multiple pairs of files displayed side-by-side, or where we suddenly need to open a file from outside the current project...
+As collections of windows, tab pages offer a pretty good way to manage workspaces. They are ideal for when we need to have multiple pairs of files displayed side-by-side, or when we suddenly need to open a file from outside the current project... But they are too limited to be used as document/file proxies.
 
-Just like windows, the place of tab pages in our workflow depends largely on our needs. Using tab pages as file proxies is wrong, but refusing to use them altogether in the name of some imaginary purity is just as wrong. If not _more_.
+Just like windows, the place of tab pages in our workflow depends largely on our needs. Using tab pages as document/file proxies is wrong, but refusing to use them altogether in the name of some imaginary purity is just as wrong. If not _more_.
 
 So... how do we use them?
 
@@ -197,6 +207,12 @@ Like with buffers and windows, it is also possible to execute a command in each 
 === Reference
 
     :help tab-page
+
+== Arguments
+
+=== Working with arguments
+
+=== Reference
 
 == Special Windows
 
@@ -359,7 +375,7 @@ The tabline and tab pages still have their use, mind you, but it is important to
 
     (picture)
 
-The statusline is that "bar", at the bottom of windows, used to show information on the window itself or the buffer currently displayed in that window. It can also be used to resize windows if mouse support is enabled.
+The statusline is that "bar", at the bottom of windows, used to show information on the window itself or the buffer currently displayed in that window. It can also be used to resize windows vertically if mouse support is enabled.
 
 By default, the statusline is shown only when there is more than one window but this can be changed with the `laststatus` option:
 
@@ -416,7 +432,7 @@ Relative numbers can be enabled with `set relativenumber` and used in the same w
 
     (picture)
 
-The `"fold column"` is disabled by default but can be enabled by setting the `foldcolumn` option to a number between 1 and 12. It is used to show information about the folds in your buffer and let you open and close them with the mouse if mouse support is enabled.
+The `"fold column"` is disabled by default but can be enabled by setting the `foldcolumn` option to a number between 1 and 12. It is used to show information about the folds in your buffer and to let you open and close them with the mouse if mouse support is enabled.
 
 Open folds are marked with a clickable `-`, lines belonging to a fold are marked with a `|` and closed folds are marked with a clickable `+`.
 
