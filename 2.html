@@ -52,6 +52,7 @@
 <li><a href="#_line_numbers">Line numbers</a></li>
 <li><a href="#_the_fold_column">The fold column</a></li>
 <li><a href="#_the_sign_column">The sign column</a></li>
+<li><a href="#_the_vertical_split">The vertical split</a></li>
 <li><a href="#_the_completion_menu">The completion menu</a></li>
 <li><a href="#_the_command_line">The command-line</a></li>
 </ul>
@@ -863,7 +864,7 @@ V5k          " linewise visual selection from here to 5 lines above
 </div>
 </div>
 <div class="paragraph">
-<p>The "sign column" can&#8217;t be shown or hidden easily: Vim shows it when you have one or more signs in your buffer and removes it when there&#8217;s no sign anymore.</p>
+<p>The "sign column" can&#8217;t be shown or hidden easily. Actually, only plugin authors have to deal with managing them so signs are not really the most interesting feature to explore. Vim shows the sign column when you have one or more signs in your buffer, removes it when there&#8217;s no sign anymore and that&#8217;s about it.</p>
 </div>
 <div class="paragraph">
 <p>The color and content of individual signs is usually defined by plugin authors whereas the background of the column is the responsibility of your colorscheme.</p>
@@ -875,6 +876,24 @@ V5k          " linewise visual selection from here to 5 lines above
 <pre>:help signs</pre>
 </div>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_the_vertical_split">The vertical split</h3>
+<div class="literalblock">
+<div class="content">
+<pre>"vertical"     "horizontal"
+splitting      splitting
+┌────┬────┐    ┌─────────┐
+│    │    │    │         │
+│    ←    │    ├─── ↑ ───┤
+│    │    │    │         │
+└────┴────┘    └─────────┘</pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_reference_13">Reference</h4>
+
 </div>
 </div>
 <div class="sect2">
@@ -891,7 +910,7 @@ V5k          " linewise visual selection from here to 5 lines above
 <p>problems and solutions (to be written)</p>
 </div>
 <div class="sect3">
-<h4 id="_reference_13">Reference</h4>
+<h4 id="_reference_14">Reference</h4>
 <div class="literalblock">
 <div class="content">
 <pre>:help ins-completion-menu</pre>
@@ -910,7 +929,7 @@ V5k          " linewise visual selection from here to 5 lines above
 <p>The command-line is Vim&#8217;s main interface. Like the prompt of your computer&#8217;s shell, it is used to send commands to Vim and for feedback if necessary.</p>
 </div>
 <div class="sect3">
-<h4 id="_reference_14">Reference</h4>
+<h4 id="_reference_15">Reference</h4>
 
 </div>
 </div>
@@ -966,7 +985,7 @@ V5k          " linewise visual selection from here to 5 lines above
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-06-14 22:29:09 CEST
+Last updated 2015-06-15 01:52:20 CEST
 </div>
 </div>
 </body>

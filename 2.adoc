@@ -445,13 +445,25 @@ Open folds are marked with a clickable `-`, lines belonging to a fold are marked
 
     (picture)
 
-The "sign column" can't be shown or hidden easily: Vim shows it when you have one or more signs in your buffer and removes it when there's no sign anymore.
+The "sign column" can't be shown or hidden easily. Actually, only plugin authors have to deal with managing them so signs are not really the most interesting feature to explore. Vim shows the sign column when you have one or more signs in your buffer, removes it when there's no sign anymore and that's about it.
 
 The color and content of individual signs is usually defined by plugin authors whereas the background of the column is the responsibility of your colorscheme.
 
 ==== Reference
 
     :help signs
+
+=== The vertical split
+
+    "vertical"     "horizontal"
+    splitting      splitting
+    ┌────┬────┐    ┌─────────┐
+    │    │    │    │         │
+    │    ←    │    ├─── ↑ ───┤
+    │    │    │    │         │
+    └────┴────┘    └─────────┘
+
+==== Reference
 
 === The completion menu
 
