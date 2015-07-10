@@ -21,7 +21,7 @@ or with an expression expanded by your shell before passing it to Vim:
 
     $ vim *.js
 
-But, no matter how we start Vim, we might want to edit other files without leaving Vim. How do we do it?
+But, no matter how we start it, we might want to edit other files without leaving Vim. How do we do it?
 
 == :edit
 
