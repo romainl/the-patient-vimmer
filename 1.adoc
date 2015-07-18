@@ -9,7 +9,7 @@ This chapter explores the many ways to open text files for editing. From outside
 
 == For argument's sake
 
-Like its distant cousins `nano` and `emacs` or, really, most command-line programs, Vim is usually started without arguments:
+Like its distant cousins `nano` and `emacs` or, really, most command-line programs, Vim can be started without arguments:
 
     $ vim
 
@@ -21,7 +21,23 @@ or with an expression expanded by your shell before passing it to Vim:
 
     $ vim *.js
 
+No matter how many arguments you give, those filenames are stored in the global _argument list_ which can be manipulated in many ways. In practice, opening multiple files at once from Vim is as simple as replacing the argument list:
+
+    :args foo.js foo.html foo.css
+
+or adding to it:
+
+    :argadd *.py
+
 But, no matter how we start it, we might want to edit other files without leaving Vim. How do we do it?
+
+=== Reference
+
+    :help buffer-list
+    :help argument-list
+    :help :args
+    :help :argadd
+    :help :next
 
 == :edit
 
@@ -30,12 +46,12 @@ But, no matter how we start it, we might want to edit other files without leavin
     :e foo.txt
     :e ../bar.txt
 
-It is important to note that this command only accepts _one_ filename as argument so you can forget these for the time being:
+It is important to note that this command only accepts _one_ filename as argument so you can forget these:
 
     :e file1 file2 file3
     :e *foo
 
-It can be done, of course, but with a different command. We will come to that later.
+That's what `:args`, `:argadd`, `:next` and friends are for.
 
 `:e` covers a lot of ground already, but we will need fast fingers and a vast memory when time will come to edit files buried at the bottom of a large and complex directory structure.
 
@@ -97,8 +113,8 @@ Vim even has a special wildcard called "`starstar`", that makes it possible to r
 
 The main benefits of "`starstar`" are:
 
-* we are now able to navigate through a flat list instead of a potentially deep hierarchy, saving quite a bunch of keystrokes and brain cells in the process,
-* we can also save large amounts of typing by skipping subdirectories.
+* it allows us to navigate through a flat list instead of a potentially deep hierarchy, saving quite a bunch of keystrokes and brain cells in the process,
+* we can avoid typing subdirectories.
 
 image::gifcast_off.png[link="images/1_wildcards.gif"]
 
@@ -110,7 +126,7 @@ image::gifcast_off.png[link="images/1_wildcards.gif"]
 
 What if we could skip the pretty but too repetitive `:e \**/*` part?
 
-"`Macros`" are a core aspect of the Vim experience. The name is most often associated with "`recording`" but they can also be used directly, with `:normal`, or as part of a mapping. The principle is always the same: we give Vim a bunch of keys to "`press`" very quickly, expecting the same result as if we pressed those keys ourself.
+"`Macros`" are a core aspect of the Vim experience. The name is most often associated with "`recording`" but they can also be used directly, with `:normal`, or as part of a mapping. The principle is always the same, though: we give Vim a bunch of keys to "`press`" very quickly, expecting the same result as if we pressed those keys ourself.
 
 Mappings are very important when it comes to customizing Vim, simply because they turn repetitive actions into near-instantaneous magic. Allowing us to save many thousands of keystrokes with minimal configuration.
 
@@ -120,47 +136,46 @@ Here is the anatomy of a mapping:
 
 where `action` is what you want to happen when you press `key`; it could be a macro, an Ex command, a function call...
 
-The command used to define your mapping can be any of the following:
+The command used to define your mapping can be any of the following, try to be as specific as possible:
 
+[cols="2,3,9"]
 |===
-| recursive | non-recursive | mode
-| `map`     | `noremap`     | normal, visual, select, operator-pending
-| `cmap`    | `cnoremap`    | command-line
-| `imap`    | `inoremap`    | insert
-| `nmap`    | `nnoremap`    | normal
-| `omap`    | `onoremap`    | operator-pending
-| `smap`    | `snoremap`    | select
-| `vmap`    | `vnoremap`    | visual, select
-| `xmap`    | `xnoremap`    | visual
+| *recursive* | *non-recursive* | *mode*
+| `map`       | `noremap`       | normal, visual, select, operator-pending
+| `cmap`      | `cnoremap`      | command-line
+| `imap`      | `inoremap`      | insert
+| `nmap`      | `nnoremap`      | normal
+| `omap`      | `onoremap`      | operator-pending
+| `smap`      | `snoremap`      | select
+| `vmap`      | `vnoremap`      | visual, select
+| `xmap`      | `xnoremap`      | visual
 |===
 
-Try to be as specific as possible.
+Here are a few examples for you...
 
-Here are a few examples:
+* Press `<F5>` to add quotes around the word under the cursor in normal mode:
 
-....
-" press <F5> to add quotes around the word under the cursor in normal mode
-:nnoremap <F5> ciw"<C-r>""
+    :nnoremap <F5> ciw"<C-r>""
 
-" press <F6> to call a function in normal mode
-:nnoremap <F6> :call MyFunction()<CR>
+* Press `<F6>` to call a function in normal mode:
 
-" press <F7> to execute a command in normal mode
-:nnoremap <F7> :MyCommand<CR>
+    :nnoremap <F6> :call MyFunction()<CR>
 
-" press <F8> to filter the current visual selection through 'uniq'
-:xnoremap <F8> !uniq<CR>
-....
+* Press `<F7>` to execute a command in normal mode:
 
-Let's say we want Vim to type `:e \**/*` for us when we press `<F6>` in _normal_ mode:
+    :nnoremap <F7> :MyCommand<CR>
+
+* Press `<F8>` to filter the current visual selection through 'uniq':
+
+    :xnoremap <F8> !uniq<CR>
+
+Let's go back to our current "`problem`": we want Vim to type `:e \**/*` for us when we press `<F6>` in _normal_ mode. Well, the solution is pretty obvious:
 
      :nmap <F6> :e **/*
 
 Easy! We only have to do `<F6>foo<Tab>` to list every file whose name contains `foo` under the working directory and every subdirectory. Woohoo!
 
-But what's the deal with `*map` and `*noremap`?
-
-It's really quite simple...
+But what's the deal with `*map` and `*noremap`? It's really quite simple...
 
 * `nmap key command` means that pressing `key` in normal mode will execute `command` _with its current meaning_. This form is _only_ useful when we want to use another mapping in our mapping; it is called "`recursive mapping`". Example:
 
@@ -170,17 +185,17 @@ It's really quite simple...
 * `nnoremap key command` means that pressing `key` in normal mode will execute `command` _with its default meaning_. This form is usually the one we want, it is called "`non-recursive mapping`". Example:
 
     :nmap b B            " change 'b' to work like 'B'
-    :nnoremap <F5> dB    " '<F5>' works like 'dB'
+    :nnoremap <F5> db    " '<F5>' works like 'db'
 
-Our mappings _have_ to be solid because they will serve as the foundation of our workflow. Non-recursive mappings are the safest choice:
+Our mappings _have_ to be solid because they will serve as the foundation of our workflow. Non-recursive mappings are thus the safest choice:
 
     :nnoremap <F6> :e **/*
 
 === A leader worth following
 
-While the whole purpose of the `<Fn>` keys is to be "`programmed`" to do whatever specific _function_ the user needs, they don't fit very well with Vim's other highly mnemonic bindings so it is wiser to use a key that "`maps`" to the idea of _editing_. But we have a problem: Vim already uses most -- if not all -- of the freaking keys on our keyboard!
+While the whole purpose of the `<Fn>` keys is to be "`programmed`" to do whatever specific _function_ the user needs, they don't fit very well with Vim's other highly mnemonic bindings so it is wiser to use a key combo that "`maps`" to the idea of _editing_. But we have a problem: Vim already uses most -- if not all -- of the freaking keys on our keyboard!
 
-The "`leader`" mechanism allows us to define a `<leader>` key (`\` by default) that will work as a mini-mode or namespace for our custom mappings. `:help mapleader` gives us the following example :
+The "`leader`" mechanism allows us to define a `<leader>` key (`\` by default) that will work as a "`mini-mode`" of sort or "`namespace`" for our custom mappings. `:help mapleader` gives us the following example :
 
     :let mapleader = ","
 
@@ -233,7 +248,7 @@ versus:
 
     :e **/foo<Tab>
 
-Like `:edit`, `:find` does its completion from the start of the filename so `:find foo` will match `foobar.txt` but not `model_foo.txt`. Add a wildcard for an even more useful completion:
+But there's a catch: like `:edit`, `:find` does its completion from the start of the filename so `:find foo` will match `foobar.txt` but not `model_foo.txt`. Let's add a wildcard for an even more useful completion:
 
     :find *foo<Tab>
 
@@ -263,7 +278,7 @@ and move on to the next section...
 
 == Customizing filename completion and the "`wildmenu`"
 
-We can further customize the behavior of Vim's filename completion with a bunch of options that work for `:edit` _and_ `:find`:
+We can further customize the behavior of Vim's filename completion with a bunch of options that work for `:edit` _and_ `:find`, as well as many other commands:
 
     :help wildmode        " defines the behavior of the wildmenu
     :help wildignore      " tells Vim to ignore some patterns
@@ -278,7 +293,7 @@ Let's go through them one by one:
 
 The default value is `full`
 
-here is an example value from my `vimrc`:
+here is a reasonably useful value:
 
     set wildmode=list:full
 
@@ -301,6 +316,10 @@ Note the `+=` operator that allows us to _add_ new values instead of redefining 
 to yield:
 
     :e README.md
+
+and is enabled with a simple:
+
+    set wildignorecase
 
 === suffixes
 
@@ -333,7 +352,7 @@ Here are a few default bindings for reference:
 * `P`      open the file/directory under the cursor in the previous window,
 * `t`      open the file/directory under the cursor in a new tab page.
 
-And the three commands you need to know:
+And the three most basic commands:
 
 * `:Ex`    open a listing of the current directory,
 * `:Lex`   open a listing of the current directory in a smaller vertical window, similar to the "project" pane common in other editors and IDEs,
@@ -346,29 +365,6 @@ Netrw's documentation is massive and covers a lot more than what you probably ne
     :help netrw-browse-maps
     :help netrw-quickhelp
     :help :Lexplore
-
-== Opening multiple files
-
-As discussed before, it is very common to start Vim with multiple files or an expression expanded to multiple files:
-
-    $ vim file1 file2 file3
-    $ vim `find . -name '*.txt'`
-
-The filenames used as arguments when starting Vim are stored in the global _argument list_ which can be manipulated in many ways. In practice, opening multiple files at once from Vim is as simple as replacing the argument list:
-
-    :args foo.js foo.html foo.css
-
-or adding to it:
-
-    :argadd *.py
-
-=== Reference
-
-    :help buffer-list
-    :help argument-list
-    :help :args
-    :help :argadd
-    :help :next
 
 == Conclusion
 
@@ -413,5 +409,6 @@ But, now that we have a bunch of files to edit… how are we supposed to work wi
         <p>Copyleft 2015</p>
     </div>
 </div>
+<link href='http://fonts.googleapis.com/css?family=Fira+Mono&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 <script src="javascript/behavior.js"></script>
 ++++

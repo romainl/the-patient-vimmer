@@ -16,20 +16,18 @@ At the root of the tree -- and at the center of Vim's design -- is the buffer; a
 
 == Buffers
 
-Like Word or Photoshop, Vim lets us create, delete and -- of course -- edit "`buffers`" (Vim's lingo for "`documents`"). Like in Word or Photoshop, those buffers can be associated with an actual file or not and your changes will not be written to disk unless you instruct Vim to do so with `:write` or `:update`. Smilarly, Vim will tell you when you are trying to quit without saving... No, Vim is not _that_ weird, after all.
+Like Word or Photoshop, Vim lets us create, delete, switch to and -- of course -- edit "`buffers`" (Vim's lingo for "`documents`"). Like in Microsoft Word or Adobe Photoshop, those buffers can be associated with an actual file or not and your changes will not be written to disk unless you instruct Vim to do so with the adequate command. Smilarly, Vim will tell you when you are trying to quit without saving... No, Vim is not _that_ weird, after all.
 
-As Vim's core file proxies, buffers are (or should be) at the core of your workflow and you owe it to yourself to know how to work with them to achieve reasonable efficiency.
+As Vim's core file proxies, buffers are (or should be) at the center of your workflow and you owe it to yourself to know how to work with them to achieve reasonable efficiency.
 
 === Working with buffers
 
-Every buffer created in Vim via `:edit`, `:find`, `:args`, or any of their relatives, or simply `$ vim filename`, is added to the _buffer list_ where it is assigned a number that will *never* change until it is explicitely wiped out from the list. When started without arguments, Vim will create an empty buffer by default so there's really always _at least_ one buffer to work with.
+Every buffer created in Vim via `:edit`, `:find`, `:args`, or any of their relatives or simply `$ vim filename`, is added to the _buffer list_ (which should not be confused with the _argument list_) where it is assigned a number that will *never* change until the buffer is explicitely wiped out from the list. When started without arguments, Vim will create an empty buffer anyway so there's really always _at least_ one buffer to work with.
 
-Beside that number, buffers are named after the file they are associated with. This gives us two ways to address a buffer:
+Beside that number, buffers are also named after the file they are associated with. This gives us two ways to address a buffer:
 
 * by its number,
 * by its name.
-
-We therefore have two ways to address buffers: by number and by name.
 
 A typical Vim session could consist of editing a single file -- and thus a single buffer -- or it could go for weeks and consist of dozens and dozens of buffers. Keeping track of a potentially large number of buffers would be daunting if Vim didn't gave us not one, not two, but _three_ commands for listing buffers:
 
@@ -62,16 +60,16 @@ Because of their central role, buffers come with _a lot_ of navigation and manag
 
 Unlike some other more "`modern`" editors, Vim doesn't have a built-in way of displaying a permanent list of loaded buffers. This may feel like a limitation if you are used to that feature but think about it for a moment... do you _really_ need that list when you are not trying to jump to another buffer?
 
-So, the most basic way to switch to another _specific_ buffer looks is a two steps process:
+So, the most basic way to switch to another _specific_ buffer is a two steps process:
 
-    :ls
-    :b24
+    :ls     " display the buffer list
+    :b24    " execute a command
 
 Of course, it is not necessary to do `:ls` before doing `:b24` but who wants to actively maintain a list of buffers in his head? Well... I certainly don't.
 
 One way to avoid thinking too much about your buffers would be to mash `:bn[ext]` and `:bp[revious]` until you get where you want. Because the buffer list is one-dimensional, you are sure to get to the right buffer but... your destination might be sixteen buffers away, so cycling is not really _the_ silver bullet.
 
-Let's go back to that boring `:ls`, then `<CR>`, then `:b`, then `24`, then `<CR>` routine which looks like a good candidate for a nice, mnemonic, custom mapping. http://of-vim-and-vigor.blogspot.fr/p/vim-vigor-comic.html[Flying is faster than cycling], right?
+Let's go back to that boring `:ls`, then `<CR>`, then `:b24`, then `<CR>` routine which looks like a good candidate for a nice, mnemonic, custom mapping. http://of-vim-and-vigor.blogspot.fr/p/vim-vigor-comic.html[Flying is faster than cycling], right?
 
     nnoremap gb :ls<CR>:b<Space>
 
@@ -81,7 +79,39 @@ Now, pressing `gb` in normal mode (`gb` for "`goto buffer`") opens the buffer li
 
 Not bad at all!
 
-There's one problem with numbers, though: the file-to-number mapping is not very intuitive. Humans being humans, we are naturally better at names than numbers so the second way to address buffers, *names,* may have a lot of potential. The commands we used before -- `:b`, `:bd` -- can take a partial name as argument which makes it easy and very close to frictionless to switch to a buffer, especially with tab-completion and the wildmenu:
+There is something special about that mapping, though: instead of the usual `<leader><key>` or `<Fn>` mechanisms we simply use two seemingly normal keys pressed in succession but... doesn't Vim actually use _every_ key on our keyboard? Won't we hit any problem down the road?
+
+Normal mode commands can roughly be divided in two groups (this table is not exhaustive):
+
+[cols="4,9"]
+|===
+| *standard commands* | `h`,`j`,`k`,`l`,`H`,`M`,`L`,`x`,`i`,`,`...
+| *operator commands* | `y`,`c`,`d`,`v`...
+|===
+
+Using "`standard commands`" in mappings is risky business because they usually work on their own and are, simply put, all over the place. It is quite hard to find a remappable standard command without overriding some useful feature.
+
+"`Operator commands`" are a bit different. They wait for a motion or text-object on which to _operate_ and thus can be thought of as key _pairs_: `c}`, `y$`... which leaves a few holes to overtake. `cd`, for example, doesn't do anything by default because there is no `d` motion or text-object. Same thing for `ym` or `zu`.
+
+Here is a far from exhaustive list of key pairs available for mapping in normal mode:
+
+    cd   dc   gb   vc   yc   zp
+    cg   dg   gc   vd   yd   zq
+    cm   dm   gl   vm   ym   zu
+    co   dq   gs   vo   yo   zy
+    cp   dr   gy   vp   yp
+    cq   du        vq   yq
+    cr   dv        vr   yr
+    cu   dx        vs   ys
+    cv   dy        vu   yu
+    cx   dz        vv   yv
+    cy             vx   yx
+    cz             vy   yz
+                   vz
+
+Adding uppercase variants, we get quite a bunch of mapping opportunities... like `gb`, used in the mapping above.
+
+But there's one problem with numbers: the file-to-number mapping is not very intuitive. Humans being humans, we are naturally better at names than numbers so the second way to address buffers, *names,* may have a lot of potential here. Well, it happens that the buffer commands we used before -- `:b`, `:bd` -- can take a partial name as argument so switching to a buffer, especially with tab-completion and the wildmenu can be very close to friction-less:
 
     (gifcast)
 
@@ -94,9 +124,9 @@ I hope you noticed the similarity with the `<leader>f` mapping we added to our `
 * `f` for "`file`",
 * `b` for "`buffer`".
 
-With `<leader>e`, `<leader>f` and now `<leader>b` we have a nice collection of easy-to-remember navigation mappings that behave exactly the same way -- exactly the kind of mapping we need -- and another one, `gb`, which simply demonstrates another way to approach the same problem. Vim is a large and complex piece of software and it offers so many ways to skin a cat... Not taking any opportunity to use that power to our advantage would be borderline criminal.
+With `<leader>f` and now `<leader>b` we have a nice collection of easy-to-remember navigation mappings that behave exactly the same way -- exactly the kind of mapping we need -- and another one, `gb`, which simply demonstrates another way to approach the same problem. Vim is a large and complex piece of software and it offers so many ways to skin a cat... Not taking any opportunity to use that power to our advantage would be borderline criminal.
 
-We shouldn't be concerned by buffers only for navigation, of course: Vim allows us to perform actions _on each buffer in the buffer list_ with the `:bufdo` command:
+We shouldn't be concerned with buffers only for navigation, of course: Vim allows us to perform actions _on each buffer in the buffer list_ with the `:bufdo` command:
 
     :bufdo %s/foo/bar/g
     :bufdo set number
@@ -532,5 +562,6 @@ toc::[]
     <p>Written by <a href="https://github.com/romainl">Romain Lafourcade</a>, with help from <a href="https://github.com/dahu/">Barry Arthur</a> and the #vim community.</p>
 <p>Copyleft 2015</p>
 </div>
+<link href='http://fonts.googleapis.com/css?family=Fira+Mono&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 <script src="javascript/behavior.js"></script>
 ++++
