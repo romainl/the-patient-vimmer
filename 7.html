@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.2">
+<title>Extending Vim</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Extending Vim</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>It should be clear by now that Vim is a very powerful text editor but don&#8217;t be fooled, it doesn&#8217;t do <em>everything</em>. Sure we get a lot of small low-level elements to play with but, sometimes, using a specialized tool would be more suited to the job. After all, shares its environment with many commandline tools so&#8230;&#8203; why not putting them to good use?</p>
+</div>
+<div class="paragraph">
+<p>With Vim, we can run external commands in&#8201;&#8212;&#8201;broadly speaking&#8201;&#8212;&#8201;two ways: as filters and, well, as external commands.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_filters">Filters</h3>
+<div class="paragraph">
+<p>Tranforming existing text in place with another program is called <em>filtering</em>: we start with some text and replace it with the output of an external `"filter`".</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_external_commands">External commands</h3>
+<div class="paragraph">
+<p>As should be obvious by now, Vim can do a lot and gives us plenty of means and opportunities to build higher-level tools to suit many needs.</p>
+</div>
+<div class="paragraph">
+<p>We have seen how to use options, mappings and custom commands to customize Vim&#8217;s behavior but there are times when</p>
+</div>
+<div class="paragraph">
+<p>~/.vim/ and its structure</p>
+</div>
+<div class="paragraph">
+<p>NB: Since 7.4, it is possible to keep our <code>vimrc</code> <strong>inside</strong> our <code>~/.vim/</code> (on Unix-like systems)</p>
+</div>
+<div class="paragraph">
+<p>vimscript
+	functions
+	commands
+	variables
+	etc.
+good practices
+when to look for plugins
+where to look for plugins
+installing plugins
+	manually
+	vimball
+	pathogen
+	vundle
+	neobundle
+	VAM
+	plug
+	notes on Git/Mercurial…
+updating plugins
+removing plugins</p>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2015-06-20 23:40:32 CEST
+</div>
+</div>
+</body>
+</html>

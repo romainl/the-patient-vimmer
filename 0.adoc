@@ -1,6 +1,8 @@
 = An introduction
 :stylesdir: css
 :stylesheet: style.css
+:imagesdir: images
+:scriptsdir: javascript
 :linkcss:
 
 Our first contact with Vim is always frustrating: the incapacity to type text right away, the non-obvious commands for writing and quitting...

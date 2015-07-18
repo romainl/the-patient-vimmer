@@ -246,6 +246,9 @@ Press ENTER or type command to continue</pre>
 <div class="paragraph">
 <p><code>:bufdo</code> can be used to perform an identical edit on every listed buffer, set a local option or do whatever complex thing you need. Since the content of a buffer can be different from the content of its associated file&#8201;&#8212;&#8201;if there&#8217;s one&#8201;&#8212;&#8201;<code>:bufdo</code> constitutes a very powerful feature.</p>
 </div>
+<div class="paragraph">
+<p>By the way, did you notice that Vim doesn&#8217;t ask us to write each buffer before changing to another one? That&#8217;s because of the <code>hidden</code> option we enabled at the start of our journey. With <code>nohidden</code>, the default value, juggling with buffers would be a lot less fun.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_reference">Reference</h3>
@@ -269,13 +272,13 @@ Press ENTER or type command to continue</pre>
 <p>As briefly mentioned in the introduction, we <em>always</em> have at least one window in Vim. A Window that <em>always</em> displays one buffer.</p>
 </div>
 <div class="paragraph">
-<p>The purpose of a window is to provide a view into a buffer. It can be created, moved around and closed but it is important to remember that windows and buffers are not coupled <strong>at all</strong>. Since any buffer could end up being displayed in any window it is plain wrong to assume &#8220;switching to a window&#8221; to be the same as &#8220;switching to a buffer&#8221;, let alone &#8220;switching to a file&#8221;.</p>
-</div>
-<div class="paragraph">
 <p>An interesting feature of Vim is the ability to split our workspace in multiple windows&#8201;&#8212;&#8201;often called &#8220;splits&#8221;&#8201;&#8212;&#8201;to display different buffers or parts of a buffer. The exact mechanism is quite simple: the current window is split in two equal parts along the desired axis, <em>vertical</em> or <em>horizontal</em>, and the cursor is placed in the new window.</p>
 </div>
 <div class="paragraph">
 <p>By default, the splitting is done to the left, which can be very counter-intuitive.</p>
+</div>
+<div class="paragraph">
+<p>The purpose of a window is to provide a view into a buffer. It can be created, moved around and closed but it is important to remember that windows and buffers are not coupled <strong>at all</strong>. Since any buffer could end up being displayed in any window it is plain wrong to assume &#8220;switching to a window&#8221; to be the same as &#8220;switching to a buffer&#8221;, let alone &#8220;switching to a file&#8221;.</p>
 </div>
 <div class="sect2">
 <h3 id="_working_with_windows">Working with windows</h3>
@@ -985,7 +988,7 @@ splitting      splitting
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-06-15 01:52:20 CEST
+Last updated 2015-06-20 23:38:09 CEST
 </div>
 </div>
 </body>

@@ -103,6 +103,8 @@ We shouldn't be concerned by buffers only for navigation, of course: Vim allows 
 
 `:bufdo` can be used to perform an identical edit on every listed buffer, set a local option or do whatever complex thing you need. Since the content of a buffer can be different from the content of its associated file -- if there's one -- `:bufdo` constitutes a very powerful feature.
 
+By the way, did you notice that Vim doesn't ask us to write each buffer before changing to another one? That's because of the `hidden` option we enabled at the start of our journey. With `nohidden`, the default value, juggling with buffers would be a lot less fun.
+
 === Reference
 
     :help windows
@@ -116,11 +118,11 @@ We shouldn't be concerned by buffers only for navigation, of course: Vim allows 
 
 As briefly mentioned in the introduction, we _always_ have at least one window in Vim. A Window that _always_ displays one buffer.
 
-The purpose of a window is to provide a view into a buffer. It can be created, moved around and closed but it is important to remember that windows and buffers are not coupled **at all**. Since any buffer could end up being displayed in any window it is plain wrong to assume "`switching to a window`" to be the same as "`switching to a buffer`", let alone "`switching to a file`".
-
 An interesting feature of Vim is the ability to split our workspace in multiple windows -- often called "`splits`" -- to display different buffers or parts of a buffer. The exact mechanism is quite simple: the current window is split in two equal parts along the desired axis, _vertical_ or _horizontal_, and the cursor is placed in the new window.
 
 By default, the splitting is done to the left, which can be very counter-intuitive.
+
+The purpose of a window is to provide a view into a buffer. It can be created, moved around and closed but it is important to remember that windows and buffers are not coupled **at all**. Since any buffer could end up being displayed in any window it is plain wrong to assume "`switching to a window`" to be the same as "`switching to a buffer`", let alone "`switching to a file`".
 
 === Working with windows
 

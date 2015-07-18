@@ -1,4 +1,21 @@
-Extending Vim
+= Extending Vim
+:stylesdir: css
+:stylesheet: style.css
+:imagesdir: images
+:scriptsdir: javascript
+:linkcss:
+
+
+It should be clear by now that Vim is a very powerful text editor but don't be fooled, it doesn't do _everything_. Sure we get a lot of small low-level elements to play with but, sometimes, using a specialized tool would be more suited to the job. After all, shares its environment with many commandline tools so... why not putting them to good use?
+
+With Vim, we can run external commands in -- broadly speaking -- two ways: as filters and, well, as external commands.
+
+=== Filters
+
+Tranforming existing text in place with another program is called _filtering_: we start with some text and replace it with the output of an external `"filter`".
+
+=== External commands
+
 
 As should be obvious by now, Vim can do a lot and gives us plenty of means and opportunities to build higher-level tools to suit many needs.
 

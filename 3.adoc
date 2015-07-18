@@ -1,437 +1,192 @@
-= Let the work flow
+= Moving around
 :stylesdir: css
 :stylesheet: style.css
 :imagesdir: images
 :scriptsdir: javascript
 :linkcss:
 
-=== OLD STUFF
+Working a whole day on the same line in the same file is a relatively uncommon pattern. In reality, we spend a lot of time jumping from one word to another, one line to another, one function to another, one file to another or even one area of the project to another. For years, editor developers have come up with various ways to make those movements easier and Vim has arguably been ahead of the curve for most of its long history.
 
-Some of the basic commands may feel too complex or require too many keystrokes for your taste, though. But do yourself a favor and try to find native ways to work around those issues before going on a plugin safari. It's good for learning and good for startup time.
+This chapter tries to present an exhaustive panorama of the many [...]
 
-Let's start Vim with two files and subsequently edit another file:
+== Starting small
 
-    $ vim foo.txt bar.txt
-    :e baz.txt
+== Moving within a buffer
 
-=== One command to…
+Contrary to common belief, `hjkl` are far from being the be-all and end-all of text editing. Using them to replace the arrows _may_ make some sense but the gain will be negligible if you only use them. `hjkl` are unfortunately the Vim equivalent of a rachitic tree hiding a lush forest. A forest so rich you will wonder why you wasted so much energy on that ugly little excuse of a tree.
 
-The first navigation-related command worth knowing is `:b`, short for `:buffer`.
+Moving the cursor character-by-character and line-by-line is perfectly OK as long as we are talking about local movement. And by "`local`" I mean "`hyperlocal`". The usefulness of that method, whether it involves the famous `hjkl`, `wasd` or the arrows, diminishes quickly as we augment the distance. That is why most "`normal`" editors allow us to do things like Alt+Right or Ctrl+Up to jump over whole words or paragraphs and why Vim allows us to do that… and a lot more.
 
-`:b` expects one argument which can be:
+=== Motions
 
-* a buffer number,
-* a buffer name,
-* a buffer reference.
+Starting small, we have _word-level_ motions:
 
-`:b2`, `:b3` and `:b1` pretty much do what you would expect them to do and `:b baz.txt` too.
+[cols="1,9"]
+|===
+|`w`|jump to first character of next _word_
+|`b`|jump to first character of current _word_ or first character of previous _word_ if already on first character of current _word_
+|`e`|jump to last character of current _word_ or last character of next _word_ if already on last character of current _word_
+|`ge`|jump to last character of previous _word_
+|===
 
-==== Reference
+Did you notice how I emphasized the word "`word`"? That's because we have this very useful distinction between a "`word`", delimited by non-keyword characters, and a "`WORD`", delimited by white space:
 
-    :help :buffer
+....
+             ┌─────────────────────────────── a word
+             │┌───────┬────────────────────── another word
+             ││       │┌───────────────────── and another word
+We live in a "wonderful" world.
+             └─────────┴───────────────────── a WORD
+....
 
-=== Next/Previous buffer
+This gives us the following variants of the motions above:
 
-These commands let you cycle through your buffers without using numbers:
+[cols="1,9"]
+|===
+|`W`|jump to first character of next _WORD_
+|`B`|jump to first character of current _WORD_ or first character of previous _WORD_ if already on first character of current _WORD_
+|`E`|jump to last character of current _WORD_ or last character of next _WORD_ if already on last character of current _WORD_
+|`gE`|jump to last character of previous _WORD_
+|===
 
-    :bn[ext]
-    :bp[revious]
+Those word-level motions alone cover more ground than our usual Ctrl+Arrow and let us avoid an enormous amount of mindless arrowing _and_ `hjkl`-ing.
 
-or with numbers if you want an equivalent of the `FFWD` and `REW` buttons on your parents' VCR:
+Approximation vs precision.
 
-    :5bn
-    :3bp
+Zooming out a little, we have a bunch of generic _line-level_ motions:
 
-As usual, you can map those commands to easier keys. These are my mappings, YMMV:
+[cols="1,9"]
+|===
+|`0`|jump to first column
+|`^`|jump to first printable character
+|`$`|jump to EOL
+|`g_`|jump to last printable character
+|`g^`|jump to first displayed character
+|`g$`|jump to last displayed character
+|===
 
-    nnoremap <PageUp>   :bprevious<CR>
-    nnoremap <PageDown> :bnext<CR>
+and another bunch of what I would call "`dynamic`" motions:
 
-Those two commands, remapped or not, are useful when your target buffer is relatively close or when the buffer list is short or, simply, when you just don't want to think but they won't help much if your target is 27 `:bn` away.
+[cols="1,9"]
+|===
+|`fx`|jump to next character `x`
+|`Fx`|jump to previous character `x`
+|`tx`|jump before next character `x`
+|`Tx`|jump before previous character `x`
+|===
 
-==== Reference
+The first set of motions above have very strict meanings: there's only one EOL on the current line, or one last printable character. That kind of motion always works the same way.
 
-    :h :bnext
-    :h :bprevious
+The motions in the second set are a bit different.
 
-=== Listing buffers
+First, because the second character -- `x` in our example -- can be any character, meaning that those four commands can be used to jump to a very large amount of potential targets.
 
-Maintaining an up-to-date mental number-to-name-to-number map to move around sounds silly, I agree, but we don't really have to!
+Second, because they can take an optional `[count]` to jump to the `[count]`-th character on the line: `3fn` for "`jump to the third `n` to the right`".
 
-We have three commands — all three synonyms — at our disposal for listing buffers:
+Third, because they can be repeated with `;` (in the same direction) and `,` (in the opposite direction).
 
-    :buffers
-    :files
-    :ls
+Zooming out a bit more, we have another set of useful motions:
 
-The output of `:ls`, the shortest one, should look like that:
+[cols="1,9"]
+|===
+|`)`|jump to next sentence
+|`(`|jump to previous sentence
+|`}`|jump to next blank line-separated
+|`{`|jump to previous blank line
+|===
 
-      1  h   "foo.txt"                      line 1
-      2 #h   "bar.txt"                      line 1
-      3 %a   "baz.txt"                      line 1
-    Press ENTER or type command to continue
+etc
+
+
+
+
+=== Search
+
+=== Defines
+
+== Moving within a project
+
+=== Files
+
+=== Grep
+
+=== Includes/Defines
+
+=== Tags
+
+== Search-based navigation
+
+Searching is a wonderful way to navigate the current buffer. Together with `:set incsearch`, `/` and `?` rarely need more than 4 or 5 keystrokes to get us where we need to.
+
+(gif)
+
+    /foo<CR>          " search forward for foo
+    ?bar<CR>          " search backward for bar
+    n                 " repeat the last search
+    N                 " repeat the last search in the opposite direction
+
+These few options are generally considered useful:
+
+* `:help 'incsearch'` moves the cursor to — and highlights — the next match *as you type*.
+* `:help 'ignorecase'` makes search case-insensitive; allows you to reach `Foo` with `foo`.
+* `:help 'smartcase'` turns case-sensitivity on if the search pattern contains an uppercase letter. `/Foo` skips `foo` on the way to `Foo`.
+* `:help 'hlsearch'` highlights *every* match, in every visible window.
+* `:help :nohl` turns off `'hlsearch'`'s highlighting until next search.
+
+== Search inside the current buffer
+
+    :g/foo/#
+
+== Search inside the current buffer, and included files, excluding comments
+
+While `/` and `#` are awesome *navigation* tools, they are not that good for *actual* searching. "Searching" usually involves comparing matches, filtering… all things `/` and `?` actually make quite hard, if only because we can't see all the matches at once.
+
+But Vim has got our back with `:help :ilist`:
+
+* List every line containing the whole word `foo` and jump to one of them:
+
+    :il foo<CR>:202<CR> (gif)
+
+* List every line containing `foo`
+
+    :il /foo<CR> (gif)
+
+* Create a TOC of the current markdown document
+
+    :il /#<CR> (gif)
+
+… and its more specialized sibling `:help :dlist`:
+
+* List every function containing `bar` in its name
+
+    :dli bar<CR>
+
+* List every function
+
+    :dli /<CR>
+
+=== … and replace
+
+* List all the functions containing `user` and add a TODO item above one of them 
+
+    :dli /user<CR>:1034norm O// TODO: fix this function<CR> (gif)
+
+* List all the occurences of `myVar` and substitute only some of them with `myArray`
+
+    :il myVar<CR>:53,89s/myVar/myArray (gif)
+
+== Search inside loaded buffers
+
+    :call setqflist([])<CR>
+    :bufdo vimgrepadd foo % | cw
     
-The most immediately useful bits are the buffer number in the first column and its status in the second column.
+    :command! -nargs=1 SearchInBuffers call setqflist([])|silent! bufdo vimgrepadd <args> %|cw
 
-* the buffer number, useful for `:b<number>`,
-* the `%` in the status column means "`current buffer`", we are already familiar with it.
+=== And replace
 
-That list is not interactive, though: we can not move around and select an item so what good is it?
-
-Hitting `<CR>` makes the list go away but — as hinted by "`or type command to continue`" — but hitting `:` gives us the usual command-line where we can type `:b2` to go to buffer number 2. Neat.
-
-The whole process is a bit too verbose, though, what if there was a way to shorten that sequence?
-
-    :ls<CR>
-    :b2<CR>
-
-It turns out there _is_ a way, and a very simple one at that! Behold the almighty mapping popularized by Barry Arthur, AKA bairui, AKA dahu in [this comic](http://2.bp.blogspot.com/-d1GaUBk-Y10/TyFhskmCYRI/AAAAAAAAARQ/CIEx1V7FLqg/s1600/vim-and-vigor-004-flying_is_faster_than_cycling.png):
-
-    :nnoremap <leader>b :ls<CR>:b<Space>
-
-It executes `:ls` and immediately puts `:b ` on the command-line, ready for us to type a number and hit `<CR>`:
-
-      1  h   "foo.txt"                      line 1
-      2 %a   "bar.txt"                      line 1
-      3 #h   "baz.txt"                      line 1
-    :b |
-
-With that mapping, we are down to 4 keystrokes:
-
-    <leader>b1<CR>
-
-Adding that mapping to our `~/.vimrc` sounds like a very good idea, doesn't it?
-
-==== Reference
-
-    :help :ls
-
-=== Our friend, the octothorpe
-
-Now is a good time to examine the output of `:ls` again…
- 
-      1 %a   "foo.txt"                      line 1
-      2 #h   "bar.txt"                      line 1
-      3  h   "baz.txt"                      line 1
-
-`#`, which can be used exactly like `%` or a buffer number, marks the "`alternate file`", or the last file that was edited. In practical terms, the alternate file is usually synonymous with "`previous buffer`" and used like this:
-
-    :b#
-
-The current buffer is now `bar.txt` and its "`alternate file`" is the one we just left, `foo.txt`:
-
-      1 #h   "foo.txt"                      line 1
-      2 %a   "bar.txt"                      line 1
-      3  h   "baz.txt"                      line 1
-
-Until we edit another buffer, repeating `:b#` or the slightly more comfortable `<C-^>` will cycle between `foo.txt` and `bar.txt`. This doesn't sound like much but the ability to alternate between two commonly used buffers is an _extremely_ useful feature.
-
-Note: I find the "`file`" part of "`alternate file`" hard to reason about so I usually think in terms of previous and current "`buffer`". YMMV of course.
-
-==== Reference
-
-    :help alternate-file
-
-=== Command-line completion
-
-We have seen earlier that `:b` accepts a buffer name as argument but doing `:b models/foo-bar.js` seems slow and error-prone.
-
-Like with `:edit` and `:find`, we can complete buffer names with `<Tab>`, see a list of possible completions with `<C-d>` and take advantage of the wildmenu:
-
-    (screencast)
-
-There is a _big_ difference, though, the completion is done on any part of the buffer name so we can just use a small bit that we remember and get where we want to get to pretty quickly:
-
-    :b o<Tab><CR>
-
-==== Reference
-
-    :help cmdline-completion
-
-=== Mapping galore
-
-The `<leader>b` mapping we added to our arsenal earlier is a fine example of how Vim works. Vim gives us _many_ small, low-level, bricks — text primitives, common commands, etc. — and the means — mappings, macros, vimscript, count, motions, etc. — to combine them in order to create the higher-level commands we need. However specialized or generic we want them to be.
-
-What about a "`choose a buffer by partial name`" mapping? Taking inspiration from our `<leader>f`, `<leader>e` and `<leader>b` mappings we can experience with other keys and start with something like:
-
-    :nnoremap <leader>u :b<Space>
-
-What about listing the candidates too?
-
-    :nnoremap <leader>u :b<Space><C-d>
-
-Cool! Well… kind of. It would be even cooler if the completion (and the wildmenu) was started automatically. Let's try with a `<Tab>`:
-
-    :nnoremap <leader>u :b<Space><Tab>
-
-Huh… It looks like `<Tab>` doesn't work like we expected.
-
-No, what we need is another option, `'wildcharm'`:
-
-    :set wildcharm=<C-z>
-
-and a slight change in our mapping:
-
-    :nnoremap <leader>u :b<Space><C-z>
-
-Hoooooo… _that_ is good!
-
-==== Reference
-
-    :help 'wildcharm'
-
-In Vim, you always have *at least* one buffer, displayed in *at least* one Window, itself contained in *at least* one tab page. That's the bare minimum.
-
-But you can have one or more buffers.
-
-And you can have one or more windows.
-
-And one or more tab pages.
-
-== Windows
-
-Simply put, a window is a *view* into whatever buffer you decide to display in that window. As such, windows can't be used as buffer proxies or, obviously, as file proxies.
-
-So what good are windows, then?
-
-=== Using windows
-
-==== Different views of the same file
-
-Because a single buffer can be viewed trough more than one window it is possible to view the definition of a function — upper in the same buffer — and the portion of code you are currently working on in two windows, the latter below the former.
-
-    (screenshot)
-
-==== Work in one widow, refer to the other one
-
-One could split the current tab page in two vertical windows, with the documentation on the right and his current code on the left. With such a setup, it becomes very easy to refer to the content of one buffer while writing in another one… using only our eyeballs.
-
-    (screenshot)
-
-==== Stay focused
-
-Alternating between two files — HTML or code/test — is easy with `:b#` or `<C-^>` but the focus change *can* become distracting after a while: the whole screen is changed, we must adapt to the new content… this can be a flow-breaker.
-
-Having your HTML in one window and your CSS in another makes it possible to refer to one when working in the other and avoids that split second of adjustment that can break our flow.
-
-    (screenshot)
-
-=== Creating a window
-
-Creating a window is done by splitting the current window in two equal parts.
-
-* The current window is split to obtain two horizontal views of the current buffer:
-
-        :sp[lit]
-
-  or:
-
-        <C-w>s
-
-* The current window is split to obtain two vertical views of the current buffer:
-
-        :vs[plit]
-
-  or:
-
-        <C-w>v
-
-* The current window is split but the new horizontal window contains a new, empty, unnamed buffer:
-
-        :new
-        
-  or:
-
-        <C-w>n
-
-* The current window is split but the new vertical window contains a new, empty, unnamed buffer:
-
-        :vnew
-
-The somewhat unintuitive default is to open the new window on the top left of the current window. It is possible to tell Vim to do that on the bottom right by prepending `:sp`, `:vs`, :new and `:vnew` with `:botright`:
-
-    :botright new
-
-You can add the two options below to your `vimrc` to make this the default behavior:
-
-     set splitbelow
-     set splitright
-
-=== Moving the cursor between windows
-
-Two windows make an easy layout: moving from one to the other is only a matter of mashing `<C-w>w`. But what if we have, say… six windows?
-
-That's where windows start to become "complicated". One could move in the four cardinal directions with:
-
-    <C-w>h or <C-w><Left>
-    <C-w>j or <C-w><Down>
-    <C-w>k or <C-w><Up>
-    <C-w>l or <C-w><Right>
-
-or directly move to the first one, at the top left:
-
-    <C-w>t ("top")
-
-or to the last one, at the bottom right:
-
-    <C-w>b ("bottom")
-
-or to the previous window:
-
-    <C-w>p
-
-or cycle through every window:
-
-    <C-w>w (forward)
-    <C-w>W (backward)
-
-In any case, keep the nature of windows in mind to avoid confusing "moving to a window" and "moving to a buffer".
-
-=== Moving windows around
-
-What if you opened an horizontal window instead of a vertical one? What if you would prefer that window at the top right to be on the left, between the top one and the bottom one?
-
-Vim gives us a bunch of commands for moving windows around but, again, it is important to stress out the *fact* that windows and buffers are not tied in any ways. Hence the question you should ask to yourself each time you want to "move a window":
-
-*Do I want to change my window layout or do I want to view this buffer in that window?*
-
-==== I want to change the window layout
-
-You can try these:
-
-    <C-w>H    turn the current window into a vertical one
-              at the far left of the screen
-    <C-w>J    turn the current window into an horizontal one
-              at the bottom of the screen
-    <C-w>K    turn the current window into an horizontal one
-              at the top of the screen
-    <C-w>L    turn the current window into a vertical one
-              at the far right of the screen
-
-    <C-w>x    switch the current window and the previous one
     
-    <C-w>r    rotate windows (clockwise)
-    <C-w>R    rotate windows (counter-clockwise)
 
-==== I want to view this buffer in that window
+== Search recursively inside project
 
-Because windows are *views* into arbitrary buffers, this task is better done by going to "that" window and displaying "this" buffer:
+=== … and replace
 
-    <C-w>l
-    :b foo…
-
-Remember: while it is certainly a tempting shortcut, mentally associating a buffer and a window or a tab is counterproductive.
-
-=== Closing windows
-
-Closing a window doesn't remove the currently displayed buffer from the buffer list and removing a buffer from the buffer list doesn't necessarily close the window where it is currently displayed.
-
-If you want to 
-
-=== Reference
-
-    :help :split
-    :help :vsplit
-    :help new
-    :help vnew
-    :help :botright
-    :help 'splitbelow'
-    :help 'splitleft'
-    :help opening-window
-    :help window-move-cursor
-    :help window-moving
-
-== Tab pages
-
-The discord around tab pages is as old as the feature and largely a confusion issue.
-
-In IDEs and other editors, the file is viewed through a window attached to a "tab", itself sitting among other tabs in a "tabline". Because that tab is unambiguously tied to that window and to that file, the whole thing constitutes the de-facto file proxy people are used to. A somewhat reasonable convention that new vimmers often bring with them upon switching.
-
-They are more than that but, unfortunately, tab pages share quite a few important aspects with other editor's tabs:
-
-* their name, to begin with,
-* their look and feel,
-* their interaction model.
-
-Indeed, Vim's tab page is made of a view attached to a tab widget that contains some informative label and can be clicked, closed or move around. And yeah, it is called "tab" page.
-
-"Confusion", do you remember? Wait! I have more for you…
-
-Editing multiple files in vanilla Vim is admittedly not a fun experience because the `'hidden'` option is disabled by default, preventing us from moving to another buffer without saving the current one or *abandoning our changes.*
-
-Naming issues, hostile defaults, poor UX choices… everything leads newcomers to tab pages… which they will invariably use as if they were the familiar file proxy they are so used to.
-
-Basically, reading the relevant documentation or listening to the advice of other seasoned vimmers are the only ways one could learn that, in fact, Vim's tab pages are *very* different from other editors tabs. And we know how people like to read documentation…
-
-=== A truth so simple it hurts
-
-A tab page is a *workspace*, a place where we can organize any number of windows.
-
-Because they contain windows, tab pages inherit their most striking limitation: *no one-to-one relationship between a buffer and a window.* Since it is impossible to tie a specific buffer to a specific window in a specific tab pages it is therefore impossible to use tab pages as file proxies.
-
-=== Using tab pages
-
-==== Creating a tab page
-
-==== Moving between tab pages
-
-==== Moving tab pages around
-
-==== Closing tab pages
-
-== Buffers vs windows vs tab pages
-
-Let us go back to that famous "discord" I hinted at earlier.
-
-When asking help on an obviously tab-centric workflow, new vimmers often get an answer that sounds like "don't use tabs, use buffers instead" which sounds in turn like "tabs are useless, using buffers is the one true way of the vimmer".
-
-Of course, using tab pages as file proxies (the rookie vimmer) is just as wrong as ditching them by principle (the uptight netizen).
-
-To paraphrase [my lengthy answer](http://stackoverflow.com/a/26710166/546861) to [that dumb StackOverflow question](http://stackoverflow.com/q/26708822/546861), buffers, windows and tab pages are designed to serve different needs and should be used according to their respective strengths and weaknesses. Using only one is *not* the answer, whatever that "one" is.
-
-* Use buffers as what they are: file proxies.
-* Use windows as what they are: views.
-* Use tab pages as what they are: workspaces.
-
-
-
-
-
-
-And take advantage of a great feature called "`autocommands`" for... the automation part.
-
-Autocommands are Vim's way of executing arbitrary commands when specific events happen. Entering a window, quitting insert mode, loading a buffer with a specific filetype are some of the many events available.
-
-An autocommand usually looks like that:
-
-    autocmd event pattern command
-
-where `autocmd` is the command that defines an autocommand, `event` can be a single event or a comma-separated list of events, `pattern` is a simple pattern describing what [todo] and `command` is what we want to happen.
-
-Scrolling through the list at `:help autocommand-events` we find `BufWritePost` which looks like it can be used after `:w` to `:make` and `:cwindow`. Let's try it:
-
-    autocmd BufWritePost *.c silent make|cwindow
-
-Phew! That was easy...
-
-But we are not finished with autocommands yet. The way that feature is implemented makes it easy for autocommands to "`pile up`" when we source our `vimrc` during a session and provoke performance issues. To avoid side effects, we should wrap our autocommands in an `augroup` and empty it before define our actual autocommands. The whole boilerplate looks like this:
-
-    augroup groupname
-        autocmd!
-        autocmd event pattern command
-    augroup END
-
-So...
-
-    augroup c
-        autocmd!
-        autocmd BufWritePost *.c silent make|cwindow
-    augroup END
-
-From there, one can configure many things to suit his needs: what program to run when doing `:make` or `:grep`, how to parse the output of those comands so that it can be used in the quickfix list, for what filetype to use what setting... but that will be the subject of another chapter.
-
-==== Reference
-
-    :help quickfix
-    :help autocommand
-    :help :silent
