@@ -1,12 +1,7 @@
 function playStop(event) {
     var gif_url = this.href;
     var png_url = "images/gifcast_off.png";
-    var images  = document.getElementsByClassName("playing");
-
-    for (var i = 0, len = images.length; i < len; i++) {
-        images[i].firstChild.src = png_url;
-        images[i].className = "image";
-    }
+    var images  = document.getElementsByClassName("image");
 
     if (this.className === "image playing") {
         this.firstChild.src = png_url;
@@ -14,6 +9,12 @@ function playStop(event) {
     } else {
         this.firstChild.src = gif_url;
         this.className = "image playing";
+        for (var i = 0, len = images.length; i < len; i++) {
+            if (images[i] !== this) {
+                images[i].firstChild.src = png_url;
+                images[i].className = "image";
+            }
+        }
     }
 
     event.preventDefault();
