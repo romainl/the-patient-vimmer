@@ -81,7 +81,7 @@
 </ul>
 </div>
 <div class="paragraph">
-<p>At the root of the tree&#8201;&#8212;&#8201;and at the center of Vim&#8217;s design&#8201;&#8212;&#8201;is the buffer; a little higher on the abstraction ladder comes the window and, higher again, is the tab page. Vim will quit when you delete the last buffer, close the last window or close the last tab page.</p>
+<p>At the root of the tree&#8201;&#8212;&#8201;and at the center of Vim&#8217;s design&#8201;&#8212;&#8201;is the buffer; a little higher on the abstraction ladder comes the window and, higher again, is the tab page. Vim will quit when you delete the last buffer, close the last window (no window means no buffer) or close the last tab page (no tab page means no window which means no buffer).</p>
 </div>
 </div>
 </div>
@@ -89,7 +89,7 @@
 <h2 id="_buffers">Buffers</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Like Word or Photoshop, Vim lets us create, delete, switch to and&#8201;&#8212;&#8201;of course&#8201;&#8212;&#8201;edit &#8220;buffers&#8221; (Vim&#8217;s lingo for &#8220;documents&#8221;). Like in Microsoft Word or Adobe Photoshop, those buffers can be associated with an actual file or not and your changes will not be written to disk unless you instruct Vim to do so with the adequate command. Smilarly, Vim will tell you when you are trying to quit without saving&#8230;&#8203; No, Vim is not <em>that</em> weird, after all.</p>
+<p>Like Microsoft Word or Adobe Photoshop, Vim lets us create, delete, switch to and&#8201;&#8212;&#8201;of course&#8201;&#8212;&#8201;edit &#8220;buffers&#8221; (Vim&#8217;s lingo for &#8220;documents&#8221;). Like in the aforementionned programs those buffers can be associated with an actual file or not and your changes will not be written to disk unless you instruct Vim to do so with the adequate command. Similarly, Vim will tell you when you are trying to quit without saving&#8230;&#8203; No, Vim is not <em>that</em> weird, after all.</p>
 </div>
 <div class="paragraph">
 <p>As Vim&#8217;s core file proxies, buffers are (or should be) at the center of your workflow and you owe it to yourself to know how to work with them to achieve reasonable efficiency.</p>
@@ -97,7 +97,7 @@
 <div class="sect2">
 <h3 id="_working_with_buffers">Working with buffers</h3>
 <div class="paragraph">
-<p>Every buffer created in Vim via <code>:edit</code>, <code>:find</code>, <code>:args</code>, or any of their relatives or simply <code>$ vim filename</code>, is added to the <em>buffer list</em> (which should not be confused with the <em>argument list</em>) where it is assigned a number that will <strong>never</strong> change until the buffer is explicitely wiped out from the list. When started without arguments, Vim will create an empty buffer anyway so there&#8217;s really always <em>at least</em> one buffer to work with.</p>
+<p>Every buffer created in Vim via <code>:edit</code>, <code>:find</code>, <code>:args</code>&#8230;&#8203; or simply <code>$ vim filename</code>, is added to the <em>buffer list</em> where it is assigned a number that will <strong>never</strong> change. When started without arguments, Vim creates an empty buffer anyway so there&#8217;s really always <em>at least</em> one buffer to work with.</p>
 </div>
 <div class="paragraph">
 <p>Beside that number, buffers are also named after the file they are associated with. This gives us two ways to address a buffer:</p>
@@ -113,7 +113,7 @@
 </ul>
 </div>
 <div class="paragraph">
-<p>A typical Vim session could consist of editing a single file&#8201;&#8212;&#8201;and thus a single buffer&#8201;&#8212;&#8201;or it could go for weeks and consist of dozens and dozens of buffers. Keeping track of a potentially large number of buffers would be daunting if Vim didn&#8217;t gave us not one, not two, but <em>three</em> commands for listing buffers:</p>
+<p>A typical Vim session could consist of commenting out a single line in a single file&#8201;&#8212;&#8201;and thus a single buffer&#8201;&#8212;&#8201;or it could go on for weeks and consist of dozens and dozens of buffers. Keeping track of a potentially large number of buffers would be daunting if Vim didn&#8217;t gave us not one, not two, but <em>three</em> commands for listing buffers:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -142,7 +142,7 @@ Press ENTER or type command to continue</pre>
 <p>The second column gives us information on the state of the buffer, <code>h</code> means &#8220;hidden&#8221;, <code>a</code> means &#8220;active&#8221;, <code>%</code> marks the current buffer and <code>#</code> marks the &#8220;alternate file&#8221;, which I usually think of as &#8220;previous buffer&#8221;.</p>
 </li>
 <li>
-<p>The third column tells us the buffer name.</p>
+<p>The third column gives us the buffer name.</p>
 </li>
 <li>
 <p>And the last column shows the current position of the cursor.</p>
@@ -178,10 +178,10 @@ Press ENTER or type command to continue</pre>
 <p>Of course, it is not necessary to do <code>:ls</code> before doing <code>:b24</code> but who wants to actively maintain a list of buffers in his head? Well&#8230;&#8203; I certainly don&#8217;t.</p>
 </div>
 <div class="paragraph">
-<p>One way to avoid thinking too much about your buffers would be to mash <code>:bn[ext]</code> and <code>:bp[revious]</code> until you get where you want. Because the buffer list is one-dimensional, you are sure to get to the right buffer but&#8230;&#8203; your destination might be sixteen buffers away, so cycling is not really <em>the</em> silver bullet.</p>
+<p>One way to avoid thinking too much about your buffers would be to mash <code>:bn[ext]</code> and <code>:bp[revious]</code> until you get where you want. Because the buffer list is one-dimensional, you are sure to get to the right buffer but&#8230;&#8203; your destination might be sixteen buffers away, so cycling is not really a silver bullet. Surely there&#8217;s something we can do with <code>:ls</code>, right?</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s go back to that boring <code>:ls</code>, then <code>&lt;CR&gt;</code>, then <code>:b24</code>, then <code>&lt;CR&gt;</code> routine which looks like a good candidate for a nice, mnemonic, custom mapping. <a href="http://of-vim-and-vigor.blogspot.fr/p/vim-vigor-comic.html">Flying is faster than cycling</a>, right?</p>
+<p>So let&#8217;s go back to that boring <code>:ls</code>, then <code>&lt;CR&gt;</code>, then <code>:b24</code>, then <code>&lt;CR&gt;</code> routine which looks like a good candidate for a nice, mnemonic, custom mapping. <a href="http://of-vim-and-vigor.blogspot.fr/p/vim-vigor-comic.html">Flying is faster than cycling</a>, right?</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -203,7 +203,7 @@ Press ENTER or type command to continue</pre>
 <p>There is something special about that mapping, though: instead of the usual <code>&lt;leader&gt;&lt;key&gt;</code> or <code>&lt;Fn&gt;</code> mechanisms we simply use two seemingly normal keys pressed in succession but&#8230;&#8203; doesn&#8217;t Vim actually use <em>every</em> key on our keyboard? Won&#8217;t we hit any problem down the road?</p>
 </div>
 <div class="paragraph">
-<p>Normal mode commands can roughly be divided in two groups (this table is not exhaustive):</p>
+<p>Short normal mode commands can roughly be divided in four groups (note the ellipses, this table is not exhaustive):</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -212,43 +212,58 @@ Press ENTER or type command to continue</pre>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>standard commands</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>&#8220;standard&#8221; commands</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>h</code>,<code>j</code>,<code>k</code>,<code>l</code>,<code>H</code>,<code>M</code>,<code>L</code>,<code>x</code>,<code>i</code>,<code>,</code>&#8230;&#8203;</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>operator commands</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>y</code>,<code>c</code>,<code>d</code>,<code>v</code>&#8230;&#8203;</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>commands starting with g</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>h</code>,<code>j</code>,<code>k</code>,<code>l</code>,<code>H</code>,<code>M</code>,<code>L</code>,<code>x</code>,<code>i</code>,<code>,</code>&#8230;&#8203;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>commands starting with z</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>y</code>,<code>c</code>,<code>d</code>,<code>v</code>&#8230;&#8203;</p></td>
+</tr>
 </tbody>
 </table>
 <div class="paragraph">
-<p>Using &#8220;standard commands&#8221; in mappings is risky business because they usually work on their own and are, simply put, all over the place. It is quite hard to find a remappable standard command without overriding some useful feature.</p>
+<p>Using &#8220;standard commands&#8221; in the left hand side of our mappings is risky business because they usually work on their own and are, simply put, all over the place. It is quite hard to find a remappable standard command without overriding some useful feature which is why we chose <code>&lt;space&gt;</code> over the suggested <code>,</code> as our <code>&lt;leader&gt;</code> earlier in our journey.</p>
 </div>
 <div class="paragraph">
-<p>&#8220;Operator commands&#8221; are a bit different. They wait for a motion or text-object on which to <em>operate</em> and thus can be thought of as key <em>pairs</em>: <code>c}</code>, <code>y$</code>&#8230;&#8203; which leaves a few holes to overtake. <code>cd</code>, for example, doesn&#8217;t do anything by default because there is no <code>d</code> motion or text-object. Same thing for <code>ym</code> or <code>zu</code>.</p>
+<p>&#8220;Operator commands&#8221; are a bit different. They wait for a motion or text-object on which to <em>operate</em> and thus can be thought of as the first key in a <em>pair</em>: <code>c}</code>, <code>y$</code>&#8230;&#8203; Since not every key is bound to a text-object motion we are left a few holes to overtake.</p>
 </div>
 <div class="paragraph">
-<p>Here is a far from exhaustive list of key pairs available for mapping in normal mode:</p>
+<p>Taking inspiration from the built-in &#8220;commands starting with g&#8221; and &#8220;commands starting with z&#8221;, we can look for available pairs like <code>cd</code> which doesn&#8217;t do anything by default because there is no <code>d</code> motion or text-object. Same thing for <code>ym</code> or <code>zu</code>.</p>
+</div>
+<div class="paragraph">
+<p>Below is a&#8201;&#8212;&#8201;probably imperfect and very much WIP&#8201;&#8212;&#8201;attempt to list every pair available in normal mode.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>cd   dc   gb   vc   yc   zp
-cg   dg   gc   vd   yd   zq
-cm   dm   gl   vm   ym   zu
-co   dq   gs   vo   yo   zy
-cp   dr   gy   vp   yp
-cq   du        vq   yq
-cr   dv        vr   yr
-cu   dx        vs   ys
-cv   dy        vu   yu
-cx   dz        vv   yv
-cy             vx   yx
-cz             vy   yz
-               vz</pre>
+<pre>ca   cA   da   dA             va   vA    ya    yA
+                    gb   gB
+          dc   dC   gc        vc   yc
+cd   cD                       vd   yd   zp
+                    gl
+cm        dm                  vm   ym    zq
+co   cO        dQ              zu
+cp   cP        gs             vo   yo   zy
+cq   cQ   dq   gy             vp   yp
+cr   cR   dr                  vq   yq
+cu   cU   du                  vr   yr
+cv   cV   dv                  vs   ys
+cx   cX   dx                  vu   yu
+cy   cY   dy                    vv   yv
+cz   cZ   dz                    vx   yx
+                              vy   yz
+                              vz</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Adding uppercase variants, we get quite a bunch of mapping opportunities&#8230;&#8203; like <code>gb</code>, used in the mapping above.</p>
+<p>That&#8217;s quite a bunch of mapping opportunities that will certainly come handy later on&#8230;&#8203;</p>
 </div>
 <div class="paragraph">
 <p>But there&#8217;s one problem with numbers: the file-to-number mapping is not very intuitive. Humans being humans, we are naturally better at names than numbers so the second way to address buffers, <strong>names,</strong> may have a lot of potential here. Well, it happens that the buffer commands we used before&#8201;&#8212;&#8201;<code>:b</code>, <code>:bd</code>&#8201;&#8212;&#8201;can take a partial name as argument so switching to a buffer, especially with tab-completion and the wildmenu can be very close to friction-less:</p>
@@ -259,7 +274,7 @@ cz             vy   yz
 </div>
 </div>
 <div class="paragraph">
-<p>Again, we can create a convenient mapping to save a bunch of keystrokes:</p>
+<p>Again, we can easily create a convenient mapping to save a bunch of keystrokes:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -267,7 +282,7 @@ cz             vy   yz
 </div>
 </div>
 <div class="paragraph">
-<p>I hope you noticed the similarity with the <code>&lt;leader&gt;f</code> mapping we added to our <code>vimrc</code> in the previous chapter. We have two commands with a similar purpose that work exactly the same way and follow the same naming convention:</p>
+<p>I hope you noticed the similarity with the <code>&lt;leader&gt;f</code> mapping we added to our <code>vimrc</code> in the previous chapter and the <code>&lt;leader&gt;e</code> mapping it replaced. We have two commands with a similar purpose&#8201;&#8212;&#8201;navigation&#8201;&#8212;&#8201;that work exactly the same way and follow the same naming convention:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -280,7 +295,7 @@ cz             vy   yz
 </ul>
 </div>
 <div class="paragraph">
-<p>With <code>&lt;leader&gt;f</code> and now <code>&lt;leader&gt;b</code> we have a nice collection of easy-to-remember navigation mappings that behave exactly the same way&#8201;&#8212;&#8201;exactly the kind of mapping we need&#8201;&#8212;&#8201;and another one, <code>gb</code>, which simply demonstrates another way to approach the same problem. Vim is a large and complex piece of software and it offers so many ways to skin a cat&#8230;&#8203; Not taking any opportunity to use that power to our advantage would be borderline criminal.</p>
+<p>With <code>&lt;leader&gt;f</code> and now <code>&lt;leader&gt;b</code> we have the beginning of a collection of easy-to-remember and consistant navigation mappings&#8201;&#8212;&#8201;exactly the kind of mapping we need&#8201;&#8212;&#8201;as well as another one, <code>gb</code>, which simply demonstrates another way to approach the same problem.</p>
 </div>
 <div class="paragraph">
 <p>We shouldn&#8217;t be concerned with buffers only for navigation, of course: Vim allows us to perform actions <em>on each buffer in the buffer list</em> with the <code>:bufdo</code> command:</p>
@@ -292,7 +307,7 @@ cz             vy   yz
 </div>
 </div>
 <div class="paragraph">
-<p><code>:bufdo</code> can be used to perform an identical edit on every listed buffer, set a local option or do whatever complex thing you need. Since the content of a buffer can be different from the content of its associated file&#8201;&#8212;&#8201;if there&#8217;s one&#8201;&#8212;&#8201;<code>:bufdo</code> constitutes a very powerful feature.</p>
+<p><code>:bufdo</code> can be used to perform an identical edit on every listed buffer, set a local option or do whatever complex thing we need.</p>
 </div>
 <div class="paragraph">
 <p>By the way, did you notice that Vim doesn&#8217;t ask us to write each buffer before changing to another one? That&#8217;s because of the <code>hidden</code> option we enabled at the start of our journey. With <code>nohidden</code>, the default value, juggling with buffers would be a lot less fun.</p>
@@ -317,7 +332,7 @@ cz             vy   yz
 <h2 id="_windows">Windows</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>As briefly mentioned in the introduction, we <em>always</em> have at least one window in Vim. A Window that <em>always</em> displays one buffer.</p>
+<p>As briefly mentioned in the introduction, we <em>always</em> have at least one window in Vim. A Window that <em>always</em> displays one buffer. An abstraction built <em>on top</em> of buffers.</p>
 </div>
 <div class="paragraph">
 <p>An interesting feature of Vim is the ability to split our workspace in multiple windows&#8201;&#8212;&#8201;often called &#8220;splits&#8221;&#8201;&#8212;&#8201;to display different buffers or parts of a buffer. The exact mechanism is quite simple: the current window is split in two equal parts along the desired axis, <em>vertical</em> or <em>horizontal</em>, and the cursor is placed in the new window.</p>
@@ -1037,7 +1052,7 @@ splitting      splitting
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-07-19 01:08:11 CEST
+Last updated 2015-08-23 15:58:48 CEST
 </div>
 </div>
 </body>
