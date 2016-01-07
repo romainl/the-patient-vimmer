@@ -37,7 +37,7 @@
 <p>But what kind of involvement are we talking about? Is it the kind that requires us to commit all of <a href="http://www.viemu.com/vi-vim-cheat-sheet.gif">that meaningless garbage</a> to memory?</p>
 </div>
 <div class="paragraph">
-<p>No. <a href="http://www.moolenaar.net/habits.html">Like Vim&#8217;s author</a>, I don&#8217;t believe &#8220;knowing all of Vim&#8221; or &#8220;being a Vim guru&#8221; should be anyone&#8217;s goal. Those are <em>consequences</em> of using Vim daily for 10 or 20 years, maybe, but we shouldn&#8217;t keep our eyes too focused on that target. Learning Vim is a long journey where the destination doesn&#8217;t really matter. What happens along the way and the positive changes it causes in us is all that counts.</p>
+<p>No. <a href="http://www.moolenaar.net/habits.html">Like Vim&#8217;s author</a>, I don&#8217;t believe &#8220;knowing all of Vim&#8221; or &#8220;being a Vim guru&#8221; should be anyone&#8217;s goal. Those may be <em>consequences</em> of using Vim daily for 10 or 20 years, but we shouldn&#8217;t keep our eyes too focused on that target. Learning Vim is a long journey where the destination doesn&#8217;t really matter. What happens along the way and the positive changes it causes in us are all that counts.</p>
 </div>
 <div class="paragraph">
 <p>You are playing in your own Tolkien trilogy, goddammit!</p>
@@ -48,7 +48,7 @@
 <h2 id="_before_we_begin">Before we begin</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The rest of this guide will assume three things:</p>
+<p>This guide assumes three things:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -328,10 +328,10 @@ Search for help:
 <p>Or <em>more</em>, if we consider all the <em>improvements</em> hidden behind that impenetrable <code>vi</code> persona.</p>
 </div>
 <div class="paragraph">
-<p>Vim&#8217;s support files are often tweaked by distribution maintainers to comply to whatever standard&#8201;&#8212;&#8201;written or not&#8201;&#8212;&#8201;they have to follow or to fit Vim into their specific file hierarchy or&#8201;&#8212;&#8201;how kind of them&#8201;&#8212;&#8201;make the default behavior <em>slightly</em> more useful. This means that Vim&#8217;s &#8220;runtime&#8221; can be in many places and that the system <code>vimrc</code>&#8201;&#8212;&#8201;if there is one&#8201;&#8212;&#8201;may or may not already contain solutions to some of the problems below. I will assume no system <code>vimrc</code> to keep this guide simple.</p>
+<p>Like many other command-line programs, Vim depends on a number of configuration files and scripts to work its magic. Those files constitute Vim&#8217;s &#8220;runtime&#8221; and are generaly not to be messed with but distribution maintainers like to edit them or move them around. This means that Vim&#8217;s &#8220;runtime&#8221; can be in many places and that the system <code>vimrc</code>&#8201;&#8212;&#8201;if there is one&#8201;&#8212;&#8201;may or may not already contain solutions to some of the problems below. For those reasons, it is hard to even talk about a &#8220;default&#8221; setup so, in order to keep this guide simple and generic, I&#8217;ll just do like if none of that mattered. Because, well&#8230;&#8203; it doesn&#8217;t.</p>
 </div>
 <div class="paragraph">
-<p>Anyway, making Vim <em>a little bit</em> more comfortable is a quick and easy exercise that will give us many opportunities to learn useful things: let&#8217;s do it step by step, one problem at a time.</p>
+<p>Whatever, making Vim <em>a little bit</em> more comfortable is a quick and easy exercise that will give us many opportunities to learn useful things: let&#8217;s do it step by step, one problem at a time.</p>
 </div>
 <div class="sect2">
 <h3 id="_problem_0_vi_compatibility">Problem 0&#8201;&#8212;&#8201;Vi compatibility</h3>
@@ -379,7 +379,7 @@ Search for help:
 <div class="title">Note</div>
 </td>
 <td class="content">
-Like most CLI programs, Vim tells you what flags can be used to change its behavior at startup when started with the <code>--help</code> argument. Go on, it&#8217;s an interesting read.
+Again, like most CLI programs, Vim tells you what flags can be used to change its behavior at startup when started with the <code>--help</code> argument. Go on, it&#8217;s an interesting read.
 </td>
 </tr>
 </table>
@@ -388,7 +388,7 @@ Like most CLI programs, Vim tells you what flags can be used to change its behav
 <p>The two solutions above may be OK for infrequent, quick, sessions but we are trying to use Vim as our main editor so they rather obviously don&#8217;t scale. Let&#8217;s see a third way: creating our very own <code>vimrc</code>.</p>
 </div>
 <div class="paragraph">
-<p>Vim&#8217;s user-level configuration file is called <code>.vimrc</code> on Unix-like systems and <code>_vimrc</code> on Windows. During the startup procedure, Vim looks for that file in a couple of standard locations; as soon as it is found, the <code>'compatible'</code> option is disabled, just like if you typed <code>:set nocompatible</code>.</p>
+<p>Vim&#8217;s user-level configuration file is called <code>.vimrc</code> on Unix-like systems and <code>_vimrc</code> on Windows. During the startup procedure, Vim looks for that file in a couple of standard locations and, as soon as it is found, disables the <code>'compatible'</code> option, just like if you typed <code>:set nocompatible</code>.</p>
 </div>
 <div class="paragraph">
 <p>We will simply create that file in order to never have to type that command again.</p>
@@ -417,15 +417,24 @@ $ vim .vimrc          C:vim _vimrc</pre>
 :help vimrc-intro</pre>
 </div>
 </div>
-<div class="paragraph">
-<p>NB: The very existence of that file makes adding <code>set nocompatible</code> to our <code>vimrc</code> generally useless so&#8230;&#8203; don&#8217;t put that at the top of your <code>vimrc</code> like many sample vimrcs and blog posts tell you to do. An explicit <code>set nocompatible</code> can have interesting effects in <em>some</em> situations but they are honestly too rare to care about.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+The very existence of that file makes adding <code>set nocompatible</code> to our <code>vimrc</code> generally useless so&#8230;&#8203; don&#8217;t put that at the top of your <code>vimrc</code> like many sample vimrcs and blog posts tell you to do. Now, an explicit <code>set nocompatible</code> can have interesting effects in <em>some</em> situations but they are honestly too rare to care.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_problem_1_backspace">Problem 1&#8201;&#8212;&#8201;Backspace</h3>
 <div class="paragraph">
-<p>So you may or may not have noticed that the backspace key doesn&#8217;t really work as expected in vanilla Vim. To be honest, how it works doesn&#8217;t make sense at all but this can be changed easily with the <code>'backspace'</code> option.</p>
+<p>So you may or may not have noticed that the backspace key doesn&#8217;t really work as expected in vanilla Vim. To be honest, I&#8217;m not sure how it works makes sense at all but this can be changed easily with the <code>'backspace'</code> option.</p>
 </div>
 <div class="sect3">
 <h4 id="_solution_2">Solution</h4>
@@ -484,7 +493,7 @@ When used as an argument for an Ex command, <code>%</code> is replaced before ex
 <p>Next comes automatic indentation. This one is more of a <em>comfort</em> thing but how are we supposed to be efficient at text editing if we are forced to adjust the indent of every new line manually?</p>
 </div>
 <div class="paragraph">
-<p>It turns out Vim has a bunch of automatic indentation mechanisms, none of which are enabled by default. The most basic, <code>'autoindent'</code>, doesn&#8217;t try to be too smart or do different things for different filetypes&#8230;&#8203; That&#8217;s all we need for now.</p>
+<p>It turns out Vim has a bunch of automatic indentation mechanisms, none of which are enabled by default. The most basic, <code>'autoindent'</code>, doesn&#8217;t try to be too smart and that&#8217;s all we need for now.</p>
 </div>
 <div class="sect3">
 <h4 id="_solution_3">Solution</h4>
@@ -519,7 +528,7 @@ When used as an argument for an Ex command, <code>%</code> is replaced before ex
 <div class="title">Note</div>
 </td>
 <td class="content">
-Most Ex commands and options can be shortened to a couple of letters. This undoubtedly make things easier to type as short names are a must on the command-line! In configuration files and scripts, though, the short form can be hard to read and doesn&#8217;t provide any benefit over the long form so don&#8217;t use it; your future self will thank you.
+Most Ex commands and options can be shortened to a couple of letters. This undoubtedly make things easier to type! In configuration files and scripts, though, the short form can be hard to read and doesn&#8217;t provide any benefit over the long form so don&#8217;t use it; your future self will thank you.
 </td>
 </tr>
 </table>
@@ -589,7 +598,7 @@ In Vim&#8217;s command-line, the vertical bar allows us to chain Ex commands. Wh
 <p>Syntax highlighting is a staple of programming. It helps readability, eye-comfort, bug-fixing&#8230;&#8203; and it&#8217;s pretty. Well, it <em>can</em> be pretty.</p>
 </div>
 <div class="paragraph">
-<p>Vim does syntax highlighting, of course, but the feature isn&#8217;t enabled by default because <code>vi</code> didn&#8217;t have it. Thankfully, it&#8217;s easy to turn on.</p>
+<p>Vim does syntax highlighting, of course, but the feature isn&#8217;t enabled by default because <code>vi</code> didn&#8217;t have it. Thankfully, Vim is Vi <em>improved</em> so it&#8217;s easy to turn on.</p>
 </div>
 <div class="sect3">
 <h4 id="_solution_5">Solution</h4>
@@ -736,52 +745,17 @@ There are two ways to &#8220;set&#8221; an option in Vim. The <code>:set</code> 
 </ul>
 </div>
 <div class="paragraph">
+<p>And we have a recent and full-featured Vim&#8230;&#8203;</p>
+</div>
+<div class="paragraph">
 <p>I would say we are doing good, here.</p>
 </div>
-<div id="front">
-    <h6>The Patient Vimmer</h6>
-    <ul>
-        <li class="current">
-            <a href="0.html">0&nbsp;&nbsp;&nbsp;An introduction</a>
-        </li>
-        <li>
-            <a href="1.html">1&nbsp;&nbsp;&nbsp;Lord of the files</a>
-        </li>
-        <li>
-            <a href="2.html">2&nbsp;&nbsp;&nbsp;Title pending</a>
-        </li>
-        <li>
-            <a href="3.html">3&nbsp;&nbsp;&nbsp;Title pending</a>
-        </li>
-        <li>
-            <a href="4.html">4&nbsp;&nbsp;&nbsp;Title pending</a>
-        </li>
-        <li>
-            <a href="5.html">5&nbsp;&nbsp;&nbsp;Title pending</a>
-        </li>
-        <li>
-            <a href="6.html">6&nbsp;&nbsp;&nbsp;Title pending</a>
-        </li>
-        <li>
-            <a href="7.html">7&nbsp;&nbsp;&nbsp;Title pending</a>
-        </li>
-        <li>
-            <a href="8.html">8&nbsp;&nbsp;&nbsp;Title pending</a>
-        </li>
-    </ul>
-    <div id="bottom">
-        <p>Written by <a href="https://github.com/romainl">Romain Lafourcade</a>, with help from <a href="https://github.com/dahu/">Barry Arthur</a> and the #vim community.</p>
-        <p>Copyleft 2015</p>
-    </div>
-</div>
-<link href='http://fonts.googleapis.com/css?family=Fira+Mono&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-<script src="javascript/behavior.js"></script>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-07-18 23:28:05 CEST
+Last updated 2016-01-06 22:55:11 CET
 </div>
 </div>
 </body>

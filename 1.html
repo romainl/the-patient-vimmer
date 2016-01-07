@@ -64,7 +64,7 @@
 </div>
 </div>
 <div class="paragraph">
-<p>But, no matter how we start it, we might want to edit other files without leaving Vim. How do we do it?</p>
+<p>But, no matter how we start Vim, we might want to edit other files without leaving. How do we do it?</p>
 </div>
 <div class="sect2">
 <h3 id="_reference">Reference</h3>
@@ -93,7 +93,7 @@
 </div>
 </div>
 <div class="paragraph">
-<p>It is important to note that this command only accepts <em>one</em> filename as argument so you can forget these:</p>
+<p>It is important to note that this command only accepts <em>one</em> filename as argument so you can forget these for the time being:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -102,7 +102,7 @@
 </div>
 </div>
 <div class="paragraph">
-<p>That&#8217;s what <code>:args</code>, <code>:argadd</code>, <code>:next</code> and friends are for.</p>
+<p>That&#8217;s what <code>:args</code>, <code>:argadd</code>, <code>:next</code> and friends are for, but I will keep them for later.</p>
 </div>
 <div class="paragraph">
 <p><code>:e</code> covers a lot of ground already, but we will need fast fingers and a vast memory when time will come to edit files buried at the bottom of a large and complex directory structure.</p>
@@ -129,7 +129,7 @@
 </div>
 </div>
 <div class="paragraph">
-<p>Here are a few default bindings:</p>
+<p>Here are the default bindings:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -151,7 +151,7 @@
 </ul>
 </div>
 <div class="paragraph">
-<p>Pretty basic.</p>
+<p>Pretty basic&#8230;&#8203;</p>
 </div>
 <div class="sect2">
 <h3 id="_reference_3">Reference</h3>
@@ -207,7 +207,7 @@
 <h2 id="_wildcards_up_our_sleeve">Wildcards up our sleeve</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Most of the time, though, the first two or three letters of a filename may not be enough&#8230;&#8203; or we only remember the end. That&#8217;s where the &#8220;star&#8221; wildcard comes in handy, just like in your shell:</p>
+<p>Most of the time, though, the first two or three letters of a filename may not be enough&#8230;&#8203; or we only remember the end. Or nothing at all beyond the extension! That&#8217;s where the &#8220;star&#8221; wildcard comes in handy, just like in your shell:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -276,7 +276,7 @@
 <p>where <code>action</code> is what you want to happen when you press <code>key</code>; it could be a macro, an Ex command, a function call&#8230;&#8203;</p>
 </div>
 <div class="paragraph">
-<p>The command used to define your mapping can be any of the following, try to be as specific as possible:</p>
+<p>The command used to define your mapping — <code>map</code> in the example above — can be any of the following, try to be as specific as possible:</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -372,6 +372,9 @@
 </ul>
 </div>
 <div class="paragraph">
+<p>No need to worry about those examples for now.</p>
+</div>
+<div class="paragraph">
 <p>Let&#8217;s go back to our current &#8220;problem&#8221;: we want Vim to type <code>:e **/*</code> for us when we press <code>&lt;F6&gt;</code> in <em>normal</em> mode. Well, the solution is pretty obvious:</p>
 </div>
 <div class="literalblock">
@@ -383,7 +386,7 @@
 <p>Easy! We only have to do <code>&lt;F6&gt;foo&lt;Tab&gt;</code> to list every file whose name contains <code>foo</code> under the working directory and every subdirectory. Woohoo!</p>
 </div>
 <div class="paragraph">
-<p>But what&#8217;s the deal with <code>*map</code> and <code>*noremap</code>? It&#8217;s really quite simple&#8230;&#8203;</p>
+<p>But what&#8217;s the deal with that <code>*map</code> versus <code>*noremap</code> distinction? It&#8217;s really quite simple&#8230;&#8203;</p>
 </div>
 <div class="ulist">
 <ul>
@@ -418,10 +421,10 @@
 <div class="sect2">
 <h3 id="_a_leader_worth_following">A leader worth following</h3>
 <div class="paragraph">
-<p>While the whole purpose of the <code>&lt;Fn&gt;</code> keys is to be &#8220;programmed&#8221; to do whatever specific <em>function</em> the user needs, they don&#8217;t fit very well with Vim&#8217;s other highly mnemonic bindings so it is wiser to use a key combo that &#8220;maps&#8221; to the idea of <em>editing</em>. But we have a problem: Vim already uses most&#8201;&#8212;&#8201;if not all&#8201;&#8212;&#8201;of the freaking keys on our keyboard!</p>
+<p>While the whole purpose of the <code>&lt;Fx&gt;</code> keys is to be &#8220;programmed&#8221; to do whatever specific <em>function</em> the user needs, they don&#8217;t fit very well with Vim&#8217;s other highly mnemonic bindings so it is certainly wiser to use a key combo that &#8220;maps&#8221; to the idea of <em>editing</em>. But we have a problem: Vim already uses most&#8201;&#8212;&#8201;if not all&#8201;&#8212;&#8201;of the freaking keys on our keyboard!</p>
 </div>
 <div class="paragraph">
-<p>The &#8220;leader&#8221; mechanism allows us to define a <code>&lt;leader&gt;</code> key (<code>\</code> by default) that will work as a &#8220;mini-mode&#8221; of sort or &#8220;namespace&#8221; for our custom mappings. <code>:help mapleader</code> gives us the following example :</p>
+<p>The &#8220;leader&#8221; mechanism allows us to define a <code>&lt;leader&gt;</code> key (<code>\</code> by default) that will work as a &#8220;mini-mode&#8221; of sort, or a &#8220;namespace&#8221; for our custom mappings. <code>:help mapleader</code> gives us the following example :</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -445,7 +448,10 @@
 <p><code>,</code> is a very useful key (repeat last <code>fFtT</code> in the other direction) with no alternative,</p>
 </li>
 <li>
-<p><code>&lt;Space&gt;</code> is synonymous with <code>l</code> and <code>&lt;Right&gt;</code> so it can safely be remapped.</p>
+<p><code>&lt;Space&gt;</code> is synonymous with <code>l</code> and <code>&lt;Right&gt;</code> so it can safely be remapped,</p>
+</li>
+<li>
+<p>it is the largest key of the keyboard and it can be pressed with any of our two thumbs.</p>
 </li>
 </ul>
 </div>
@@ -496,7 +502,7 @@ nnoremap &lt;leader&gt;e :edit **/*</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>which allows us to find files in the directory of the current file <em>and</em> anywhere under the working directory, recursively, without needing to use <code>**</code> explicitly.</p>
+<p>which allows us to find files in the directory of the current file (the <code>.</code>) <em>and</em> anywhere under the working directory, recursively, (the <code><strong></code>) without needing to use <code></strong></code> explicitly.</p>
 </div>
 <div class="paragraph">
 <p>Or we can use a more project-specific value:</p>
@@ -510,7 +516,7 @@ nnoremap &lt;leader&gt;e :edit **/*</pre>
 <p>The sky is still the limit&#8230;&#8203;</p>
 </div>
 <div class="paragraph">
-<p>We can now use the <code>:find</code> command as a smarter replacement for <code>:edit</code>:</p>
+<p>We can now use the <code>:find</code> command as a slightly smarter replacement for <code>:edit</code>:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -573,12 +579,12 @@ nnoremap &lt;leader&gt;e :edit **/*</pre>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>nnoremap &lt;leader&gt;f :find *
-set path=.,**</pre>
+<pre>set path=.,**
+nnoremap &lt;leader&gt;f :find *</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>and move on to the next section&#8230;&#8203;</p>
+<p>and move on to&#8230;&#8203;</p>
 </div>
 </div>
 </div>
@@ -763,50 +769,12 @@ set path=.,**</pre>
 <div class="paragraph">
 <p>But, now that we have a bunch of files to edit… how are we supposed to work with them?</p>
 </div>
-<div id="front">
-    <h6>The Patient Vimmer</h6>
-    <ul>
-        <li>
-            <a href="0.html">0&nbsp;&nbsp;&nbsp;An introduction</a>
-        </li>
-        <li class="current">
-            <a href="1.html">1&nbsp;&nbsp;&nbsp;Lord of the files</a>
-        </li>
-        <li>
-            <a href="2.html">2&nbsp;&nbsp;&nbsp;Your workspace</a>
-        </li>
-        <li>
-            <a href="3.html">3&nbsp;&nbsp;&nbsp;Title pending</a>
-        </li>
-        <li>
-            <a href="4.html">4&nbsp;&nbsp;&nbsp;Title pending</a>
-        </li>
-        <li>
-            <a href="5.html">5&nbsp;&nbsp;&nbsp;Title pending</a>
-        </li>
-        <li>
-            <a href="6.html">6&nbsp;&nbsp;&nbsp;Title pending</a>
-        </li>
-        <li>
-            <a href="7.html">7&nbsp;&nbsp;&nbsp;Title pending</a>
-        </li>
-        <li>
-            <a href="8.html">8&nbsp;&nbsp;&nbsp;Title pending</a>
-        </li>
-    </ul>
-    <div id="bottom">
-        <p>Written by <a href="https://github.com/romainl">Romain Lafourcade</a>, with help from <a href="https://github.com/dahu/">Barry Arthur</a> and the #vim community.</p>
-        <p>Copyleft 2015</p>
-    </div>
-</div>
-<link href='http://fonts.googleapis.com/css?family=Fira+Mono&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-<script src="javascript/behavior.js"></script>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-07-19 00:07:09 CEST
+Last updated 2016-01-06 23:45:55 CET
 </div>
 </div>
 </body>

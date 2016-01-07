@@ -29,7 +29,7 @@ or adding to it:
 
     :argadd *.py
 
-But, no matter how we start it, we might want to edit other files without leaving Vim. How do we do it?
+But, no matter how we start Vim, we might want to edit other files without leaving. How do we do it?
 
 === Reference
 
@@ -46,12 +46,12 @@ But, no matter how we start it, we might want to edit other files without leavin
     :e foo.txt
     :e ../bar.txt
 
-It is important to note that this command only accepts _one_ filename as argument so you can forget these:
+It is important to note that this command only accepts _one_ filename as argument so you can forget these for the time being:
 
     :e file1 file2 file3
     :e *foo
 
-That's what `:args`, `:argadd`, `:next` and friends are for.
+That's what `:args`, `:argadd`, `:next` and friends are for, but I will keep them for later.
 
 `:e` covers a lot of ground already, but we will need fast fingers and a vast memory when time will come to edit files buried at the bottom of a large and complex directory structure.
 
@@ -65,7 +65,7 @@ Fortunately, tab-completion lets us cycle through eligible files:
 
 image::gifcast_off.png[link="images/1_tab-completion.gif"]
 
-Here are a few default bindings:
+Here are the default bindings:
 
 * `<Tab>`     selects the next item,
 * `<S-Tab>`   selects the previous item,
@@ -73,7 +73,7 @@ Here are a few default bindings:
 * `<CR>`      chooses the selected item,
 * `<C-d>`     lists the completion items.
 
-Pretty basic.
+Pretty basic...
 
 === Reference
 
@@ -101,7 +101,7 @@ and for every further session by adding this line to your `vimrc`, as usual:
 
 == Wildcards up our sleeve
 
-Most of the time, though, the first two or three letters of a filename may not be enough... or we only remember the end. That's where the "`star`" wildcard comes in handy, just like in your shell:
+Most of the time, though, the first two or three letters of a filename may not be enough... or we only remember the end. Or nothing at all beyond the extension! That's where the "`star`" wildcard comes in handy, just like in your shell:
 
     :e *fr<Tab>
     :e README_fr.txt
@@ -136,7 +136,7 @@ Here is the anatomy of a mapping:
 
 where `action` is what you want to happen when you press `key`; it could be a macro, an Ex command, a function call...
 
-The command used to define your mapping can be any of the following, try to be as specific as possible:
+The command used to define your mapping — `map` in the example above — can be any of the following, try to be as specific as possible:
 
 [cols="2,3,9"]
 |===
@@ -169,13 +169,15 @@ Here are a few examples for you...
 
     :xnoremap <F8> !uniq<CR>
 
+No need to worry about those examples for now.
+
 Let's go back to our current "`problem`": we want Vim to type `:e \**/*` for us when we press `<F6>` in _normal_ mode. Well, the solution is pretty obvious:
 
      :nmap <F6> :e **/*
 
 Easy! We only have to do `<F6>foo<Tab>` to list every file whose name contains `foo` under the working directory and every subdirectory. Woohoo!
 
-But what's the deal with `*map` and `*noremap`? It's really quite simple...
+But what's the deal with that `*map` versus `*noremap` distinction? It's really quite simple...
 
 * `nmap key command` means that pressing `key` in normal mode will execute `command` _with its current meaning_. This form is _only_ useful when we want to use another mapping in our mapping; it is called "`recursive mapping`". Example:
 
@@ -193,9 +195,9 @@ Our mappings _have_ to be solid because they will serve as the foundation of our
 
 === A leader worth following
 
-While the whole purpose of the `<Fn>` keys is to be "`programmed`" to do whatever specific _function_ the user needs, they don't fit very well with Vim's other highly mnemonic bindings so it is wiser to use a key combo that "`maps`" to the idea of _editing_. But we have a problem: Vim already uses most -- if not all -- of the freaking keys on our keyboard!
+While the whole purpose of the `<Fx>` keys is to be "`programmed`" to do whatever specific _function_ the user needs, they don't fit very well with Vim's other highly mnemonic bindings so it is certainly wiser to use a key combo that "`maps`" to the idea of _editing_. But we have a problem: Vim already uses most -- if not all -- of the freaking keys on our keyboard!
 
-The "`leader`" mechanism allows us to define a `<leader>` key (`\` by default) that will work as a "`mini-mode`" of sort or "`namespace`" for our custom mappings. `:help mapleader` gives us the following example :
+The "`leader`" mechanism allows us to define a `<leader>` key (`\` by default) that will work as a "`mini-mode`" of sort, or a "`namespace`" for our custom mappings. `:help mapleader` gives us the following example :
 
     :let mapleader = ","
 
@@ -206,7 +208,8 @@ which allows us to use the comma as `<leader>` in all our mappings:
 We are of course free to choose which key to use as our leader. `<Space>`, for example, can be a more sensible choice because:
 
 * `,` is a very useful key (repeat last `fFtT` in the other direction) with no alternative,
-* `<Space>` is synonymous with `l` and `<Right>` so it can safely be remapped.
+* `<Space>` is synonymous with `l` and `<Right>` so it can safely be remapped,
+* it is the largest key of the keyboard and it can be pressed with any of our two thumbs.
 
 Let's end this section by adding these lines to our `vimrc`:
 
@@ -232,7 +235,7 @@ The key to using `:find` efficiently is to define a good value for the `path` op
 
     :set path=.,**
 
-which allows us to find files in the directory of the current file _and_ anywhere under the working directory, recursively, without needing to use `**` explicitly.
+which allows us to find files in the directory of the current file (the `.`) _and_ anywhere under the working directory, recursively, (the `**`) without needing to use `**` explicitly.
 
 Or we can use a more project-specific value:
 
@@ -240,7 +243,7 @@ Or we can use a more project-specific value:
 
 The sky is still the limit...
 
-We can now use the `:find` command as a smarter replacement for `:edit`:
+We can now use the `:find` command as a slightly smarter replacement for `:edit`:
 
     :find foo<Tab>
 
@@ -271,10 +274,10 @@ image::gifcast_off.png[link="images/1_leader-f.gif"]
 
 Let's replace the `:edit`-based mapping in our `vimrc` with the following:
 
-    nnoremap <leader>f :find *
     set path=.,**
+    nnoremap <leader>f :find *
 
-and move on to the next section...
+and move on to...
 
 == Customizing filename completion and the "`wildmenu`"
 
@@ -371,44 +374,3 @@ Netrw's documentation is massive and covers a lot more than what you probably ne
 Opening files for editing is neither complex nor hard but -- as with everything in Vim -- it can be made quicker and easier with a couple of settings and mappings. Make sure you have exhausted the built-in ways before installing the latest and greatest fuzzy gadget people rave about on Reddit, Twitter or Hacker News.
 
 But, now that we have a bunch of files to edit… how are we supposed to work with them?
-
-++++
-<div id="front">
-    <h6>The Patient Vimmer</h6>
-    <ul>
-        <li>
-            <a href="0.html">0&nbsp;&nbsp;&nbsp;An introduction</a>
-        </li>
-        <li class="current">
-            <a href="1.html">1&nbsp;&nbsp;&nbsp;Lord of the files</a>
-        </li>
-        <li>
-            <a href="2.html">2&nbsp;&nbsp;&nbsp;Your workspace</a>
-        </li>
-        <li>
-            <a href="3.html">3&nbsp;&nbsp;&nbsp;Title pending</a>
-        </li>
-        <li>
-            <a href="4.html">4&nbsp;&nbsp;&nbsp;Title pending</a>
-        </li>
-        <li>
-            <a href="5.html">5&nbsp;&nbsp;&nbsp;Title pending</a>
-        </li>
-        <li>
-            <a href="6.html">6&nbsp;&nbsp;&nbsp;Title pending</a>
-        </li>
-        <li>
-            <a href="7.html">7&nbsp;&nbsp;&nbsp;Title pending</a>
-        </li>
-        <li>
-            <a href="8.html">8&nbsp;&nbsp;&nbsp;Title pending</a>
-        </li>
-    </ul>
-    <div id="bottom">
-        <p>Written by <a href="https://github.com/romainl">Romain Lafourcade</a>, with help from <a href="https://github.com/dahu/">Barry Arthur</a> and the #vim community.</p>
-        <p>Copyleft 2015</p>
-    </div>
-</div>
-<link href='http://fonts.googleapis.com/css?family=Fira+Mono&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-<script src="javascript/behavior.js"></script>
-++++

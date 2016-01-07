@@ -19,13 +19,13 @@ Vim does a lot and thus requires quite a bit of learning as well as a significan
 
 But what kind of involvement are we talking about? Is it the kind that requires us to commit all of http://www.viemu.com/vi-vim-cheat-sheet.gif[that meaningless garbage] to memory?
 
-No. http://www.moolenaar.net/habits.html[Like Vim's author], I don't believe "`knowing all of Vim`" or "`being a Vim guru`" should be anyone's goal. Those are _consequences_ of using Vim daily for 10 or 20 years, maybe, but we shouldn't keep our eyes too focused on that target. Learning Vim is a long journey where the destination doesn't really matter. What happens along the way and the positive changes it causes in us is all that counts.
+No. http://www.moolenaar.net/habits.html[Like Vim's author], I don't believe "`knowing all of Vim`" or "`being a Vim guru`" should be anyone's goal. Those may be _consequences_ of using Vim daily for 10 or 20 years, but we shouldn't keep our eyes too focused on that target. Learning Vim is a long journey where the destination doesn't really matter. What happens along the way and the positive changes it causes in us are all that counts.
 
 You are playing in your own Tolkien trilogy, goddammit!
 
 == Before we begin
 
-The rest of this guide will assume three things:
+This guide assumes three things:
 
 * that you are comfortable with the command-line, our primary environment for the whole guide,
 
@@ -186,9 +186,9 @@ What's happening here is that Vim is just being humble and professional. Its rol
 
 Or _more_, if we consider all the _improvements_ hidden behind that impenetrable `vi` persona.
 
-Vim's support files are often tweaked by distribution maintainers to comply to whatever standard -- written or not -- they have to follow or to fit Vim into their specific file hierarchy or -- how kind of them -- make the default behavior _slightly_ more useful. This means that Vim's "`runtime`" can be in many places and that the system `vimrc` -- if there is one -- may or may not already contain solutions to some of the problems below. I will assume no system `vimrc` to keep this guide simple.
+Like many other command-line programs, Vim depends on a number of configuration files and scripts to work its magic. Those files constitute Vim's "`runtime`" and are generaly not to be messed with but distribution maintainers like to edit them or move them around. This means that Vim's "`runtime`" can be in many places and that the system `vimrc` -- if there is one -- may or may not already contain solutions to some of the problems below. For those reasons, it is hard to even talk about a "`default`" setup so, in order to keep this guide simple and generic, I'll just do like if none of that mattered. Because, well... it doesn't.
 
-Anyway, making Vim _a little bit_ more comfortable is a quick and easy exercise that will give us many opportunities to learn useful things: let's do it step by step, one problem at a time.
+Whatever, making Vim _a little bit_ more comfortable is a quick and easy exercise that will give us many opportunities to learn useful things: let's do it step by step, one problem at a time.
 
 === Problem 0 -- Vi compatibility
 
@@ -208,11 +208,11 @@ The second way consists of using a command-line flag to tell Vim to start in "`n
 
     $ vim -N
 
-NOTE: Like most CLI programs, Vim tells you what flags can be used to change its behavior at startup when started with the `--help` argument. Go on, it's an interesting read.
+NOTE: Again, like most CLI programs, Vim tells you what flags can be used to change its behavior at startup when started with the `--help` argument. Go on, it's an interesting read.
 
 The two solutions above may be OK for infrequent, quick, sessions but we are trying to use Vim as our main editor so they rather obviously don't scale. Let's see a third way: creating our very own `vimrc`.
 
-Vim's user-level configuration file is called `.vimrc` on Unix-like systems and `_vimrc` on Windows. During the startup procedure, Vim looks for that file in a couple of standard locations; as soon as it is found, the `'compatible'` option is disabled, just like if you typed `:set nocompatible`.
+Vim's user-level configuration file is called `.vimrc` on Unix-like systems and `_vimrc` on Windows. During the startup procedure, Vim looks for that file in a couple of standard locations and, as soon as it is found, disables the `'compatible'` option, just like if you typed `:set nocompatible`.
 
 We will simply create that file in order to never have to type that command again.
 
@@ -234,11 +234,11 @@ $ vim .vimrc          C:vim _vimrc
     :help startup
     :help vimrc-intro
 
-NB: The very existence of that file makes adding `set nocompatible` to our `vimrc` generally useless so... don't put that at the top of your `vimrc` like many sample vimrcs and blog posts tell you to do. An explicit `set nocompatible` can have interesting effects in _some_ situations but they are honestly too rare to care about.
+NOTE: The very existence of that file makes adding `set nocompatible` to our `vimrc` generally useless so... don't put that at the top of your `vimrc` like many sample vimrcs and blog posts tell you to do. Now, an explicit `set nocompatible` can have interesting effects in _some_ situations but they are honestly too rare to care.
 
 === Problem 1 -- Backspace
 
-So you may or may not have noticed that the backspace key doesn't really work as expected in vanilla Vim. To be honest, how it works doesn't make sense at all but this can be changed easily with the `'backspace'` option.
+So you may or may not have noticed that the backspace key doesn't really work as expected in vanilla Vim. To be honest, I'm not sure how it works makes sense at all but this can be changed easily with the `'backspace'` option.
 
 ==== Solution
 
@@ -267,7 +267,7 @@ NOTE: When used as an argument for an Ex command, `%` is replaced before executi
 
 Next comes automatic indentation. This one is more of a _comfort_ thing but how are we supposed to be efficient at text editing if we are forced to adjust the indent of every new line manually?
 
-It turns out Vim has a bunch of automatic indentation mechanisms, none of which are enabled by default. The most basic, `'autoindent'`, doesn't try to be too smart or do different things for different filetypes... That's all we need for now.
+It turns out Vim has a bunch of automatic indentation mechanisms, none of which are enabled by default. The most basic, `'autoindent'`, doesn't try to be too smart and that's all we need for now.
 
 ==== Solution
 
@@ -283,7 +283,7 @@ and source it with:
 
     :so %
 
-NOTE: Most Ex commands and options can be shortened to a couple of letters. This undoubtedly make things easier to type as short names are a must on the command-line! In configuration files and scripts, though, the short form can be hard to read and doesn't provide any benefit over the long form so don't use it; your future self will thank you.
+NOTE: Most Ex commands and options can be shortened to a couple of letters. This undoubtedly make things easier to type! In configuration files and scripts, though, the short form can be hard to read and doesn't provide any benefit over the long form so don't use it; your future self will thank you.
 
 ==== Reference
 
@@ -316,7 +316,7 @@ NOTE: In Vim's command-line, the vertical bar allows us to chain Ex commands. Wh
 
 Syntax highlighting is a staple of programming. It helps readability, eye-comfort, bug-fixing... and it's pretty. Well, it _can_ be pretty.
 
-Vim does syntax highlighting, of course, but the feature isn't enabled by default because `vi` didn't have it. Thankfully, it's easy to turn on.
+Vim does syntax highlighting, of course, but the feature isn't enabled by default because `vi` didn't have it. Thankfully, Vim is Vi _improved_ so it's easy to turn on.
 
 ==== Solution
 
@@ -390,45 +390,6 @@ This quick exercise helped us learn:
 
 * that we can shorten commands and options.
 
-I would say we are doing good, here.
+And we have a recent and full-featured Vim...
 
-++++
-<div id="front">
-    <h6>The Patient Vimmer</h6>
-    <ul>
-        <li class="current">
-            <a href="0.html">0&nbsp;&nbsp;&nbsp;An introduction</a>
-        </li>
-        <li>
-            <a href="1.html">1&nbsp;&nbsp;&nbsp;Lord of the files</a>
-        </li>
-        <li>
-            <a href="2.html">2&nbsp;&nbsp;&nbsp;Title pending</a>
-        </li>
-        <li>
-            <a href="3.html">3&nbsp;&nbsp;&nbsp;Title pending</a>
-        </li>
-        <li>
-            <a href="4.html">4&nbsp;&nbsp;&nbsp;Title pending</a>
-        </li>
-        <li>
-            <a href="5.html">5&nbsp;&nbsp;&nbsp;Title pending</a>
-        </li>
-        <li>
-            <a href="6.html">6&nbsp;&nbsp;&nbsp;Title pending</a>
-        </li>
-        <li>
-            <a href="7.html">7&nbsp;&nbsp;&nbsp;Title pending</a>
-        </li>
-        <li>
-            <a href="8.html">8&nbsp;&nbsp;&nbsp;Title pending</a>
-        </li>
-    </ul>
-    <div id="bottom">
-        <p>Written by <a href="https://github.com/romainl">Romain Lafourcade</a>, with help from <a href="https://github.com/dahu/">Barry Arthur</a> and the #vim community.</p>
-        <p>Copyleft 2015</p>
-    </div>
-</div>
-<link href='http://fonts.googleapis.com/css?family=Fira+Mono&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-<script src="javascript/behavior.js"></script>
-++++
+I would say we are doing good, here.
