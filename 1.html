@@ -16,7 +16,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>This chapter explores the many ways to open text files for editing. From outside of Vim and from Vim itself.</p>
+<p>This chapter explores the many ways to open text files for editing. At startup and from Vim itself.</p>
 </div>
 </div>
 </div>
@@ -24,7 +24,7 @@
 <h2 id="_for_argument_s_sake">For argument&#8217;s sake</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Like its distant cousins <code>nano</code> and <code>emacs</code> or, really, most command-line programs, Vim can be started without arguments:</p>
+<p>Like other text editors, Vim can be started without arguments:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -48,43 +48,23 @@
 </div>
 </div>
 <div class="paragraph">
-<p>No matter how many arguments you give, those filenames are stored in the global <em>argument list</em> which can be manipulated in many ways. In practice, opening multiple files at once from Vim is as simple as replacing the argument list:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>:args foo.js foo.html foo.css</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>or adding to it:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>:argadd *.py</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>But, no matter how we start Vim, we might want to edit other files without leaving. How do we do it?</p>
+<p>Those filenames are stored in the global <em>argument list</em> which can be manipulated in many ways but&#8230;&#8203; how do we open other files from Vim itself?</p>
 </div>
 <div class="sect2">
 <h3 id="_reference">Reference</h3>
 <div class="literalblock">
 <div class="content">
-<pre>:help buffer-list
-:help argument-list
-:help :args
-:help :argadd
-:help :next</pre>
+<pre>:help argument-list</pre>
 </div>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="__edit">:edit</h2>
+<h2 id="_editing_a_single_file">Editing a single file</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><code>:edit</code> (shortened to <code>:e</code>) is the canonical way to open a file for editing, whether the file exists on disk or not.</p>
+<p><code>:edit</code> (shortened to <code>:e</code>) is the most classical way to open a <em>single</em> file for editing, whether that file exists on disk or not.</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -93,19 +73,7 @@
 </div>
 </div>
 <div class="paragraph">
-<p>It is important to note that this command only accepts <em>one</em> filename as argument so you can forget these for the time being:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>:e file1 file2 file3
-:e *foo</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>That&#8217;s what <code>:args</code>, <code>:argadd</code>, <code>:next</code> and friends are for, but I will keep them for later.</p>
-</div>
-<div class="paragraph">
-<p><code>:e</code> covers a lot of ground already, but we will need fast fingers and a vast memory when time will come to edit files buried at the bottom of a large and complex directory structure.</p>
+<p>Once it is opened, the file is added to the argument list.</p>
 </div>
 <div class="sect2">
 <h3 id="_reference_2">Reference</h3>
@@ -118,8 +86,51 @@
 </div>
 </div>
 <div class="sect1">
+<h2 id="_editing_multiple_files_at_once">Editing multiple files at once</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>:argadd</code> (shortened to <code>:arga</code>) can be used to add multiple files to the argument list:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:arga file4 file4
+:arga *.js</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>followed by <code>:next</code> (shortened to <code>:n</code>) to edit the first one of those new files:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:argadd *.c
+:next</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or the short form:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:arga *.c|n</pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_reference_3">Reference</h3>
+<div class="literalblock">
+<div class="content">
+<pre>:help :argadd
+:help :next</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_tab_completion">Tab-completion</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p><code>:e</code> and <code>:argadd</code> cover a lot of ground already, but we will need fast fingers and a vast memory when time will come to edit files buried at the bottom of a large and complex directory structure.</p>
+</div>
 <div class="paragraph">
 <p>Fortunately, tab-completion lets us cycle through eligible files:</p>
 </div>
@@ -154,7 +165,7 @@
 <p>Pretty basic&#8230;&#8203;</p>
 </div>
 <div class="sect2">
-<h3 id="_reference_3">Reference</h3>
+<h3 id="_reference_4">Reference</h3>
 <div class="literalblock">
 <div class="content">
 <pre>:help cmdline-completion</pre>
@@ -194,7 +205,7 @@
 </div>
 </div>
 <div class="sect2">
-<h3 id="_reference_4">Reference</h3>
+<h3 id="_reference_5">Reference</h3>
 <div class="literalblock">
 <div class="content">
 <pre>:help 'wildmenu'</pre>
@@ -225,7 +236,7 @@
 </div>
 </div>
 <div class="paragraph">
-<p>The main benefits of &#8220;starstar&#8221; are:</p>
+<p>&#8220;starstar&#8221; has two main benefits:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -243,7 +254,7 @@
 </div>
 </div>
 <div class="sect2">
-<h3 id="_reference_5">Reference</h3>
+<h3 id="_reference_6">Reference</h3>
 <div class="literalblock">
 <div class="content">
 <pre>:help starstar</pre>
@@ -394,8 +405,10 @@
 <p><code>nmap key command</code> means that pressing <code>key</code> in normal mode will execute <code>command</code> <em>with its current meaning</em>. This form is <em>only</em> useful when we want to use another mapping in our mapping; it is called &#8220;recursive mapping&#8221;. Example:</p>
 <div class="literalblock">
 <div class="content">
-<pre>:nmap b B        " change 'b' to work like 'B'
-:nmap &lt;F5&gt; db    " '&lt;F5&gt;' works like 'dB', not like 'db'</pre>
+<pre>" change 'b' to work like 'B'
+:nmap b B
+" '&lt;F5&gt;' works like 'dB', not like 'db'
+:nmap &lt;F5&gt; db</pre>
 </div>
 </div>
 </li>
@@ -403,8 +416,10 @@
 <p><code>nnoremap key command</code> means that pressing <code>key</code> in normal mode will execute <code>command</code> <em>with its default meaning</em>. This form is usually the one we want, it is called &#8220;non-recursive mapping&#8221;. Example:</p>
 <div class="literalblock">
 <div class="content">
-<pre>:nmap b B            " change 'b' to work like 'B'
-:nnoremap &lt;F5&gt; db    " '&lt;F5&gt;' works like 'db'</pre>
+<pre>" change 'b' to work like 'B'
+:nmap b B
+" '&lt;F5&gt;' works like 'db'
+:nnoremap &lt;F5&gt; db</pre>
 </div>
 </div>
 </li>
@@ -451,7 +466,7 @@
 <p><code>&lt;Space&gt;</code> is synonymous with <code>l</code> and <code>&lt;Right&gt;</code> so it can safely be remapped,</p>
 </li>
 <li>
-<p>it is the largest key of the keyboard and it can be pressed with any of our two thumbs.</p>
+<p><code>&lt;Space&gt;</code> is the largest key of the keyboard and it can be pressed with any of our two thumbs.</p>
 </li>
 </ul>
 </div>
@@ -477,7 +492,7 @@ nnoremap &lt;leader&gt;e :edit **/*</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_reference_6">Reference</h3>
+<h3 id="_reference_7">Reference</h3>
 <div class="literalblock">
 <div class="content">
 <pre>:help mapping
@@ -494,7 +509,7 @@ nnoremap &lt;leader&gt;e :edit **/*</pre>
 <p>Vim comes with an often overlooked command fittingly named <code>:find</code> that differs from <code>:edit</code> in one big way: <strong>it can be set to visit specific directories.</strong></p>
 </div>
 <div class="paragraph">
-<p>The key to using <code>:find</code> efficiently is to define a good value for the <code>path</code> option that tells Vim where to <em>find</em> files. The default value may be a good starting point for C programmers but we can set it to a more generic&#8201;&#8212;&#8201;and simplistic&#8201;&#8212;&#8201;value:</p>
+<p>The key to using <code>:find</code> efficiently is to define a good value for the <code>path</code> option that tells Vim where to <em>find</em> files. The default value may be a good starting point for C programmers but others can set it to a more generic&#8201;&#8212;&#8201;and simplistic&#8201;&#8212;&#8201;value:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -548,7 +563,7 @@ nnoremap &lt;leader&gt;e :edit **/*</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_reference_7">Reference</h3>
+<h3 id="_reference_8">Reference</h3>
 <div class="literalblock">
 <div class="content">
 <pre>:help :find
@@ -575,7 +590,7 @@ nnoremap &lt;leader&gt;e :edit **/*</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s replace the <code>:edit</code>-based mapping in our <code>vimrc</code> with the following:</p>
+<p>Let&#8217;s replace the <code>:edit</code> mapping in our <code>vimrc</code> with the following:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -611,10 +626,7 @@ nnoremap &lt;leader&gt;f :find *</pre>
 <p><code>'wildmode'</code> defines the behavior of the wildmenu. You can tell Vim to show a list of completions or not but also when to show it. It is recommended to play with the many possible combinations until you find the right one.</p>
 </div>
 <div class="paragraph">
-<p>The default value is <code>full</code></p>
-</div>
-<div class="paragraph">
-<p>here is a reasonably useful value:</p>
+<p>The default value, <code>full</code>, is pretty good, here is anotehr reasonably useful one:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -681,7 +693,7 @@ nnoremap &lt;leader&gt;f :find *</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_reference_8">Reference</h3>
+<h3 id="_reference_9">Reference</h3>
 <div class="literalblock">
 <div class="content">
 <pre>:help 'wildmode'
@@ -745,11 +757,11 @@ nnoremap &lt;leader&gt;f :find *</pre>
 </li>
 </ul>
 </div>
+<div class="sect2">
+<h3 id="_reference_10">Reference</h3>
 <div class="paragraph">
 <p>Netrw&#8217;s documentation is massive and covers a lot more than what you probably need for basic exploration and file-handling but you should at least take a look at the following sections&#8230;&#8203;</p>
 </div>
-<div class="sect2">
-<h3 id="_reference_9">Reference</h3>
 <div class="literalblock">
 <div class="content">
 <pre>:help netrw-browse-maps
@@ -767,14 +779,14 @@ nnoremap &lt;leader&gt;f :find *</pre>
 <p>Opening files for editing is neither complex nor hard but&#8201;&#8212;&#8201;as with everything in Vim&#8201;&#8212;&#8201;it can be made quicker and easier with a couple of settings and mappings. Make sure you have exhausted the built-in ways before installing the latest and greatest fuzzy gadget people rave about on Reddit, Twitter or Hacker News.</p>
 </div>
 <div class="paragraph">
-<p>But, now that we have a bunch of files to edit… how are we supposed to work with them?</p>
+<p>But, now that we have a bunch of files to edit, how are we supposed to work with them?</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-01-06 23:45:55 CET
+Last updated 2016-03-27 16:58:34 CEST
 </div>
 </div>
 </body>

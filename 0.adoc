@@ -11,15 +11,15 @@ Most of us bail out and learn to mentally replace `vi` and `vim` with `nano` in 
 
 Others learn the bare minimum to make those occasional edits as painless as possible, confident in their knowledge that there are vastly better editors for serious work anyway.
 
-The rest are lucky/crazy enough to see the potential behind the weirdness and decide to do what it takes to become more efficient with Vim.
+Yet some are lucky/crazy enough to see the potential behind the weirdness and decide to do what it takes to become more efficient with Vim.
 
 This guide is directed toward that third group. Picking up where `vimtutor` left off, it will hopefully give your Vim experience the right kind of foundations: deep and dependable.
 
-Vim does a lot and thus requires quite a bit of learning as well as a significant amount of will and _patience_. In that respect, it isn't worse than Photoshop, any serious 3D modeling software, font editor or digital audio workstation: you can quickly learn the basics needed for performing simple tasks but you can't honestly put "`ProTools`" on your resumé after a tutorial or two. It takes years to master Photoshop and it will take you and me years to master Vim.
+Vim does a lot and thus requires quite a bit of learning as well as a significant amount of will and _patience_. In that respect, it isn't worse than Photoshop, any serious 3D modeling software, font editor or digital audio workstation: you can quickly learn the basics needed for performing simple tasks but you can't honestly put "`ProTools`" on your resumé after a tutorial or two. It takes years to master Photoshop and it will take years to master Vim.
 
 But what kind of involvement are we talking about? Is it the kind that requires us to commit all of http://www.viemu.com/vi-vim-cheat-sheet.gif[that meaningless garbage] to memory?
 
-No. http://www.moolenaar.net/habits.html[Like Vim's author], I don't believe "`knowing all of Vim`" or "`being a Vim guru`" should be anyone's goal. Those may be _consequences_ of using Vim daily for 10 or 20 years, but we shouldn't keep our eyes too focused on that target. Learning Vim is a long journey where the destination doesn't really matter. What happens along the way and the positive changes it causes in us are all that counts.
+No. http://www.moolenaar.net/habits.html[Like Vim's author], I don't believe "`knowing all of Vim`" or "`being a Vim guru`" should be anyone's goal. Those may be _consequences_ of using Vim daily for 10 or 20 years, but we shouldn't focus too much on that target. Learning Vim is a long journey where the destination doesn't really matter. What happens along the way and the positive changes it causes in us are all that counts.
 
 You are playing in your own Tolkien trilogy, goddammit!
 
@@ -39,7 +39,7 @@ I therefore recommend you upgrade to a more up-to-date and full-featured build. 
 
 === On Linux/BSD
 
-On Linux/BSD systems, the trick is generally to install the more featured "`gvim`" package, which generally gives you both a `vim` command for terminal usage and a `gvim` command for GUI usage.
+On Linux/BSD systems, the trick is generally to install the more featured "`gvim`" package, which usually gives you both a `vim` command for terminal usage and a `gvim` command for GUI usage.
 
 You may need slightly different packages depending on your Desktop Environment or even distribution variant. There are too many possibilities so... use your package manager and common-sense to decide what to install. For any issue, refer to your package manager's documentation.
 

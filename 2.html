@@ -14,27 +14,28 @@
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
+<li><a href="#_arguments">Arguments</a>
+<ul class="sectlevel2">
+<li><a href="#_working_with_arguments">Working with arguments</a></li>
+<li><a href="#_reference">Reference</a></li>
+</ul>
+</li>
 <li><a href="#_buffers">Buffers</a>
 <ul class="sectlevel2">
+<li><a href="#_the_buffer_list_versus_the_argument_list">The buffer list versus the argument list</a></li>
 <li><a href="#_working_with_buffers">Working with buffers</a></li>
-<li><a href="#_reference">Reference</a></li>
+<li><a href="#_reference_2">Reference</a></li>
 </ul>
 </li>
 <li><a href="#_windows">Windows</a>
 <ul class="sectlevel2">
 <li><a href="#_working_with_windows">Working with windows</a></li>
-<li><a href="#_reference_2">Reference</a></li>
+<li><a href="#_reference_3">Reference</a></li>
 </ul>
 </li>
 <li><a href="#_tab_pages">Tab pages</a>
 <ul class="sectlevel2">
 <li><a href="#_working_with_tab_pages">Working with tab pages</a></li>
-<li><a href="#_reference_3">Reference</a></li>
-</ul>
-</li>
-<li><a href="#_arguments">Arguments</a>
-<ul class="sectlevel2">
-<li><a href="#_working_with_arguments">Working with arguments</a></li>
 <li><a href="#_reference_4">Reference</a></li>
 </ul>
 </li>
@@ -81,7 +82,20 @@
 </ul>
 </div>
 <div class="paragraph">
-<p>At the root of the tree&#8201;&#8212;&#8201;and at the center of Vim&#8217;s design&#8201;&#8212;&#8201;is the buffer; a little higher on the abstraction ladder comes the window and, higher again, is the tab page. Vim will quit when you delete the last buffer, close the last window (no window means no buffer) or close the last tab page (no tab page means no window which means no buffer).</p>
+<p>At the root of that tree&#8201;&#8212;&#8201;and at the center of Vim&#8217;s design&#8201;&#8212;&#8201;is the buffer; then comes the window and, finally, the tab page. Vim will quit when you delete the last buffer, close the last window or close the last tab page.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_arguments">Arguments</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_working_with_arguments">Working with arguments</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_reference">Reference</h3>
+
 </div>
 </div>
 </div>
@@ -89,15 +103,43 @@
 <h2 id="_buffers">Buffers</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Like Microsoft Word or Adobe Photoshop, Vim lets us create, delete, switch to and&#8201;&#8212;&#8201;of course&#8201;&#8212;&#8201;edit &#8220;buffers&#8221; (Vim&#8217;s lingo for &#8220;documents&#8221;). Like in the aforementionned programs those buffers can be associated with an actual file or not and your changes will not be written to disk unless you instruct Vim to do so with the adequate command. Similarly, Vim will tell you when you are trying to quit without saving&#8230;&#8203; No, Vim is not <em>that</em> weird, after all.</p>
+<p>Like Microsoft Word or Adobe Photoshop, Vim lets us create, delete, switch to and edit &#8220;buffers&#8221; (Vim&#8217;s lingo for &#8220;documents&#8221;). Like in Microsoft Word or Adobe Photoshop, those buffers:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>can be associated with an actual file or not,</p>
+</li>
+<li>
+<p>are written to disk only if you instruct Vim to do so.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Similarly, Vim will tell you when you are trying to quit without saving so, well&#8230;&#8203; Vim is not <em>that</em> weird, after all.</p>
 </div>
 <div class="paragraph">
 <p>As Vim&#8217;s core file proxies, buffers are (or should be) at the center of your workflow and you owe it to yourself to know how to work with them to achieve reasonable efficiency.</p>
 </div>
 <div class="sect2">
+<h3 id="_the_buffer_list_versus_the_argument_list">The buffer list versus the argument list</h3>
+<div class="paragraph">
+<p>The argument list and the buffer list have a &#8220;complicated&#8221; relationship.</p>
+</div>
+<div class="paragraph">
+<p>By default, files added to the argument list are also added to the buffer list but removing files from the argument list has no impact on the bufer list. That weird kind of semi-independence gives us the possibility to use each list in different ways.</p>
+</div>
+<div class="paragraph">
+<p>The buffer list contains all the buffers currently loaded in your sessions. It can be seen as a reliable representation of the current &#8220;state&#8221; of the editor and&#8201;&#8212;&#8201;mainly&#8201;&#8212;&#8201;used for navigation.</p>
+</div>
+<div class="paragraph">
+<p>The argument list can be manipulated independently from the buffer list so it can be used to hold a temporary list of buffers on which to perform batch commands.</p>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_working_with_buffers">Working with buffers</h3>
 <div class="paragraph">
-<p>Every buffer created in Vim via <code>:edit</code>, <code>:find</code>, <code>:args</code>&#8230;&#8203; or simply <code>$ vim filename</code>, is added to the <em>buffer list</em> where it is assigned a number that will <strong>never</strong> change. When started without arguments, Vim creates an empty buffer anyway so there&#8217;s really always <em>at least</em> one buffer to work with.</p>
+<p>Every buffer created in Vim, at startup or later, is added to the <em>buffer list</em> where it is assigned a number that will <strong>never</strong> change until the buffer is explicitely wiped out from the list.</p>
 </div>
 <div class="paragraph">
 <p>Beside that number, buffers are also named after the file they are associated with. This gives us two ways to address a buffer:</p>
@@ -113,7 +155,7 @@
 </ul>
 </div>
 <div class="paragraph">
-<p>A typical Vim session could consist of commenting out a single line in a single file&#8201;&#8212;&#8201;and thus a single buffer&#8201;&#8212;&#8201;or it could go on for weeks and consist of dozens and dozens of buffers. Keeping track of a potentially large number of buffers would be daunting if Vim didn&#8217;t gave us not one, not two, but <em>three</em> commands for listing buffers:</p>
+<p>A typical Vim session could consist of editing a single file&#8201;&#8212;&#8201;and thus a single buffer&#8201;&#8212;&#8201;or it could go on for weeks and consist of dozens and dozens of buffers. Keeping track of a potentially large number of buffers would be daunting if Vim didn&#8217;t gave us not one, not two, but <em>three</em> commands for listing buffers:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -157,13 +199,13 @@ Press ENTER or type command to continue</pre>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>:b1      " jump to buffer number 1
-:b#      " jump back to the previous buffer
-:bd 2    " delete buffer number 2</pre>
+<pre>:b1     " jump to buffer number 1
+:b#     " jump back to the previous buffer
+:bd2    " delete buffer number 2</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Unlike some other more &#8220;modern&#8221; editors, Vim doesn&#8217;t have a built-in way of displaying a permanent list of loaded buffers. This may feel like a limitation if you are used to that feature but think about it for a moment&#8230;&#8203; do you <em>really</em> need that list when you are not trying to jump to another buffer?</p>
+<p>Unlike &#8220;modern&#8221; editors, Vim doesn&#8217;t have a built-in way of displaying a permanent list of loaded buffers. This may feel like a limitation if you are used to that feature but think about it for a moment&#8230;&#8203; do you <em>really</em> need that list when you are not trying to jump to another buffer?</p>
 </div>
 <div class="paragraph">
 <p>So, the most basic way to switch to another <em>specific</em> buffer is a two steps process:</p>
@@ -178,10 +220,13 @@ Press ENTER or type command to continue</pre>
 <p>Of course, it is not necessary to do <code>:ls</code> before doing <code>:b24</code> but who wants to actively maintain a list of buffers in his head? Well&#8230;&#8203; I certainly don&#8217;t.</p>
 </div>
 <div class="paragraph">
-<p>One way to avoid thinking too much about your buffers would be to mash <code>:bn[ext]</code> and <code>:bp[revious]</code> until you get where you want. Because the buffer list is one-dimensional, you are sure to get to the right buffer but&#8230;&#8203; your destination might be sixteen buffers away, so cycling is not really a silver bullet. Surely there&#8217;s something we can do with <code>:ls</code>, right?</p>
+<p>One way to avoid thinking too much about your buffers would be to mash <code>:bn[ext]</code> and <code>:bp[revious]</code> until you get where you want. Because the buffer list is one-dimensional, you are sure to get to the right buffer. But cycling is not really a silver bullet when your destination is sixteen buffers away. There must be a more <em>deterministic</em> solution.</p>
 </div>
 <div class="paragraph">
-<p>So let&#8217;s go back to that boring <code>:ls</code>, then <code>&lt;CR&gt;</code>, then <code>:b24</code>, then <code>&lt;CR&gt;</code> routine which looks like a good candidate for a nice, mnemonic, custom mapping. <a href="http://of-vim-and-vigor.blogspot.fr/p/vim-vigor-comic.html">Flying is faster than cycling</a>, right?</p>
+<p>Let&#8217;s go back to that boring <code>:ls</code>, then <code>&lt;CR&gt;</code>, then <code>:b24</code>, then <code>&lt;CR&gt;</code> routine which looks like a good candidate for a nice, mnemonic, custom mapping. <a href="http://of-vim-and-vigor.blogspot.fr/p/vim-vigor-comic.html">Flying is faster than cycling</a>, right?</p>
+</div>
+<div class="paragraph">
+<p>What about something like <code>gb</code>, for &#8220;goto buffer&#8221;?</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -314,7 +359,7 @@ cz   cZ   dz                    vx   yx
 </div>
 </div>
 <div class="sect2">
-<h3 id="_reference">Reference</h3>
+<h3 id="_reference_2">Reference</h3>
 <div class="literalblock">
 <div class="content">
 <pre>:help windows
@@ -362,7 +407,7 @@ cz   cZ   dz                    vx   yx
 </div>
 </div>
 <div class="sect2">
-<h3 id="_reference_2">Reference</h3>
+<h3 id="_reference_3">Reference</h3>
 
 </div>
 </div>
@@ -482,25 +527,12 @@ nnoremap &lt;leader&gt;tf :tabfind *</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_reference_3">Reference</h3>
+<h3 id="_reference_4">Reference</h3>
 <div class="literalblock">
 <div class="content">
 <pre>:help tab-page</pre>
 </div>
 </div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_arguments">Arguments</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_working_with_arguments">Working with arguments</h3>
-
-</div>
-<div class="sect2">
-<h3 id="_reference_4">Reference</h3>
-
 </div>
 </div>
 </div>
@@ -1007,52 +1039,12 @@ splitting      splitting
 <div class="paragraph">
 <p>(to be written)</p>
 </div>
-<div id="front">
-    <a href="#" id="open-close">...</a>
-    <ul>
-        <li>
-            <a href="0.html">0&nbsp;&nbsp;&nbsp;An introduction</a>
-        </li>
-        <li>
-            <a href="1.html">1&nbsp;&nbsp;&nbsp;Lord of the files</a>
-        </li>
-        <li class="current">
-            <a href="2.html">2&nbsp;&nbsp;&nbsp;Your workspace</a>
-<!-- toc disabled -->
-        </li>
-        <li>
-            <a href="3.html">3&nbsp;&nbsp;&nbsp;Title pending</a>
-        </li>
-        <li>
-            <a href="4.html">4&nbsp;&nbsp;&nbsp;Title pending</a>
-        </li>
-        <li>
-            <a href="5.html">5&nbsp;&nbsp;&nbsp;Title pending</a>
-        </li>
-        <li>
-            <a href="6.html">6&nbsp;&nbsp;&nbsp;Title pending</a>
-        </li>
-        <li>
-            <a href="7.html">7&nbsp;&nbsp;&nbsp;Title pending</a>
-        </li>
-        <li>
-            <a href="8.html">8&nbsp;&nbsp;&nbsp;Title pending</a>
-        </li>
-    </ul>
-</div>
-<h6>The Patient Vimmer</h6>
-<div id="bottom">
-    <p>Written by <a href="https://github.com/romainl">Romain Lafourcade</a>, with help from <a href="https://github.com/dahu/">Barry Arthur</a> and the #vim community.</p>
-<p>Copyleft 2015</p>
-</div>
-<link href='http://fonts.googleapis.com/css?family=Fira+Mono&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-<script src="javascript/behavior.js"></script>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-01-09 14:36:08 CET
+Last updated 2016-03-27 18:47:06 CEST
 </div>
 </div>
 </body>

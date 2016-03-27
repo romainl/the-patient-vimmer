@@ -5,11 +5,11 @@
 :scriptsdir: javascript
 :linkcss:
 
-This chapter explores the many ways to open text files for editing. From outside of Vim and from Vim itself.
+This chapter explores the many ways to open text files for editing. At startup and from Vim itself.
 
 == For argument's sake
 
-Like its distant cousins `nano` and `emacs` or, really, most command-line programs, Vim can be started without arguments:
+Like other text editors, Vim can be started without arguments:
 
     $ vim
 
@@ -21,45 +21,49 @@ or with an expression expanded by your shell before passing it to Vim:
 
     $ vim *.js
 
-No matter how many arguments you give, those filenames are stored in the global _argument list_ which can be manipulated in many ways. In practice, opening multiple files at once from Vim is as simple as replacing the argument list:
-
-    :args foo.js foo.html foo.css
-
-or adding to it:
-
-    :argadd *.py
-
-But, no matter how we start Vim, we might want to edit other files without leaving. How do we do it?
+Those filenames are stored in the global _argument list_ which can be manipulated in many ways but... how do we open other files from Vim itself?
 
 === Reference
 
-    :help buffer-list
     :help argument-list
-    :help :args
-    :help :argadd
-    :help :next
 
-== :edit
+== Editing a single file
 
-`:edit` (shortened to `:e`) is the canonical way to open a file for editing, whether the file exists on disk or not.
+`:edit` (shortened to `:e`) is the most classical way to open a _single_ file for editing, whether that file exists on disk or not.
 
     :e foo.txt
     :e ../bar.txt
 
-It is important to note that this command only accepts _one_ filename as argument so you can forget these for the time being:
-
-    :e file1 file2 file3
-    :e *foo
-
-That's what `:args`, `:argadd`, `:next` and friends are for, but I will keep them for later.
-
-`:e` covers a lot of ground already, but we will need fast fingers and a vast memory when time will come to edit files buried at the bottom of a large and complex directory structure.
+Once it is opened, the file is added to the argument list.
 
 === Reference
 
     :help :edit
 
+== Editing multiple files at once
+
+`:argadd` (shortened to `:arga`) can be used to add multiple files to the argument list:
+
+    :arga file4 file4
+    :arga *.js
+
+followed by `:next` (shortened to `:n`) to edit the first one of those new files:
+
+    :argadd *.c
+    :next
+
+or the short form:
+
+    :arga *.c|n
+
+=== Reference
+
+    :help :argadd
+    :help :next
+
 == Tab-completion
+
+`:e` and `:argadd` cover a lot of ground already, but we will need fast fingers and a vast memory when time will come to edit files buried at the bottom of a large and complex directory structure.
 
 Fortunately, tab-completion lets us cycle through eligible files:
 
@@ -111,7 +115,7 @@ Vim even has a special wildcard called "`starstar`", that makes it possible to r
     :e **/*use<Tab>
     :e app/controllers/user_management.js
 
-The main benefits of "`starstar`" are:
+"`starstar`" has two main benefits:
 
 * it allows us to navigate through a flat list instead of a potentially deep hierarchy, saving quite a bunch of keystrokes and brain cells in the process,
 * we can avoid typing subdirectories.
@@ -181,13 +185,17 @@ But what's the deal with that `*map` versus `*noremap` distinction? It's really 
 
 * `nmap key command` means that pressing `key` in normal mode will execute `command` _with its current meaning_. This form is _only_ useful when we want to use another mapping in our mapping; it is called "`recursive mapping`". Example:
 
-    :nmap b B        " change 'b' to work like 'B'
-    :nmap <F5> db    " '<F5>' works like 'dB', not like 'db'
+    " change 'b' to work like 'B'
+    :nmap b B
+    " '<F5>' works like 'dB', not like 'db'
+    :nmap <F5> db
 
 * `nnoremap key command` means that pressing `key` in normal mode will execute `command` _with its default meaning_. This form is usually the one we want, it is called "`non-recursive mapping`". Example:
 
-    :nmap b B            " change 'b' to work like 'B'
-    :nnoremap <F5> db    " '<F5>' works like 'db'
+    " change 'b' to work like 'B'
+    :nmap b B
+    " '<F5>' works like 'db'
+    :nnoremap <F5> db
 
 Our mappings _have_ to be solid because they will serve as the foundation of our workflow. Non-recursive mappings are thus the safest choice:
 
@@ -209,7 +217,7 @@ We are of course free to choose which key to use as our leader. `<Space>`, for e
 
 * `,` is a very useful key (repeat last `fFtT` in the other direction) with no alternative,
 * `<Space>` is synonymous with `l` and `<Right>` so it can safely be remapped,
-* it is the largest key of the keyboard and it can be pressed with any of our two thumbs.
+* `<Space>` is the largest key of the keyboard and it can be pressed with any of our two thumbs.
 
 Let's end this section by adding these lines to our `vimrc`:
 
@@ -231,7 +239,7 @@ Neat!
 
 Vim comes with an often overlooked command fittingly named `:find` that differs from `:edit` in one big way: **it can be set to visit specific directories.**
 
-The key to using `:find` efficiently is to define a good value for the `path` option that tells Vim where to _find_ files. The default value may be a good starting point for C programmers but we can set it to a more generic -- and simplistic -- value:
+The key to using `:find` efficiently is to define a good value for the `path` option that tells Vim where to _find_ files. The default value may be a good starting point for C programmers but others can set it to a more generic -- and simplistic -- value:
 
     :set path=.,**
 
@@ -272,7 +280,7 @@ Again, we can go a bit further with a nice _normal_ mode mapping similar to the 
 
 image::gifcast_off.png[link="images/1_leader-f.gif"]
 
-Let's replace the `:edit`-based mapping in our `vimrc` with the following:
+Let's replace the `:edit` mapping in our `vimrc` with the following:
 
     set path=.,**
     nnoremap <leader>f :find *
@@ -294,9 +302,7 @@ Let's go through them one by one:
 
 `'wildmode'` defines the behavior of the wildmenu. You can tell Vim to show a list of completions or not but also when to show it. It is recommended to play with the many possible combinations until you find the right one.
 
-The default value is `full`
-
-here is a reasonably useful value:
+The default value, `full`, is pretty good, here is anotehr reasonably useful one:
 
     set wildmode=list:full
 
@@ -361,9 +367,9 @@ And the three most basic commands:
 * `:Lex`   open a listing of the current directory in a smaller vertical window, similar to the "project" pane common in other editors and IDEs,
 * `:Rex`   come back to the previous listing.
 
-Netrw's documentation is massive and covers a lot more than what you probably need for basic exploration and file-handling but you should at least take a look at the following sections...
-
 === Reference
+
+Netrw's documentation is massive and covers a lot more than what you probably need for basic exploration and file-handling but you should at least take a look at the following sections...
 
     :help netrw-browse-maps
     :help netrw-quickhelp
@@ -373,4 +379,4 @@ Netrw's documentation is massive and covers a lot more than what you probably ne
 
 Opening files for editing is neither complex nor hard but -- as with everything in Vim -- it can be made quicker and easier with a couple of settings and mappings. Make sure you have exhausted the built-in ways before installing the latest and greatest fuzzy gadget people rave about on Reddit, Twitter or Hacker News.
 
-But, now that we have a bunch of files to edit… how are we supposed to work with them?
+But, now that we have a bunch of files to edit, how are we supposed to work with them?
