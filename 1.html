@@ -11,12 +11,79 @@
 <body class="article">
 <div id="header">
 <h1>Lord of the files</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_introduction">Introduction</a></li>
+<li><a href="#_for_argument_s_sake">For argument&#8217;s sake</a>
+<ul class="sectlevel2">
+<li><a href="#_reference">Reference</a></li>
+</ul>
+</li>
+<li><a href="#_editing_a_single_file">Editing a single file</a>
+<ul class="sectlevel2">
+<li><a href="#_reference_2">Reference</a></li>
+</ul>
+</li>
+<li><a href="#_editing_multiple_files_at_once">Editing multiple files at once</a>
+<ul class="sectlevel2">
+<li><a href="#_reference_3">Reference</a></li>
+</ul>
+</li>
+<li><a href="#_tab_completion">Tab-completion</a>
+<ul class="sectlevel2">
+<li><a href="#_reference_4">Reference</a></li>
+</ul>
+</li>
+<li><a href="#_the_wildmenu">The wildmenu</a>
+<ul class="sectlevel2">
+<li><a href="#_reference_5">Reference</a></li>
+</ul>
+</li>
+<li><a href="#_wildcards_up_our_sleeve">Wildcards up our sleeve</a>
+<ul class="sectlevel2">
+<li><a href="#_reference_6">Reference</a></li>
+</ul>
+</li>
+<li><a href="#_mappings">Mappings</a>
+<ul class="sectlevel2">
+<li><a href="#_a_leader_worth_following">A leader worth following</a></li>
+<li><a href="#_reference_7">Reference</a></li>
+</ul>
+</li>
+<li><a href="#__find">:find</a>
+<ul class="sectlevel2">
+<li><a href="#_reference_8">Reference</a></li>
+</ul>
+</li>
+<li><a href="#_more_mappings">More mappings</a></li>
+<li><a href="#_customizing_filename_completion_and_the_wildmenu">Customizing filename completion and the &#8220;wildmenu&#8221;</a>
+<ul class="sectlevel2">
+<li><a href="#_wildmode">wildmode</a></li>
+<li><a href="#_wildignore">wildignore</a></li>
+<li><a href="#_wildignorecase">wildignorecase</a></li>
+<li><a href="#_suffixes">suffixes</a></li>
+<li><a href="#_reference_9">Reference</a></li>
+</ul>
+</li>
+<li><a href="#_but_i_em_need_em_a_file_explorer">But I <em>need</em> a file explorer!</a>
+<ul class="sectlevel2">
+<li><a href="#_reference_10">Reference</a></li>
+</ul>
+</li>
+<li><a href="#_conclusion">Conclusion</a></li>
+</ul>
+</div>
 </div>
 <div id="content">
-<div id="preamble">
+<div class="sect1">
+<h2 id="_introduction">Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This chapter explores the many ways to open text files for editing. At startup and from Vim itself.</p>
+<p>This chapter explores the many ways to open text files&#8201;&#8212;&#8201;or &#8220;edit text files&#8221; in Vim parlance&#8201;&#8212;&#8201;at startup and from Vim itself.</p>
+</div>
+<div class="paragraph">
+<p>(more to come)</p>
 </div>
 </div>
 </div>
@@ -32,29 +99,67 @@
 </div>
 </div>
 <div class="paragraph">
-<p>or with one or more explicit filename as arguments:</p>
+<p>in which case it creates an empty buffer for your convenience.</p>
+</div>
+<div class="paragraph">
+<p>Or with one or more explicit filename as arguments :</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>$ vim file1 file2 file3</pre>
+<pre>$ vim file1 file2 file3
+$ vim *.js</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>or with an expression expanded by your shell before passing it to Vim:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>$ vim *.js</pre>
-</div>
+<p>in which case <em>n</em> buffers are created and named after their respective argument.</p>
 </div>
 <div class="paragraph">
-<p>Those filenames are stored in the global <em>argument list</em> which can be manipulated in many ways but&#8230;&#8203; how do we open other files from Vim itself?</p>
+<p>The buffers are stored in the global <em>buffer list</em> and the filenames are stored in the global <em>argument list</em>.</p>
+</div>
+<div class="paragraph">
+<p>The two lists differ in many ways:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the argument list only stores filenames whereas the buffer list also stores cursor position and state,</p>
+</li>
+<li>
+<p>it is possible to insert a new &#8220;argument&#8221; anywhere in the argument list but it is only possible to add a new item at the end of the buffer list,</p>
+</li>
+<li>
+<p>adding an item to the argument list also adds an item to the buffer list but the opposite is not true,</p>
+</li>
+<li>
+<p>&#8230;&#8203;</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The buffer list is best seen as a partial representation of Vim&#8217;s internal state. Not being very flexible makes it reliable.</p>
+</div>
+<div class="paragraph">
+<p>The argument list is best seen as a transient list of files. It is certainly possible to use it for navigation but its flexibility makes it less than reliable. Generally, the argument list is better suited for other tasks such as:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>adding a bunch of files to the buffer list in one go,</p>
+</li>
+<li>
+<p>holding a temporary list of files for later processing,</p>
+</li>
+<li>
+<p>keeping a number of &#8220;special&#8221; files on hand&#8230;&#8203;</p>
+</li>
+</ul>
 </div>
 <div class="sect2">
 <h3 id="_reference">Reference</h3>
 <div class="literalblock">
 <div class="content">
-<pre>:help argument-list</pre>
+<pre>:help argument-list
+:help buffer-list</pre>
 </div>
 </div>
 </div>
@@ -64,16 +169,16 @@
 <h2 id="_editing_a_single_file">Editing a single file</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><code>:edit</code> (shortened to <code>:e</code>) is the most classical way to open a <em>single</em> file for editing, whether that file exists on disk or not.</p>
+<p>That&#8217;s all good but&#8230;&#8203; how do we open other files from Vim itself?</p>
+</div>
+<div class="paragraph">
+<p><code>:edit</code> (shortened to <code>:e</code>) is probably the most common way to edit a <em>single</em> file, whether that file exists on disk or not.</p>
 </div>
 <div class="literalblock">
 <div class="content">
 <pre>:e foo.txt
 :e ../bar.txt</pre>
 </div>
-</div>
-<div class="paragraph">
-<p>Once it is opened, the file is added to the argument list.</p>
 </div>
 <div class="sect2">
 <h3 id="_reference_2">Reference</h3>
@@ -102,8 +207,8 @@
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>:argadd *.c
-:next</pre>
+<pre>:arga *.c
+:n</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -114,12 +219,21 @@
 <pre>:arga *.c|n</pre>
 </div>
 </div>
+<div class="paragraph">
+<p>If you don&#8217;t care about the argument list, <code>:arg</code> can be used as a drop-in replacement for <code>:argadd</code> + <code>:next</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:arg *.c</pre>
+</div>
+</div>
 <div class="sect2">
 <h3 id="_reference_3">Reference</h3>
 <div class="literalblock">
 <div class="content">
 <pre>:help :argadd
-:help :next</pre>
+:help :next
+:help :arg</pre>
 </div>
 </div>
 </div>
@@ -129,7 +243,7 @@
 <h2 id="_tab_completion">Tab-completion</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><code>:e</code> and <code>:argadd</code> cover a lot of ground already, but we will need fast fingers and a vast memory when time will come to edit files buried at the bottom of a large and complex directory structure.</p>
+<p><code>:e</code>, <code>:arg</code>, and <code>:argadd</code> cover a lot of ground already, but we will need fast fingers and a vast memory when we&#8217;ll need to edit files buried at the bottom of a large and complex directory structure.</p>
 </div>
 <div class="paragraph">
 <p>Fortunately, tab-completion lets us cycle through eligible files:</p>
@@ -178,7 +292,7 @@
 <h2 id="_the_wildmenu">The wildmenu</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>But we are in the dark, here: we have no idea how large the completion list is unless we press <code>&lt;C-d&gt;</code> every couple of keystrokes or if and how we could refine our query or how to leave the current directory! <em>Basic</em> tab-completion is better than nothing but meh&#8230;&#8203;</p>
+<p>But we are in the dark, here. We have no idea how large the completion list is unless we press <code>&lt;C-d&gt;</code> every couple of keystrokes or if and how we could refine our query or how to leave the current directory! <em>Basic</em> tab-completion is better than nothing but meh&#8230;&#8203;</p>
 </div>
 <div class="paragraph">
 <p>Don&#8217;t worry! Vim has our back with a brilliant feature called &#8220;wildmenu&#8221; that temporarily replaces the status line with a handy menu:</p>
@@ -244,7 +358,7 @@
 <p>it allows us to navigate through a flat list instead of a potentially deep hierarchy, saving quite a bunch of keystrokes and brain cells in the process,</p>
 </li>
 <li>
-<p>we can avoid typing subdirectories.</p>
+<p>we can avoid typing subdirectories names.</p>
 </li>
 </ul>
 </div>
@@ -781,12 +895,25 @@ nnoremap &lt;leader&gt;f :find *</pre>
 <div class="paragraph">
 <p>But, now that we have a bunch of files to edit, how are we supposed to work with them?</p>
 </div>
+<div id="nav" class="toc">
+<p>Where to go now?</p>
+<ul class="sectlevel1">
+<li><a href="#">foo</a></li>
+<li><a href="#">bar</a></li>
+<li><a href="#">baz</a></li>
+</ul>
+<div id="bottom">
+<p>Written by <a href="https://github.com/romainl">Romain Lafourcade</a>, with help from <a href="https://github.com/dahu/">Barry Arthur</a> and the #vim community.</p>
+<p class="copyleft">Copyleft 2015</p>
+</div>
+</div>
+<script src="javascript/behavior.js"></script>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-03-27 16:58:34 CEST
+Last updated 2016-05-06 13:36:31 CEST
 </div>
 </div>
 </body>

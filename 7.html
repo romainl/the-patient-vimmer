@@ -5,70 +5,88 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.2">
-<title>Extending Vim</title>
+<title>Advanced configuration</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="article">
 <div id="header">
-<h1>Extending Vim</h1>
+<h1>Advanced configuration</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+
+</div>
 </div>
 <div id="content">
-<div id="preamble">
-<div class="sectionbody">
 <div class="paragraph">
-<p>It should be clear by now that Vim is a very powerful text editor but don&#8217;t be fooled, it doesn&#8217;t do <em>everything</em>. Sure we get a lot of small low-level elements to play with but, sometimes, using a specialized tool would be more suited to the job. After all, shares its environment with many commandline tools so&#8230;&#8203; why not putting them to good use?</p>
+<p>And take advantage of a great feature called &#8220;autocommands&#8221; for&#8230;&#8203; the automation part.</p>
 </div>
 <div class="paragraph">
-<p>With Vim, we can run external commands in&#8201;&#8212;&#8201;broadly speaking&#8201;&#8212;&#8201;two ways: as filters and, well, as external commands.</p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_filters">Filters</h3>
-<div class="paragraph">
-<p>Tranforming existing text in place with another program is called <em>filtering</em>: we start with some text and replace it with the output of an external `"filter`".</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_external_commands">External commands</h3>
-<div class="paragraph">
-<p>As should be obvious by now, Vim can do a lot and gives us plenty of means and opportunities to build higher-level tools to suit many needs.</p>
+<p>Autocommands are Vim&#8217;s way of executing arbitrary commands when specific events happen. Entering a window, quitting insert mode, loading a buffer with a specific filetype are some of the many events available.</p>
 </div>
 <div class="paragraph">
-<p>We have seen how to use options, mappings and custom commands to customize Vim&#8217;s behavior but there are times when</p>
+<p>An autocommand usually looks like that:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>autocmd event pattern command</pre>
+</div>
 </div>
 <div class="paragraph">
-<p>~/.vim/ and its structure</p>
+<p>where <code>autocmd</code> is the command that defines an autocommand, <code>event</code> can be a single event or a comma-separated list of events, <code>pattern</code> is a simple pattern describing what [todo] and <code>command</code> is what we want to happen.</p>
 </div>
 <div class="paragraph">
-<p>NB: Since 7.4, it is possible to keep our <code>vimrc</code> <strong>inside</strong> our <code>~/.vim/</code> (on Unix-like systems)</p>
+<p>Scrolling through the list at <code>:help autocommand-events</code> we find <code>BufWritePost</code> which looks like it can be used after <code>:w</code> to <code>:make</code> and <code>:cwindow</code>. Let&#8217;s try it:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>autocmd BufWritePost *.c silent make|cwindow</pre>
+</div>
 </div>
 <div class="paragraph">
-<p>vimscript
-	functions
-	commands
-	variables
-	etc.
-good practices
-when to look for plugins
-where to look for plugins
-installing plugins
-	manually
-	vimball
-	pathogen
-	vundle
-	neobundle
-	VAM
-	plug
-	notes on Git/Mercurial…
-updating plugins
-removing plugins</p>
+<p>Phew! That was easy&#8230;&#8203;</p>
+</div>
+<div class="paragraph">
+<p>But we are not finished with autocommands yet. The way that feature is implemented makes it easy for autocommands to &#8220;pile up&#8221; when we source our <code>vimrc</code> during a session and provoke performance issues. To avoid side effects, we should wrap our autocommands in an <code>augroup</code> and empty it before define our actual autocommands. The whole boilerplate looks like this:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>augroup groupname
+    autocmd!
+    autocmd event pattern command
+augroup END</pre>
 </div>
 </div>
+<div class="paragraph">
+<p>So&#8230;&#8203;</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>augroup c
+    autocmd!
+    autocmd BufWritePost *.c silent make|cwindow
+augroup END</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>From there, one can configure many things to suit his needs: what program to run when doing <code>:make</code> or <code>:grep</code>, how to parse the output of those comands so that it can be used in the quickfix list, for what filetype to use what setting&#8230;&#8203; but that will be the subject of another chapter.</p>
+</div>
+<div id="nav" class="toc">
+<p>Where to go now?</p>
+<ul class="sectlevel1">
+<li><a href="#">foo</a></li>
+<li><a href="#">bar</a></li>
+<li><a href="#">baz</a></li>
+</ul>
+<div id="bottom">
+<p>Written by <a href="https://github.com/romainl">Romain Lafourcade</a>, with help from <a href="https://github.com/dahu/">Barry Arthur</a> and the #vim community.</p>
+<p class="copyleft">Copyleft 2015</p>
+</div>
+</div>
+<script src="javascript/behavior.js"></script>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-06-20 23:40:32 CEST
+Last updated 2016-04-25 00:30:00 CEST
 </div>
 </div>
 </body>

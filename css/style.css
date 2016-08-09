@@ -429,12 +429,13 @@ th {
 /* End of normalize.css */
 
 html {
+    font-size: 16px;
     margin: 2em 10%;
 }
 body {
     margin: 0 auto;
     max-width: 50em;
-    font-family: sans-serif;
+    font-family: serif;
     line-height: 1.5;
     color: #262626;
     background-color: #fcfcfc;
@@ -447,32 +448,35 @@ pre {
     padding: 1em;
     background-color: #666666;
     color: #eeeeee;
-    font-size: 0.8em;
+    font-size: 0.75em;
     overflow: auto;
-    border-radius: 4px 4px 4px 4px;
+    border-radius: 2px 2px 2px 2px;
     font-family: 'Fira Mono', monospace;
 }
 p {
-    text-align: justify;
+    /* text-align: justify; */
+    margin: 1em 0 0.5em 0;
 }
 p code {
+    font-size: 0.75em;
     padding: 0.10em 0.5em;
     background-color: #eeeeee;
     color: #262626;
     border-radius: 2px 2px 2px 2px;
     font-family: 'Fira Mono', monospace;
 }
-h1 {
-    margin-top: 3em;
+h1, h2, h3, h4, h5, h6 {
+    font-style: italic;
     margin-bottom: 0.5em;
+}
+h1 {
+    margin-top: 4em;
 }
 h2 {
-    margin-top: 2em;
-    margin-bottom: 0.5em;
+    margin-top: 3em;
 }
 h3 {
-    margin-top: 1em;
-    margin-bottom: 0.5em;
+    margin-top: 2em;
 }
 h1:before, h2:before, h3:before {
     font-size: 14px;
@@ -482,6 +486,8 @@ h1:before, h2:before, h3:before {
     text-align: right;
     margin-left: -55px;
     border-right: 5px solid #fcfcfc;
+    font-family: 'Fira Mono', monospace;
+    font-weight: normal;
 }
 h1:before {
     content: "#";
@@ -500,65 +506,6 @@ ol, ul {
 #footer {
     display: none;
 }
-#front {
-    color: #ffffff;
-    margin: 10% 0;
-    text-align: center;
-}
-h6 {
-    font-size: 3em;
-    margin: 0;
-    padding: 32px;
-    line-height: 1;
-    border-radius: 4px 4px 0px 0px;
-    background-color: #007f00;
-}
-#front p {
-    text-align: center;
-    margin: 0 0 0.5em 0;
-}
-#front ul {
-    list-style-type: none;
-    margin: 0;
-    background-color: #007f00;
-}
-#front ul li {
-    height: 32px;
-    margin: 0;
-    border-bottom: 1px solid #007f00;
-    background-color: #409f40;
-}
-#front ul li.current {
-    background-color: #ffffff;
-}
-#front ul li a {
-    color: #ffffff;
-    display: block;
-    line-height: 32px;
-    text-decoration: none;
-    text-align: left;
-    margin: 0 auto;
-    padding: 0 2em;
-}
-#front ul li a:hover {
-    background-color: #007f00;
-}
-#front ul li.current a {
-    color: #007f00;
-}
-#front ul li.current a:hover {
-    background-color: #ffffff;
-}
-#front ul li ul {
-    background-color: #ffffff;
-}
-#front #bottom {
-    background-color: #cccccc;
-    color: #262626;
-    font-size: 12px;
-    border-radius: 0 0 4px 4px;
-    padding: 16px 32px;
-}
 table {
     width: 100%;
 }
@@ -568,49 +515,83 @@ table col {
 table tr th {
     width: 1;
     border-bottom: 2px solid #999999;
+    padding-left: 1em;
 }
 table tr td {
     border-bottom: 1px solid #999999;
     width: 1;
+    padding-left: 1em;
+}
+table tr th:first-child,
+table tr td:first-child {
+    padding-left: 0;
 }
 table tr td p {
     text-align: left;
 }
-.note {
-    background-color: #007F00;
-    border-radius: 4px;
-    padding: 12px;
+.note table {
     color: #ffffff;
     font-size: 0.8em;
+    margin: 2em 0;
+    font-family: sans-serif;
 }
 .note table tr th {
-    width: 1;
     border-bottom: none;
+    padding: 12px;
 }
 .note table tr td {
     border-bottom: none;
-    width: 1;
 }
 .note table tr td p {
     text-align: left;
 }
 .note table tr td.icon {
-    width: 3em;
     vertical-align: top;
+    background-color: #007F00;
+    border-radius: 2px 0 0 2px;
+    padding: 12px;
+    max-width: 2em;
 }
 .note table tr td.content {
     font-style: italic;
+    padding: 12px;
+    background-color: #229F22;
+    border-radius: 0 2px 2px 0;
+}
+.note table code {
+    font-family: 'Fira Mono', monospace;
+    font-size: 0.9em;
 }
 a {
     color: #007f00;
 }
 .imageblock {
     background-color: #262626;
-    border-top: 4px solid #262626;
-    border-bottom: 4px solid #262626;
-    border-radius: 4px 4px 4px 4px;
+    border-top: 2px solid #262626;
+    border-bottom: 2px solid #262626;
+    border-radius: 2px 2px 2px 2px;
 }
 img {
     background-color: #262626;
     max-width: 100%;
 }
+#bottom, #nav {
+    margin-top: 4em;
+}
+#nav {
+    padding-top: 3em;
+    border-top: 1px solid #999999;
+}
+.copyleft {
+    padding-left: 1em;
+    background-image: url(../images/copyleft.svg);
+    background-repeat: no-repeat;
+    background-position: left center;
+}
+/* start Smartphones (portrait and landscape) */
+@media only screen and (min-width : 320px) and (max-width : 767px) {
+    body {
+        font-size: 14px;
+    }
+}
+/* end Smartphones (portrait and landscape) */

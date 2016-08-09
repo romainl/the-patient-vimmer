@@ -1,33 +1,10 @@
-= Extending Vim
+= Resources
 :stylesdir: css
 :stylesheet: style.css
 :imagesdir: images
 :scriptsdir: javascript
 :linkcss:
 :toc:
-
-
-NB: Since 7.4, it is possible to keep our `vimrc` *inside* our `~/.vim/` (on Unix-like systems)
-
-vimscript
-	functions
-	commands
-	variables
-	etc.
-good practices
-when to look for plugins
-where to look for plugins
-installing plugins
-	manually
-	vimball
-	pathogen
-	vundle
-	neobundle
-	VAM
-	plug
-	notes on Git/Mercurial…
-updating plugins
-removing plugins
 
 ++++
 <div id="nav" class="toc">

@@ -1,56 +1,23 @@
-= Your screen
+= Buffers, Windows, Tab Pages
 :stylesdir: css
-:stylesheet: style2.css
+:stylesheet: style.css
 :imagesdir: images
 :scriptsdir: javascript
 :linkcss:
 :toc:
 
-Vim's screen **always** contains _at least_ the following elements:
-
-* one tab page, always containing at least...
-* one window, always displaying...
-* one buffer.
-
-At the root of that tree -- and at the center of Vim's design -- is the buffer; then comes the window and, finally, the tab page. Vim will quit when you delete the last buffer, close the last window or close the last tab page.
-
-== Arguments
-
-=== Working with arguments
-
-=== Reference
-
 == Buffers
 
-Like Microsoft Word or Adobe Photoshop, Vim lets us create, delete, switch to and edit "`buffers`" (Vim's lingo for "`documents`"). Like in Microsoft Word or Adobe Photoshop, those buffers:
-
-* can be associated with an actual file or not,
-* are written to disk only if you instruct Vim to do so.
-
-Similarly, Vim will tell you when you are trying to quit without saving so, well... Vim is not _that_ weird, after all.
-
-As Vim's core file proxies, buffers are (or should be) at the center of your workflow and you owe it to yourself to know how to work with them to achieve reasonable efficiency.
-
-=== The buffer list versus the argument list
-
-The argument list and the buffer list have a "`complicated`" relationship.
-
-By default, files added to the argument list are also added to the buffer list but removing files from the argument list has no impact on the bufer list. That weird kind of semi-independence gives us the possibility to use each list in different ways.
-
-The buffer list contains all the buffers currently loaded in your sessions. It can be seen as a reliable representation of the current "`state`" of the editor and -- mainly -- used for navigation.
-
-The argument list can be manipulated independently from the buffer list so it can be used to hold a temporary list of buffers on which to perform batch commands.
-
-=== Working with buffers
+=== Switching buffers
 
 Every buffer created in Vim, at startup or later, is added to the _buffer list_ where it is assigned a number that will *never* change until the buffer is explicitely wiped out from the list.
 
-Beside that number, buffers are also named after the file they are associated with. This gives us two ways to address a buffer:
+Beside that number, buffers are also named after the file they are associated with, if applicable. This gives us two ways to address a buffer:
 
 * by its number,
 * by its name.
 
-A typical Vim session could consist of editing a single file -- and thus a single buffer -- or it could go on for weeks and consist of dozens and dozens of buffers. Keeping track of a potentially large number of buffers would be daunting if Vim didn't gave us not one, not two, but _three_ commands for listing buffers:
+A typical Vim session could consist of editing a single file--and thus a single buffer--or it could go on for weeks and consist of dozens and dozens of buffers. Keeping track of a potentially large number of buffers would be daunting if Vim didn't gave us not one, not two, but _three_ commands for listing buffers:
 
     :buffers
     :files
@@ -58,9 +25,9 @@ A typical Vim session could consist of editing a single file -- and thus a singl
 
 All those commands do the same thing so we will simply use the shortest: `:ls`. Here is what its output looks like:
 
-      1  h   "foo.txt"                      line 1
-      2 #h   "bar.txt"                      line 1
-      3 %a   "baz.txt"                      line 1
+    1  h   "foo.txt"                 line 1
+    2 #h   "bar.txt"                 line 1
+    3 %a   "baz.txt"                 line 1
     Press ENTER or type command to continue
 
 * The first column shows the buffer number.
@@ -76,73 +43,74 @@ But we have no cursor, no active line, no selection... Obviously, this list is n
 Because of their central role, buffers come with _a lot_ of navigation and management commands, let's see a few things we can do with the list above:
 
     :b1     " jump to buffer number 1
-    :b#     " jump back to the previous buffer
+    :b#     " jump back to previous buffer
     :bd2    " delete buffer number 2
 
-Unlike "`modern`" editors, Vim doesn't have a built-in way of displaying a permanent list of loaded buffers. This may feel like a limitation if you are used to that feature but think about it for a moment... do you _really_ need that list when you are not trying to jump to another buffer?
+Unlike "`modern`" editors, Vim can't display a permanent list of loaded buffers by default. This may feel like a limitation if you are used to that feature but think about it for a moment... do you _really_ need that list when you are not trying to jump to another buffer?
 
-So, the most basic way to switch to another _specific_ buffer is a two steps process:
+To sum it up, the most basic way to switch to another _specific_ buffer is a two steps process:
 
     :ls     " display the buffer list
-    :b24    " execute a command
+    :b24    " switch to the desired buffer
 
 Of course, it is not necessary to do `:ls` before doing `:b24` but who wants to actively maintain a list of buffers in his head? Well... I certainly don't.
 
-One way to avoid thinking too much about your buffers would be to mash `:bn[ext]` and `:bp[revious]` until you get where you want. Because the buffer list is one-dimensional, you are sure to get to the right buffer. But cycling is not really a silver bullet when your destination is sixteen buffers away. There must be a more _deterministic_ solution.
+One way to avoid thinking too much about your buffers would be to mash `:bn[ext]` and `:bp[revious]` until you get where you want. Because the buffer list is one-dimensional, you are sure to eventually get to the right buffer but cycling is not really a silver bullet when your destination is sixteen buffers away. There must be a more _deterministic_ solution.
 
 Let's go back to that boring `:ls`, then `<CR>`, then `:b24`, then `<CR>` routine which looks like a good candidate for a nice, mnemonic, custom mapping. http://of-vim-and-vigor.blogspot.fr/p/vim-vigor-comic.html[Flying is faster than cycling], right?
 
-What about something like `gb`, for "`goto buffer`"?
+Following the pattern we established earlier, we could add something like this to our `vimrc`:
 
-    nnoremap gb :ls<CR>:b<Space>
+    nnoremap <leader>b :ls<CR>:b<Space>
 
-Now, pressing `gb` in normal mode (`gb` for "`goto buffer`") opens the buffer list like `:ls` and populates the prompt with `:b`, ready for us to perform an operation on one or more listed buffers:
+which seems to work perfectly:
 
     (gifcast)
 
-Not bad at all!
+But there's something fishy with that mapping: it certainly is easy to remember, easy to type, and easy to think about... but it doesn't really behave like its friend `<leader>f`. Hmm... let's try something different.
 
-There is something special about that mapping, though: instead of the usual `<leader><key>` or `<Fn>` mechanisms we simply use two seemingly normal keys pressed in succession but... doesn't Vim actually use _every_ key on our keyboard? Won't we hit any problem down the road?
+Vim is rather famous for the way its normal mode commands span the entire keyboard but there are a few gaps, here and there, that we can take to our advantage.
 
-Short normal mode commands can roughly be divided in four groups (note the ellipses, this table is not exhaustive):
+One of those gaps can be found in how operators work. Operators are normal mode commands that don't do anything by themselves; they wait for us to tell them on what to operate. `c`, for example, is an operator, just like `y` or `d`, that expects a text-object or motion. If we don't provide one, operators will keep waiting indefinitely until we decide to give them _a purpose_. As an example, here is the command for "`changing from the cursor to the end of the current word`":
 
-[cols="4,9"]
-|===
-| *"`standard`" commands*    | `h`,`j`,`k`,`l`,`H`,`M`,`L`,`x`,`i`,`,`...
-| *operator commands*        | `y`,`c`,`d`,`v`...
-| *commands starting with g* | `h`,`j`,`k`,`l`,`H`,`M`,`L`,`x`,`i`,`,`...
-| *commands starting with z* | `y`,`c`,`d`,`v`...
-|===
+    ce
 
-Using "`standard commands`" in the left hand side of our mappings is risky business because they usually work on their own and are, simply put, all over the place. It is quite hard to find a remappable standard command without overriding some useful feature which is why we chose `<space>` over the suggested `,` as our `<leader>` earlier in our journey.
+Now, Vim comes with a bunch of motions like `e`, but _not all keys are associated with a motion_. As it turns out, we can associate unused keys with `c` to create a many normal mode combos that _don't do anything_:
 
-"`Operator commands`" are a bit different. They wait for a motion or text-object on which to _operate_ and thus can be thought of as the first key in a _pair_: `c}`, `y$`... Since not every key is bound to a text-object motion we are left a few holes to overtake.
+    ca  cd  cm  co  cp  cq  cr  cu  cv  cx  cy  cz
+    cA  cD  cO  cP  cQ  cR  cU  cV  cX  cY  cZ
 
-Taking inspiration from the built-in "`commands starting with g`" and "`commands starting with z`", we can look for available pairs like `cd` which doesn't do anything by default because there is no `d` motion or text-object. Same thing for `ym` or `zu`.
+And the same can be done with other operators:
 
-Below is a -- probably imperfect and very much WIP -- attempt to list every pair available in normal mode.
+    da  dc  dm  dq  dr  du  dv  dx  dy  dz
+    dA  dC  dQ
 
-    ca   cA   da   dA             va   vA    ya    yA
-                        gb   gB
-              dc   dC   gc        vc   yc
-    cd   cD                       vd   yd   zp
-                        gl
-    cm        dm                  vm   ym    zq
-    co   cO        dQ              zu
-    cp   cP        gs             vo   yo   zy
-    cq   cQ   dq   gy             vp   yp
-    cr   cR   dr                  vq   yq
-    cu   cU   du                  vr   yr
-    cv   cV   dv                  vs   ys
-    cx   cX   dx                  vu   yu
-    cy   cY   dy                    vv   yv
-    cz   cZ   dz                    vx   yx
-                                  vy   yz
-                                  vz
+    va  vc  vd  vm  vo  vp  vq  vr  vs  vu  vv  vx  vy  vz
+    vA
 
-That's quite a bunch of mapping opportunities that will certainly come handy later on...
+    ya  yc  yd  ym  yo  yp  yq  yr  ys  yu  yv  yx  yz
+    yA
 
-But there's one problem with numbers: the file-to-number mapping is not very intuitive. Humans being humans, we are naturally better at names than numbers so the second way to address buffers, *names,* may have a lot of potential here. Well, it happens that the buffer commands we used before -- `:b`, `:bd` -- can take a partial name as argument so switching to a buffer, especially with tab-completion and the wildmenu can be very close to friction-less:
+There's another--slightly smaller--gap: "`commands starting with g`" and "`commands starting with z`". Even if they work differently, those two-characters commands look a lot like the operator-based commands above and the missing pairs can be used in the same way:
+
+    gb  gc  gl
+    gB
+
+    zp  zq  zu  zy
+
+Hmm... `gb` sounds a lot like "`goto buffer`", doesn't it? Here we go:
+
+    nnoremap gb :ls<CR>:b<Space>
+
+Now, pressing `gb` in normal mode opens the buffer list like `:ls` and populates the prompt with `:b`, ready for us to perform an operation on one or more listed buffers:
+
+    (gifcast)
+
+Not bad at all, and that's one more mapping to add to our `vimrc`.
+
+But there's one problem with numbers: the file-to-number relationship is not very intuitive. Humans being humans, we are naturally better at names than numbers so the second way to address buffers, *names,* may have a lot of potential here.
+
+Well, it happens that the buffer commands we used before, `:b` and `:bd`, can take a partial name as argument so switching to a buffer, especially with tab-completion and the wildmenu, can be very close to friction-less:
 
     (gifcast)
 
@@ -150,19 +118,19 @@ Again, we can easily create a convenient mapping to save a bunch of keystrokes:
 
     nnoremap <leader>b :buffer *
 
-I hope you noticed the similarity with the `<leader>f` mapping we added to our `vimrc` in the previous chapter and the `<leader>e` mapping it replaced. We have two commands with a similar purpose -- navigation -- that work exactly the same way and follow the same naming convention:
+The similarity with the `<leader>f` mapping we added to our `vimrc` in the previous chapter and the `<leader>e` mapping it replaced is not a happy coincidense. We have two commands with a similar purpose--navigation--that work exactly the same way and follow the same naming convention:
 
 * `f` for "`file`",
 * `b` for "`buffer`".
 
-With `<leader>f` and now `<leader>b` we have the beginning of a collection of easy-to-remember and consistant navigation mappings -- exactly the kind of mapping we need -- as well as another one, `gb`, which simply demonstrates another way to approach the same problem.
+With `<leader>f` and now `<leader>b` we have the beginning of a collection of easy-to-remember and consistant navigation mappings--exactly the kind of mapping we need--as well as another one, `gb`, which simply demonstrates another way to approach the same problem.
 
 We shouldn't be concerned with buffers only for navigation, of course: Vim allows us to perform actions _on each buffer in the buffer list_ with the `:bufdo` command:
 
     :bufdo %s/foo/bar/g
     :bufdo set number
 
-`:bufdo` can be used to perform an identical edit on every listed buffer, set a local option or do whatever complex thing we need.
+`:bufdo` can be used to perform an identical edit on every listed buffer, set a local option or do whatever complex thing we need. 
 
 By the way, did you notice that Vim doesn't ask us to write each buffer before changing to another one? That's because of the `hidden` option we enabled at the start of our journey. With `nohidden`, the default value, juggling with buffers would be a lot less fun.
 
@@ -177,45 +145,113 @@ By the way, did you notice that Vim doesn't ask us to write each buffer before c
 
 == Windows
 
-As briefly mentioned in the introduction, we _always_ have at least one window in Vim. A Window that _always_ displays one buffer. An abstraction built _on top_ of buffers.
+=== Creating windows
 
-An interesting feature of Vim is the ability to split our workspace in multiple windows -- often called "`splits`" -- to display different buffers or parts of a buffer. The exact mechanism is quite simple: the current window is split in two equal parts along the desired axis, _vertical_ or _horizontal_, and the cursor is placed in the new window.
+Splitting the current window in two side-by-side views is done with either `<C-w>v`--all window-related commands start with `<C-w>`--or `:vsplit` (shortened to `:vs`).
 
-By default, the splitting is done to the left, which can be very counter-intuitive.
+Splitting the current window in two windows one above the other is done with either `<C-w>s` or `:split` (shortened to `:sp`).
 
-The purpose of a window is to provide a view into a buffer. It can be created, moved around and closed but it is important to remember that windows and buffers are not coupled **at all**. Since any buffer could end up being displayed in any window it is plain wrong to assume "`switching to a window`" to be the same as "`switching to a buffer`", let alone "`switching to a file`".
+By default, the splitting is done above and to the left of the current window. This can be very counter-intuitive but that behavior is easily changed by prepending `:vs` or `:sp` with `:bel[owright]`:
 
-=== Working with windows
+    :bel vs
+    :bel sp
 
-If buffers and windows had a one-to-one relationship, listing windows would make just as much sense as listing buffers for navigation purpose. Addressing them by name would certainly be useful too. But they don't and 
+or--more constructively--by adding those two options to your `vimrc`:
 
-creating window
+    set splitright
+    set splitbelow
 
-moving the cursor between windows
+The funny thing with window-splitting, though, is that the vocabulary is a bit counter-intuitive. `:vsplit`, for example, splits the current window along the _horizontal_ axis to obtain _vertical_ windows and `:split` does its splitting along the _vertical_ axis to obtain _horizontal_ windows.
 
-moving and resizing windows
+    vertical       horizontal
+    splitting      splitting
+    ┌────┬────┐    ┌─────────┐
+    │    │    │    │         │
+    │    ←    │    ├─── ↑ ───┤
+    │    │    │    │         │
+    └────┴────┘    └─────────┘
 
-closing windows
+OK. Maybe I'm the only one finding that "`funny`".
+
+`:vs` and `:sp` can be used with or without argument. When given an argument, they do their usual splitting and edit the given file in the new window. Basically, `:vs file2` is the same as `:vs` followed by `:e file2`.
+
+=== Moving the cursor between windows
+
+If buffers and windows had a one-to-one relationship, listing windows would make just as much sense as listing buffers for navigation purpose but there is no such relationship and no built-in method to address a window by its name.
+
+Moving the cursor to another window usually involves the `<C-w>` prefix, followed by a letter indicating the direction or destination:
+
+[cols="2,9"]
+|===
+| *command* | *description*
+| `<C-w>h`  | moves the cursor to the window on the left of the current window
+| `<C-w>j`  | moves the cursor to the window below the current window
+| `<C-w>k`  | moves the cursor to the window above the current window
+| `<C-w>l`  | moves the cursor to the window on the right of the current window
+| `<C-w>t`  | moves the cursor to the topmost/leftmost window
+| `<C-w>b`  | moves the cursor to the bottommost/rightmost window
+| `<C-w>w`  | moves the cursor to the window directly below/right of the current window
+| `<C-w>W`  | moves the cursor to the window directly above/left of the current window
+|===
+
+NOTE: Prepending `<C-w>` with a count moves the cursor by `count` windows.
+
+    (gifcast)
+
+Then comes my favorite window-related command:
+
+[cols="2,9"]
+|===
+| *command* | *description*
+| `<C-w>p`  | moves the cursor to the previous window
+|===
+
+which makes alterning between two windows a _breeze_.
+
+    (gifcast)
+
+=== Moving and resizing windows
+
+Sometimes, building the _perfect_ layout means moving windows around:
+
+[cols="2,9"]
+|===
+| *command* | *description*
+| `<C-w>H`  | moves the current window to the far left of the screen
+| `<C-w>J`  | moves the current window to the bottom of the screen
+| `<C-w>K`  | moves the current window to the top of the screen
+| `<C-w>L`  | moves the current window to the far right of the screen
+|===
+
+or resizing them:
+
+[cols="2,9"]
+|===
+| *command* | *description*
+| `<C-w>>`  | increases the width of the current window
+| `<C-w><`  | decreases the width of the current window
+| `<C-w>+`  | increases the height of teh current window
+| `<C-w>-`  | decreases the height of the current window
+| `<C-w>_`  | makes the current window as tall as possible
+| `<C-w>\|` | makes the current window as wide as possible
+| `<C-w>=`  | makes all windows more or less equally tall and equally wide
+|===
+
+But, to be perfectly honest, I rarely have multiple windows and, when I do, I prefer to use my mouse/trackpad to resize them. YMMV.
+
+Here is a last command to wrap up the subject:
+
+[cols="2,9"]
+|===
+| *command* | *description*
+| `<C-w>T`  | moves the current window to a new tab page
+|===
+
+=== Closing windows
 
 === Reference
 
 == Tab pages
-
-Tab pages -- too often called "`tabs`" -- have been a neverending source of confusion since their appearance in Vim 7.x. Despite their name and how the <<_the_tabline,"`tabline`">> is implemented, Vim's _tab pages_ are not like other editor's _tabs_.
-
-In other editors, "`tabs`" serve as proxies for documents. This means that the editor's "`tabline`" -- a list of tabs -- is effectively a list of documents: one navigates from one tab to another and thus from one document to another. A "`tab`" _is_ for all intent and purpose a _document_ and there is no need to separate the tab _widget_ from its associated "`panel`" and thus from the document it is associated to.
-
-Switching to a "`tab`" is exactly like switching to a document.
-
-In Vim, "`tab pages`" are _workspaces_, associated with "`tab`" widgets, themselves listed in a "`tabline`". The "`tab`" and "`tabline`" widgets work just like their counterparts in other editors but the _huge_ difference lies in the _workspace_ bit.
-
-A workspace is a place where you arrange one or more windows displaying one or more buffers. But we have seen earlier that buffers are _global_ so, while it is entirely possible to have a single buffer displayed in a single window in a single tab page, it is impossible to have an actual one-to-one relationship between that buffer and that tab page without devising our own buffer/window/tab management paradigm.
-
-Because "`tab`" widgets are not associated with specific buffers we simply can't use them as document proxies.
-
-As collections of windows, tab pages offer a pretty good way to manage workspaces. They are ideal for when we need to have multiple pairs of files displayed side-by-side, or when we suddenly need to open a file from outside the current project... But they are too limited to be used as document/file proxies.
-
-Just like windows, the place of tab pages in our workflow depends largely on our needs. Using tab pages as document/file proxies is wrong, but refusing to use them altogether in the name of some imaginary purity is just as wrong. If not _more_.
 
 So... how do we use them?
 
@@ -271,277 +307,18 @@ Like with buffers and windows, it is also possible to execute a command in each 
 
     :help tab-page
 
-== Special Windows
-
-Beyond the "`normal`" windows described above, Vim uses a number of very useful specialized windows.
-
-=== The quickfix window
-
-The quickfix is a handy list that we can populate and navigate at will. It actually is a bit more complicated but the quickfix list can be thought of as a list containing a number of entries made of:
-
-* a filename,
-* a line number,
-* an optional column number,
-* some text associated with the current item.
-
-That list is global. This means that you can't have more than one active list at a time. One could recall previous lists with `:colder`, though, but I honestly never had to... so YMMV.
-
-Vim comes with a lot of commands that populate the quickfix list, like `:grep` or `:vimgrep`, used for searching text in your project, and `:make`, used to build your program or pass them through a syntax checker. Once the quickfix is populated with valid entries, one can use a number of relatively intuitively named commands to navigate the list:
-
-    :cfirst
-    :clast
-    :cnext
-    :cprevious
-
-or use `:copen` to open the interactive "`quickfix window`", or -- even better -- `:cwindow`:
-
-    (gifcast)
-
-See? The quickfix window is super-useful and super-easy to use.
-
-The quickfix list has a close cousin called "`location list`" that pretty much works the same way except for these two differences:
-
-* unlike the quickfix list, the location list is local to a window so you can have as many as you have windows,
-* the commands start with an `l` instead of a `c`, `:lfirst`, `:lwindow`, etc.
-
-Using the location list can be useful if you are heavily into windows and tab pages but the quickfix list is probably a simpler choice otherwise.
-
-Now, repeating the `:w` & `:mak` & `:cw` dance over and over doesn't sound fun. Does it? Well, those commands can be chained with a `|`:
-
-    :w|mak|cw
-
-and recalled with `<Up>` so that's not such a big deal but there is still room for improvement, here:
-
-* we have too many `<Enter>` to press,
-* some kind of automation would be better.
-
-Let's address the first issue by telling Vim to shut up with the `:silent` command:
-
-    :w|silent mak|cw
-
-A simple mapping would be a perfect alternative to all that typing. Let's try with `<F5>`, a shortcut often used in IDEs to compile the project, both in insert mode and normal mode:
-
-    inoremap <F5> <Esc>:write|silent make|cwindow<CR>
-    nnoremap <F5> :write|silent make|cwindow<CR>
-
-Hmm... It looks like Vim doesn't like bars in mappings. That's understandable, actually: bars are used to separate commands but `inoremap <F5> <Esc>:write|silent make|cwindow<CR>` is _one_ command and the parts between bars don't really make sense on their own. So what can we do? Escape those bars?
-
-Well yes:
-
-    inoremap <F5> <Esc>:write\|silent make\|cwindow<CR>
-    nnoremap <F5> :write\|silent make\|cwindow<CR>
-
-or we can use `<Bar>`:
-
-    inoremap <F5> <Esc>:write<Bar>silent make<Bar>cwindow<CR>
-    nnoremap <F5> :write<Bar>silent make<Bar>cwindow<CR>
-
-Let's see how it looks:
-
-    (gifcast)
-
-==== Reference
-
-    :help quickfix
-    :help :silent
-    :help map_bar
-
-=== The preview window
-
-The preview window is a small window used to preview something, usually the signature of a function while we are working on its usage. It is a lot like a normal window except for these differences:
-
-* opening the preview window doesn't steal the focus from the current window,
-* there is only one preview window per tab page,
-* it can be closed even if it is not focused.
-
-This window can be opened with a bunch of commands, among which these ones:
-
-    :ptag foo       " open tag 'foo' in a preview window
-    <C-w>}          " open tag under the cursor in a preview window
-    :psearch bar    " use include search to find 'bar' and open it in a preview window
-
-And closed with: `:pclose` or `<C-w>z`.
-
-Here is the preview window in action:
-
-    (gifcast)
-
-==== Reference
-
-    :help preview-window
-
-=== The Command-line window
-
-The command-line is a handy way to input commands but it is not that good when it comes to editing the current command or recalling an old one and changing its parameters. This is not a design flaw or an implementation issue, though: only sane seperation of concerns that should appeal to anyone used to the concept of *modal editing*.
-
-You use insert mode to insert text and normal mode to edit text.
-
-You use command-line mode to issue commands and the command-line window to edit the current command and command history.
-
-Simple.
-
-Opening the command-line window from the current command-line mode is done with `<C-f>`. This will open the relevant command history in the command-line window, with the current command ready for you to edit on the last line.
-
-From normal mode, you can use `q:` to open the command-line history or `q/`/`q?` to open the search history, with the cursor in an empty line. Press `<CR>` in normal mode to run the current command or `:q` to quit that window.
-
-Here is the command-line window in action:
-
-    (gifcast)
-
-Some hardcore Ex commands users like to use the command-line window instead of the usual command-line. This can be done by overriding `:` in normal mode:
-
-    nnoremap : q:i
-
-I don't recommend doing that, actually, but I think it is an interesting example of customization.
-
-==== Reference
-
-    :h cmdline-window
-
-== Various UI elements
-
-In addition to windows, we have many UI elements at our disposal for displaying information and/or interacting with one feature or another.
-
-=== The tabline
-
-   (picture)
-
-The tabline is a list of "tabs" working as proxies for tab pages. Each tab shows some information on its associated tab page:
-
-* the name of the buffer currently displayed in the currently focused window,
-* the number of windows contained in the tab page when there is more than one,
-* a `+` if one of the buffers displayed in one of the windows is "dirty".
-
-If you have enabled mouse support in your `vimrc` and your terminal emulator supports that feature, you can use your mouse to switch to a tab page, reorder the tabs or close the current tab page by clicking on the `X` at the end of the tabline.
-
-When to show a tabline can be defined with the `showtabline` option and what information to display depends on the `tabline` option.
-
-While Vim's _tab pages_ are definitely not equivalent to other editor's _tabs_, Vim's _tabline_ looks and works a lot like its counterparts and suffers from the same usability issues.
-
-The main issue is that tabs are used to display filenames and filenames take up a lot of horizontal space. An horizontal space that is physically limited and thus incapable of displaying more than a few tabs. Many solutions exist to remedy that problem: wrapping the tabline to form a second one, adding scrolling widgets at both ends of the tabline, grouping tabs, truncating filenames... The harsh reality is that none of those "solutions" is free of annoying side effects which, ultimately, can turn an otherwise good idea into an unusable gyzmo.
-
-The tabline and tab pages still have their use, mind you, but it is important to not think about them as you would in other editors.
-
-==== Reference
-
-    :help 'showtabline'
-    :help 'tabline'
-    :help setting-tabline
-
-=== The statusline
-
-    (picture)
-
-The statusline is that "bar", at the bottom of windows, used to show information on the window itself or the buffer currently displayed in that window. It can also be used to resize windows vertically if mouse support is enabled.
-
-By default, the statusline is shown only when there is more than one window but this can be changed with the `laststatus` option:
-
-    set laststatus=2
-
-The default content of the statusline -- the filename and a status indicator -- is not exactly thrilling but it's possible to beef it up by enabling the `ruler` option that shows the line and colum of the cursor and tells how much of the buffer is currently visible.
-
-It is very common, though, to customize it a bit further by playing with the `statusline` option that gives more control over the statusline's content and appearance.
-
-This is how I define the statusline shown in the picture above, the explanation for each item can be found in `:help 'statusline'`:
-
-    set statusline=%<\ %f\ %m%r%y%w%=\ L:\ \%l\/\%L\ C:\ \%c\ 
-
-It is also possible to define colors for specific parts or use functions to display dynamic information not provided by Vim but I recommend measure, here: the statusline is an information device, not a decorative widget.
-
-==== Reference
-
-    :help 'laststatus'
-    :help 'ruler'
-    :help 'statusline'
-
-=== Line numbers
-
-Line numbers are a fairly straightforward feature that doesn't deserve much explanation. One enables it with `:set number`, disables it with `:set nonumber` and decides how much room they take with `:set numberwidth=6`.
-
-In most editors or IDEs, line numbers are only used directly by users in two ways: to communicate with other people who work on the same code and to jump to a specific line.
-
-In addition, Vim allows us to use line numbers to define the range and/or the address for many Ex commands:
-
-    33G          " go to line 33
-    V13G         " linewise visual selection from here to line 13
-    :2t24        " copy line 2 after line 24
-    :m12         " move current line after line 12
-    :8,17d       " delete lines 8 to 17
-    :46put=@f    " put content of register f after line 46
-
-But we are not limited to absolute line numbers: we can use relative line numbers to see how far a line is from the current line.
-
-    (screenshot)
-
-Relative numbers can be enabled with `set relativenumber` and used in the same way as absolute line numbers:
-
-    6j           " go down 6 lines
-    V5k          " linewise visual selection from here to 5 lines above
-    :-2,+6m45    " move lines from 2 lines above to 6 lines below after line 45
-
-==== Reference
-
-    :help 'number'
-    :help 'numberwidth'
-    :help 'relativenumber'
-
-=== The fold column
-
-    (picture)
-
-The `"fold column"` is disabled by default but can be enabled by setting the `foldcolumn` option to a number between 1 and 12. It is used to show information about the folds in your buffer and to let you open and close them with the mouse if mouse support is enabled.
-
-Open folds are marked with a clickable `-`, lines belonging to a fold are marked with a `|` and closed folds are marked with a clickable `+`.
-
-==== Reference
-
-    :h fold-foldcolumn
-    :h 'foldcolumn'
-
-=== The sign column
-
-    (picture)
-
-The "sign column" can't be shown or hidden easily. Actually, only plugin authors have to deal with managing them so signs are not really the most interesting feature to explore. Vim shows the sign column when you have one or more signs in your buffer, removes it when there's no sign anymore and that's about it.
-
-The color and content of individual signs is usually defined by plugin authors whereas the background of the column is the responsibility of your colorscheme.
-
-==== Reference
-
-    :help signs
-
-=== The vertical split
-
-    "vertical"     "horizontal"
-    splitting      splitting
-    ┌────┬────┐    ┌─────────┐
-    │    │    │    │         │
-    │    ←    │    ├─── ↑ ───┤
-    │    │    │    │         │
-    └────┴────┘    └─────────┘
-
-==== Reference
-
-=== The completion menu
-
-    (picture)
-
-The completion menu comes up when you press one of the many key-combinations affected to insert mode completion and there is at least one or more possible completions. In pure "modal" fashion, once the menu is displayed, some keys acquire a new meaning to allow cursor movement and selection but the general pattern stays consistent with the general Vim UI and works more or less how we expect.
-
-problems and solutions (to be written)
-
-==== Reference
-
-    :help ins-completion-menu
-
-=== The command-line
-
-    (picture)
-
-The command-line is Vim's main interface. Like the prompt of your computer's shell, it is used to send commands to Vim and for feedback if necessary.
-
-==== Reference
-
-== Conclusion
-
-(to be written)
+++++
+<div id="nav" class="toc">
+<p>Where to go now?</p>
+<ul class="sectlevel1">
+<li><a href="#">foo</a></li>
+<li><a href="#">bar</a></li>
+<li><a href="#">baz</a></li>
+</ul>
+<div id="bottom">
+<p>Written by <a href="https://github.com/romainl">Romain Lafourcade</a>, with help from <a href="https://github.com/dahu/">Barry Arthur</a> and the #vim community.</p>
+<p class="copyleft">Copyleft 2015</p>
+</div>
+</div>
+<script src="javascript/behavior.js"></script>
+++++

@@ -1,48 +1,55 @@
-= Extending Vim
+= Advanced configuration
 :stylesdir: css
 :stylesheet: style.css
 :imagesdir: images
 :scriptsdir: javascript
 :linkcss:
+:toc:
 
+And take advantage of a great feature called "`autocommands`" for... the automation part.
 
-It should be clear by now that Vim is a very powerful text editor but don't be fooled, it doesn't do _everything_. Sure we get a lot of small low-level elements to play with but, sometimes, using a specialized tool would be more suited to the job. After all, shares its environment with many commandline tools so... why not putting them to good use?
+Autocommands are Vim's way of executing arbitrary commands when specific events happen. Entering a window, quitting insert mode, loading a buffer with a specific filetype are some of the many events available.
 
-With Vim, we can run external commands in -- broadly speaking -- two ways: as filters and, well, as external commands.
+An autocommand usually looks like that:
 
-=== Filters
+    autocmd event pattern command
 
-Tranforming existing text in place with another program is called _filtering_: we start with some text and replace it with the output of an external `"filter`".
+where `autocmd` is the command that defines an autocommand, `event` can be a single event or a comma-separated list of events, `pattern` is a simple pattern describing what [todo] and `command` is what we want to happen.
 
-=== External commands
+Scrolling through the list at `:help autocommand-events` we find `BufWritePost` which looks like it can be used after `:w` to `:make` and `:cwindow`. Let's try it:
 
+    autocmd BufWritePost *.c silent make|cwindow
 
-As should be obvious by now, Vim can do a lot and gives us plenty of means and opportunities to build higher-level tools to suit many needs.
+Phew! That was easy...
 
-We have seen how to use options, mappings and custom commands to customize Vim's behavior but there are times when  
+But we are not finished with autocommands yet. The way that feature is implemented makes it easy for autocommands to "`pile up`" when we source our `vimrc` during a session and provoke performance issues. To avoid side effects, we should wrap our autocommands in an `augroup` and empty it before define our actual autocommands. The whole boilerplate looks like this:
 
-~/.vim/ and its structure
+    augroup groupname
+        autocmd!
+        autocmd event pattern command
+    augroup END
 
+So...
 
+    augroup c
+        autocmd!
+        autocmd BufWritePost *.c silent make|cwindow
+    augroup END
 
-NB: Since 7.4, it is possible to keep our `vimrc` *inside* our `~/.vim/` (on Unix-like systems)
+From there, one can configure many things to suit his needs: what program to run when doing `:make` or `:grep`, how to parse the output of those comands so that it can be used in the quickfix list, for what filetype to use what setting... but that will be the subject of another chapter.
 
-vimscript
-	functions
-	commands
-	variables
-	etc.
-good practices
-when to look for plugins
-where to look for plugins
-installing plugins
-	manually
-	vimball
-	pathogen
-	vundle
-	neobundle
-	VAM
-	plug
-	notes on Git/Mercurial…
-updating plugins
-removing plugins
+++++
+<div id="nav" class="toc">
+<p>Where to go now?</p>
+<ul class="sectlevel1">
+<li><a href="#">foo</a></li>
+<li><a href="#">bar</a></li>
+<li><a href="#">baz</a></li>
+</ul>
+<div id="bottom">
+<p>Written by <a href="https://github.com/romainl">Romain Lafourcade</a>, with help from <a href="https://github.com/dahu/">Barry Arthur</a> and the #vim community.</p>
+<p class="copyleft">Copyleft 2015</p>
+</div>
+</div>
+<script src="javascript/behavior.js"></script>
+++++

@@ -1,6 +1,296 @@
-= Vim and its environment
+= Moving around
 :stylesdir: css
 :stylesheet: style.css
 :imagesdir: images
 :scriptsdir: javascript
 :linkcss:
+:toc:
+
+Working a whole day on the same line in the same file is a relatively uncommon pattern. In reality, we spend a lot of time jumping from one word to another, one line to another, one function to another, one file to another or even one area of the project to another. For years, editor developers have come up with various ways to make those movements easier but Vim--and vi--have arguably been ahead of the curve for most of their long history.
+
+This chapter tries to present an exhaustive panorama of the many ways to move around in Vim, from the line to the project.
+
+== Moving within a buffer
+
+Contrary to common belief, `hjkl` are far from being the be-all and end-all of text editing. Using them to replace the arrows _may_ make some sense if you are touch-typing but the gain will be negligible if you only use them. `hjkl` are unfortunately the Vim equivalent of a rachitic tree hiding a lush forest. A forest so rich you will wonder why you wasted so much energy on that ugly little excuse of a tree.
+
+Moving the cursor character-by-character and line-by-line is perfectly OK as long as we are talking about local movement. And by "`local`" I mean "`hyperlocal`". The usefulness of that method, whether it involves the famous `hjkl`, `wasd` or the arrows, diminishes quickly as we augment the distance. That is why most "`normal`" editors allow us to do things like Alt+Right or Ctrl+Up to jump over whole words or paragraphs and why Vim allows us to do that... and a lot more.
+
+=== Motions
+
+Starting small and generic, we have _word-level_ motions:
+
+[cols="1,9"]
+|===
+|`w`|jump to first character of next _word_
+|`b`|jump to first character of current _word_ or first character of previous _word_ if already on first character of current _word_
+|`e`|jump to last character of current _word_ or last character of next _word_ if already on last character of current _word_
+|`ge`|jump to last character of previous _word_
+|===
+
+Did you notice the emphasis on "`word`"? That's because we have this very useful distinction between a "`word`", delimited by non-keyword characters, and a "`WORD`", delimited by white space:
+
+....
+             ┌─────────────────────────────── a word
+             │┌───────┬────────────────────── another word
+             ││       │┌───────────────────── and another word
+We live in a "wonderful" world.
+             └─────────┴───────────────────── a WORD
+....
+
+This gives us the following variants of the motions above:
+
+[cols="1,9"]
+|===
+|`W`|jump to first character of next _WORD_
+|`B`|jump to first character of current _WORD_ or first character of previous _WORD_ if already on first character of current _WORD_
+|`E`|jump to last character of current _WORD_ or last character of next _WORD_ if already on last character of current _WORD_
+|`gE`|jump to last character of previous _WORD_
+|===
+
+Here is a demonstration of word-motions in action:
+
+    (gifcast)
+
+Those word-level motions alone cover more ground than the usual "`Ctrl+Arrow`" business and help us avoid an enormous amount of mindless arrowing _and_ `hjkl`-ing.
+
+Zooming out a little, we have a set of generic _line-level_ motions:
+
+[cols="1,9"]
+|===
+|`0`|jump to first column
+|`^`|jump to first printable character
+|`$`|jump to EOL
+|`g_`|jump to last printable character
+|`g^`|jump to first displayed character
+|`g$`|jump to last displayed character
+|===
+
+The first motions above have very strict meanings: there's only one EOL on the current line, or one last printable character. That kind of motion always works the same way.
+
+    (gifcast)
+
+At the same level, we have a more specific set of motions:
+
+[cols="1,9"]
+|===
+|`fx`|jump to next character `x`
+|`Fx`|jump to previous character `x`
+|`tx`|jump before next character `x`
+|`Tx`|jump before previous character `x`
+|===
+
+They are different because the second character--`x` in our example--can be any character, meaning that those four commands can be used to jump to a very large amount of potential targets.
+
+Another difference is that they can take an optional `[count]` to jump to the `[count]`-th character on the line: `3fn` for "`jump to the third `n` to the right`".
+
+The last difference is that they can be repeated with `;` (in the same direction) and `,` (in the opposite direction).
+
+    (gifcast)
+
+Zooming out a bit more, we have another set of motions:
+
+[cols="1,9"]
+|===
+|`)`|jump to next sentence
+|`(`|jump to previous sentence
+|`}`|jump to next blank line above a non-blank line
+|`{`|jump to previous blank line above a non-blank line
+|===
+
+`(` and `)` are only useful for prose but the ability to position the cursor above a paragraph or code block is extremely usefuful:
+
+    (gifcast)
+
+Then comes the last level of in-buffer motions:
+
+[cols="1,9"]
+|===
+|`gg`|jump to first line
+|`nG`|jump to line `n`, defaults to last line if no `[count]` given
+|===
+
+And, finally, an often overlooked set of in-window motions:
+
+[cols="1,9"]
+|===
+|`nH`|jump to `n`-th line from the top of the window, defaults to first line if no `[count]` is given
+|`M` |jump to middle line
+|`nL`|jump to `n`-th line from the bottom of the window, defaults to last line if no `[count]` is given
+|===
+
+NOTE: The default behavior of `H` and `L` can be altered with the `'scrolloff'` option.
+
+==== Reference
+
+    :help foo
+
+=== Search
+
+Searching is a wonderful way to move around the current buffer. Together with `:set incsearch`, `/` and `?` rarely need more than 4 or 5 keystrokes to reach any target.
+
+    (gifcast)
+
+[cols="1,9"]
+|===
+|`/foo<CR>`|search forward for `foo`
+|`?bar<CR>`|search backward for `bar`
+|`n`       |repeat last search
+|`N`       |repeat last search in opposite direction
+|===
+
+These few options are generally considered useful:
+
+* `'incsearch'` moves the cursor to--and highlights--the next match *as you type*.
+* `'ignorecase'` makes search case-insensitive; allows you to reach `Foo` with `foo`.
+* `'smartcase'` turns case-sensitivity on if the search pattern contains an uppercase letter. `/Foo` skips `foo` on the way to `Foo`.
+* `'hlsearch'` highlights *every* match, in every visible window.
+
+==== A few words about search highlighting
+
+* `:help :nohl` turns off `'hlsearch'`'s highlighting until next search.
+
+==== Reference
+
+    :help /
+    :help ?
+    :help n
+    :help N
+    :help 'incsearch'
+    :help 'ignorecase'
+    :help 'smartcase'
+    :help 'hlsearch'
+
+== Search inside the current buffer
+
+While `/` and `#` are awesome *navigation* tools, they are not that good for *actual* searching. "Searching" usually involves comparing matches, filtering... all things `/` and `?` actually make quite hard, if only because we can't see all the matches at once.
+
+=== The Power of `:g`
+
+For that, we have `:global` (shortened to `:g`), a very simple and very powerful command that lets us execute arbitrary commands on lines matching a given pattern.
+
+Let's start with a very verbose command:
+
+    :1,$global/pattern/print
+
+It works by marking every line from the first to the last matching `pattern` and then executing `:print` on each marked line successively. The output looks something like this:
+
+    (gifcast)
+
+But we can make it shorter by using `:g` and `:p`:
+
+    :1,$g/pattern/p
+
+or by using the `%` range:
+
+    :%g/pattern/p
+
+or by not using a range at all since `:g` works on the whole buffer by default:
+
+    :g/pattern/p
+
+or by omitting `:p` since it is the default command for `:g`:
+
+    :g/pattern/
+
+or even by omitting the last slash:
+
+    :g/pattern
+
+Without line numbers, that list doesn't seem very useful, though. Sure we can press `:` and issue Ex commands but we won't go very far with that list.
+
+That's where `:#`, a relatively obscure Ex commands that works like `:p` but with line numbers, comes into play:
+
+    :g/pattern/#
+
+    (gifcast)
+
+With line numbers, we can now do all kinds of line-oriented things without mindlessly scrolling around:
+
+    :23       " jump to line 23
+    :46d      " delete line 46
+    :92m46    " move line 92 below line 46
+
+
+
+=== Definitions
+
+== Moving within a project
+
+=== Files
+
+=== Grep
+
+=== Includes/Defines
+
+=== Tags
+
+---
+
+== Search inside the current buffer, and included files, excluding comments
+
+But Vim has got our back with `:help :ilist`:
+
+* List every line containing the whole word `foo` and jump to one of them:
+
+    :il foo<CR>:202<CR> (gif)
+
+* List every line containing `foo`
+
+    :il /foo<CR> (gif)
+
+* Create a TOC of the current markdown document
+
+    :il /#<CR> (gif)
+
+... and its more specialized sibling `:help :dlist`:
+
+* List every function containing `bar` in its name
+
+    :dli bar<CR>
+
+* List every function
+
+    :dli /<CR>
+
+=== ... and replace
+
+* List all the functions containing `user` and add a TODO item above one of them 
+
+    :dli /user<CR>:1034norm O// TODO: fix this function<CR> (gif)
+
+* List all the occurences of `myVar` and substitute only some of them with `myArray`
+
+    :il myVar<CR>:53,89s/myVar/myArray (gif)
+
+== Search inside loaded buffers
+
+    :call setqflist([])<CR>
+    :bufdo vimgrepadd foo % | cw
+    
+    :command! -nargs=1 SearchInBuffers call setqflist([])|silent! bufdo vimgrepadd <args> %|cw
+
+=== And replace
+
+    
+
+== Search recursively inside project
+
+=== ... and replace
+
+
+++++
+<div id="nav" class="toc">
+<p>Where to go now?</p>
+<ul class="sectlevel1">
+<li><a href="#">foo</a></li>
+<li><a href="#">bar</a></li>
+<li><a href="#">baz</a></li>
+</ul>
+<div id="bottom">
+<p>Written by <a href="https://github.com/romainl">Romain Lafourcade</a>, with help from <a href="https://github.com/dahu/">Barry Arthur</a> and the #vim community.</p>
+<p class="copyleft">Copyleft 2015</p>
+</div>
+</div>
+<script src="javascript/behavior.js"></script>
+++++

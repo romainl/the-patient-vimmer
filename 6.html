@@ -5,71 +5,118 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.2">
-<title>Advanced configuration</title>
+<title>Let the work flow</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="article">
 <div id="header">
-<h1>Advanced configuration</h1>
+<h1>Let the work flow</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+
+</div>
 </div>
 <div id="content">
 <div class="paragraph">
-<p>And take advantage of a great feature called &#8220;autocommands&#8221; for&#8230;&#8203; the automation part.</p>
+<p>Let&#8217;s explore a typical use case: write the current buffer, start the build, check the errors.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Writing the current buffer</strong> is done with <code>:write</code>, that we can shorten to <code>:w</code>.</p>
+</li>
+<li>
+<p><strong>Building</strong> is done with <code>:make</code>, that we can shorten to <code>:mak</code>. Vim is suspended to leave room for the compiler&#8217;s output.</p>
+</li>
+<li>
+<p><strong>Opening the quickfix window</strong> is done with <code>:cwindow</code>, that we can shorten to <code>:cw</code>.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>Autocommands are Vim&#8217;s way of executing arbitrary commands when specific events happen. Entering a window, quitting insert mode, loading a buffer with a specific filetype are some of the many events available.</p>
-</div>
-<div class="paragraph">
-<p>An autocommand usually looks like that:</p>
+<p>Now, repeating the <code>:w</code> &amp; <code>:mak</code> &amp; <code>:cw</code> dance over and over doesn&#8217;t sound fun. Does it? Well, those commands can be chained with a <code>|</code>:</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>autocmd event pattern command</pre>
+<pre>:w|mak|cw</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>where <code>autocmd</code> is the command that defines an autocommand, <code>event</code> can be a single event or a comma-separated list of events, <code>pattern</code> is a simple pattern describing what [todo] and <code>command</code> is what we want to happen.</p>
+<p>and recalled with <code>&lt;Up&gt;</code> so that&#8217;s not such a big deal but there is still room for improvement, here:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>we still have too many <code>&lt;Enter&gt;</code> to press,</p>
+</li>
+<li>
+<p>some kind of automation would obviously be better.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>Scrolling through the list at <code>:help autocommand-events</code> we find <code>BufWritePost</code> which looks like it can be used after <code>:w</code> to <code>:make</code> and <code>:cwindow</code>. Let&#8217;s try it:</p>
+<p>Let&#8217;s address the first issue by telling Vim to shut up with the <code>:silent</code> command (or <code>:sil</code> for short):</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>autocmd BufWritePost *.c silent make|cwindow</pre>
+<pre>:w|sil mak|cw</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Phew! That was easy&#8230;&#8203;</p>
-</div>
-<div class="paragraph">
-<p>But we are not finished with autocommands yet. The way that feature is implemented makes it easy for autocommands to &#8220;pile up&#8221; when we source our <code>vimrc</code> during a session and provoke performance issues. To avoid side effects, we should wrap our autocommands in an <code>augroup</code> and empty it before define our actual autocommands. The whole boilerplate looks like this:</p>
+<p>A simple mapping would be a perfect alternative to all that typing. Let&#8217;s try with <code>&lt;F5&gt;</code>, a shortcut often used in IDEs to compile the project, both in insert mode and normal mode:</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>augroup groupname
-    autocmd!
-    autocmd event pattern command
-augroup END</pre>
+<pre>inoremap &lt;F5&gt; &lt;Esc&gt;:write|silent make|cwindow&lt;CR&gt;
+nnoremap &lt;F5&gt; :write|silent make|cwindow&lt;CR&gt;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>So&#8230;&#8203;</p>
+<p>Hmm&#8230;&#8203; It looks like Vim doesn&#8217;t like bars in mappings. That&#8217;s understandable, actually: bars are used to separate commands but <code>inoremap &lt;F5&gt; &lt;Esc&gt;:write|silent make|cwindow&lt;CR&gt;</code> is <em>one</em> command and the parts between bars don&#8217;t really make sense on their own. So what can we do? Escape those bars?</p>
+</div>
+<div class="paragraph">
+<p>Well yes:</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>augroup c
-    autocmd!
-    autocmd BufWritePost *.c silent make|cwindow
-augroup END</pre>
+<pre>inoremap &lt;F5&gt; &lt;Esc&gt;:write\|silent make\|cwindow&lt;CR&gt;
+nnoremap &lt;F5&gt; :write\|silent make\|cwindow&lt;CR&gt;</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>From there, one can configure many things to suit his needs: what program to run when doing <code>:make</code> or <code>:grep</code>, how to parse the output of those comands so that it can be used in the quickfix list, for what filetype to use what setting&#8230;&#8203; but that will be the subject of another chapter.</p>
+<p>or we can use <code>&lt;Bar&gt;</code>:</p>
 </div>
+<div class="literalblock">
+<div class="content">
+<pre>inoremap &lt;F5&gt; &lt;Esc&gt;:write&lt;Bar&gt;silent make&lt;Bar&gt;cwindow&lt;CR&gt;
+nnoremap &lt;F5&gt; :write&lt;Bar&gt;silent make&lt;Bar&gt;cwindow&lt;CR&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s see how it looks:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(gifcast)</pre>
+</div>
+</div>
+<div id="nav" class="toc">
+<p>Where to go now?</p>
+<ul class="sectlevel1">
+<li><a href="#">foo</a></li>
+<li><a href="#">bar</a></li>
+<li><a href="#">baz</a></li>
+</ul>
+<div id="bottom">
+<p>Written by <a href="https://github.com/romainl">Romain Lafourcade</a>, with help from <a href="https://github.com/dahu/">Barry Arthur</a> and the #vim community.</p>
+<p class="copyleft">Copyleft 2015</p>
+</div>
+</div>
+<script src="javascript/behavior.js"></script>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-06-20 23:40:11 CEST
+Last updated 2016-04-25 00:30:00 CEST
 </div>
 </div>
 </body>

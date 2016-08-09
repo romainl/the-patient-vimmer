@@ -5,19 +5,663 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.2">
-<title>Vim and its environment</title>
+<title>Moving around</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="article">
 <div id="header">
-<h1>Vim and its environment</h1>
+<h1>Moving around</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_moving_within_a_buffer">Moving within a buffer</a>
+<ul class="sectlevel2">
+<li><a href="#_motions">Motions</a></li>
+<li><a href="#_search">Search</a></li>
+</ul>
+</li>
+<li><a href="#_search_inside_the_current_buffer">Search inside the current buffer</a>
+<ul class="sectlevel2">
+<li><a href="#_the_power_of_code_g_code">The Power of <code>:g</code></a></li>
+<li><a href="#_definitions">Definitions</a></li>
+</ul>
+</li>
+<li><a href="#_moving_within_a_project">Moving within a project</a>
+<ul class="sectlevel2">
+<li><a href="#_files">Files</a></li>
+<li><a href="#_grep">Grep</a></li>
+<li><a href="#_includes_defines">Includes/Defines</a></li>
+<li><a href="#_tags">Tags</a></li>
+</ul>
+</li>
+<li><a href="#_search_inside_the_current_buffer_and_included_files_excluding_comments">Search inside the current buffer, and included files, excluding comments</a>
+<ul class="sectlevel2">
+<li><a href="#__and_replace">&#8230;&#8203; and replace</a></li>
+</ul>
+</li>
+<li><a href="#_search_inside_loaded_buffers">Search inside loaded buffers</a>
+<ul class="sectlevel2">
+<li><a href="#_and_replace">And replace</a></li>
+</ul>
+</li>
+<li><a href="#_search_recursively_inside_project">Search recursively inside project</a>
+<ul class="sectlevel2">
+<li><a href="#__and_replace_2">&#8230;&#8203; and replace</a></li>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 <div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Working a whole day on the same line in the same file is a relatively uncommon pattern. In reality, we spend a lot of time jumping from one word to another, one line to another, one function to another, one file to another or even one area of the project to another. For years, editor developers have come up with various ways to make those movements easier but Vim&#8212;&#8203;and vi&#8212;&#8203;have arguably been ahead of the curve for most of their long history.</p>
+</div>
+<div class="paragraph">
+<p>This chapter tries to present an exhaustive panorama of the many ways to move around in Vim, from the line to the project.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_moving_within_a_buffer">Moving within a buffer</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Contrary to common belief, <code>hjkl</code> are far from being the be-all and end-all of text editing. Using them to replace the arrows <em>may</em> make some sense if you are touch-typing but the gain will be negligible if you only use them. <code>hjkl</code> are unfortunately the Vim equivalent of a rachitic tree hiding a lush forest. A forest so rich you will wonder why you wasted so much energy on that ugly little excuse of a tree.</p>
+</div>
+<div class="paragraph">
+<p>Moving the cursor character-by-character and line-by-line is perfectly OK as long as we are talking about local movement. And by &#8220;local&#8221; I mean &#8220;hyperlocal&#8221;. The usefulness of that method, whether it involves the famous <code>hjkl</code>, <code>wasd</code> or the arrows, diminishes quickly as we augment the distance. That is why most &#8220;normal&#8221; editors allow us to do things like Alt+Right or Ctrl+Up to jump over whole words or paragraphs and why Vim allows us to do that&#8230;&#8203; and a lot more.</p>
+</div>
+<div class="sect2">
+<h3 id="_motions">Motions</h3>
+<div class="paragraph">
+<p>Starting small and generic, we have <em>word-level</em> motions:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 90%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>w</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jump to first character of next <em>word</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>b</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jump to first character of current <em>word</em> or first character of previous <em>word</em> if already on first character of current <em>word</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>e</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jump to last character of current <em>word</em> or last character of next <em>word</em> if already on last character of current <em>word</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ge</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jump to last character of previous <em>word</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Did you notice the emphasis on &#8220;word&#8221;? That&#8217;s because we have this very useful distinction between a &#8220;word&#8221;, delimited by non-keyword characters, and a &#8220;WORD&#8221;, delimited by white space:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>             ┌─────────────────────────────── a word
+             │┌───────┬────────────────────── another word
+             ││       │┌───────────────────── and another word
+We live in a "wonderful" world.
+             └─────────┴───────────────────── a WORD</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This gives us the following variants of the motions above:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 90%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>W</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jump to first character of next <em>WORD</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>B</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jump to first character of current <em>WORD</em> or first character of previous <em>WORD</em> if already on first character of current <em>WORD</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>E</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jump to last character of current <em>WORD</em> or last character of next <em>WORD</em> if already on last character of current <em>WORD</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>gE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jump to last character of previous <em>WORD</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Here is a demonstration of word-motions in action:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(gifcast)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Those word-level motions alone cover more ground than the usual &#8220;Ctrl+Arrow&#8221; business and help us avoid an enormous amount of mindless arrowing <em>and</em> <code>hjkl</code>-ing.</p>
+</div>
+<div class="paragraph">
+<p>Zooming out a little, we have a set of generic <em>line-level</em> motions:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 90%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jump to first column</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>^</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jump to first printable character</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>$</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jump to EOL</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>g_</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jump to last printable character</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>g^</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jump to first displayed character</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>g$</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jump to last displayed character</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The first motions above have very strict meanings: there&#8217;s only one EOL on the current line, or one last printable character. That kind of motion always works the same way.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(gifcast)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>At the same level, we have a more specific set of motions:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 90%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fx</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jump to next character <code>x</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Fx</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jump to previous character <code>x</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tx</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jump before next character <code>x</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Tx</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jump before previous character <code>x</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>They are different because the second character--<code>x</code> in our example&#8212;&#8203;can be any character, meaning that those four commands can be used to jump to a very large amount of potential targets.</p>
+</div>
+<div class="paragraph">
+<p>Another difference is that they can take an optional <code>[count]</code> to jump to the <code>[count]</code>-th character on the line: <code>3fn</code> for &#8220;jump to the third <code>n</code> to the right&#8221;.</p>
+</div>
+<div class="paragraph">
+<p>The last difference is that they can be repeated with <code>;</code> (in the same direction) and <code>,</code> (in the opposite direction).</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(gifcast)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Zooming out a bit more, we have another set of motions:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 90%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jump to next sentence</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>(</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jump to previous sentence</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>}</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jump to next blank line above a non-blank line</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>{</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jump to previous blank line above a non-blank line</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><code>(</code> and <code>)</code> are only useful for prose but the ability to position the cursor above a paragraph or code block is extremely usefuful:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(gifcast)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then comes the last level of in-buffer motions:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 90%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>gg</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jump to first line</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nG</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jump to line <code>n</code>, defaults to last line if no <code>[count]</code> given</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>And, finally, an often overlooked set of in-window motions:</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 90%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nH</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jump to <code>n</code>-th line from the top of the window, defaults to first line if no <code>[count]</code> is given</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>M</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jump to middle line</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>nL</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jump to <code>n</code>-th line from the bottom of the window, defaults to last line if no <code>[count]</code> is given</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+The default behavior of <code>H</code> and <code>L</code> can be altered with the <code>'scrolloff'</code> option.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_reference">Reference</h4>
+<div class="literalblock">
+<div class="content">
+<pre>:help foo</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_search">Search</h3>
+<div class="paragraph">
+<p>Searching is a wonderful way to move around the current buffer. Together with <code>:set incsearch</code>, <code>/</code> and <code>?</code> rarely need more than 4 or 5 keystrokes to reach any target.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(gifcast)</pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 90%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>/foo&lt;CR&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">search forward for <code>foo</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>?bar&lt;CR&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">search backward for <code>bar</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>n</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">repeat last search</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>N</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">repeat last search in opposite direction</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>These few options are generally considered useful:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>'incsearch'</code> moves the cursor to&#8212;&#8203;and highlights&#8212;&#8203;the next match <strong>as you type</strong>.</p>
+</li>
+<li>
+<p><code>'ignorecase'</code> makes search case-insensitive; allows you to reach <code>Foo</code> with <code>foo</code>.</p>
+</li>
+<li>
+<p><code>'smartcase'</code> turns case-sensitivity on if the search pattern contains an uppercase letter. <code>/Foo</code> skips <code>foo</code> on the way to <code>Foo</code>.</p>
+</li>
+<li>
+<p><code>'hlsearch'</code> highlights <strong>every</strong> match, in every visible window.</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_a_few_words_about_search_highlighting">A few words about search highlighting</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><code>:help :nohl</code> turns off &#8217;hlsearch'&#8217;s highlighting until next search.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_reference_2">Reference</h4>
+<div class="literalblock">
+<div class="content">
+<pre>:help /
+:help ?
+:help n
+:help N
+:help 'incsearch'
+:help 'ignorecase'
+:help 'smartcase'
+:help 'hlsearch'</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_search_inside_the_current_buffer">Search inside the current buffer</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>While <code>/</code> and <code>#</code> are awesome <strong>navigation</strong> tools, they are not that good for <strong>actual</strong> searching. "Searching" usually involves comparing matches, filtering&#8230;&#8203; all things <code>/</code> and <code>?</code> actually make quite hard, if only because we can&#8217;t see all the matches at once.</p>
+</div>
+<div class="sect2">
+<h3 id="_the_power_of_code_g_code">The Power of <code>:g</code></h3>
+<div class="paragraph">
+<p>For that, we have <code>:global</code> (shortened to <code>:g</code>), a very simple and very powerful command that lets us execute arbitrary commands on lines matching a given pattern.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s start with a very verbose command:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:1,$global/pattern/print</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It works by marking every line from the first to the last matching <code>pattern</code> and then executing <code>:print</code> on each marked line successively. The output looks something like this:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(gifcast)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>But we can make it shorter by using <code>:g</code> and <code>:p</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:1,$g/pattern/p</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or by using the <code>%</code> range:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:%g/pattern/p</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or by not using a range at all since <code>:g</code> works on the whole buffer by default:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:g/pattern/p</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or by omitting <code>:p</code> since it is the default command for <code>:g</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:g/pattern/</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or even by omitting the last slash:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:g/pattern</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Without line numbers, that list doesn&#8217;t seem very useful, though. Sure we can press <code>:</code> and issue Ex commands but we won&#8217;t go very far with that list.</p>
+</div>
+<div class="paragraph">
+<p>That&#8217;s where <code>:#</code>, a relatively obscure Ex commands that works like <code>:p</code> but with line numbers, comes into play:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:g/pattern/#</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(gifcast)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With line numbers, we can now do all kinds of line-oriented things without mindlessly scrolling around:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:23       " jump to line 23
+:46d      " delete line 46
+:92m46    " move line 92 below line 46</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_definitions">Definitions</h3>
 
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_moving_within_a_project">Moving within a project</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_files">Files</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_grep">Grep</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_includes_defines">Includes/Defines</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_tags">Tags</h3>
+<hr>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_search_inside_the_current_buffer_and_included_files_excluding_comments">Search inside the current buffer, and included files, excluding comments</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>But Vim has got our back with <code>:help :ilist</code>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>List every line containing the whole word <code>foo</code> and jump to one of them:</p>
+<div class="literalblock">
+<div class="content">
+<pre>:il foo&lt;CR&gt;:202&lt;CR&gt; (gif)</pre>
+</div>
+</div>
+</li>
+<li>
+<p>List every line containing <code>foo</code></p>
+<div class="literalblock">
+<div class="content">
+<pre>:il /foo&lt;CR&gt; (gif)</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a TOC of the current markdown document</p>
+<div class="literalblock">
+<div class="content">
+<pre>:il /#&lt;CR&gt; (gif)</pre>
+</div>
+</div>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>and its more specialized sibling <code>:help :dlist</code>:</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>List every function containing <code>bar</code> in its name</p>
+<div class="literalblock">
+<div class="content">
+<pre>:dli bar&lt;CR&gt;</pre>
+</div>
+</div>
+</li>
+<li>
+<p>List every function</p>
+<div class="literalblock">
+<div class="content">
+<pre>:dli /&lt;CR&gt;</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="__and_replace">&#8230;&#8203; and replace</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>List all the functions containing <code>user</code> and add a TODO item above one of them</p>
+<div class="literalblock">
+<div class="content">
+<pre>:dli /user&lt;CR&gt;:1034norm O// TODO: fix this function&lt;CR&gt; (gif)</pre>
+</div>
+</div>
+</li>
+<li>
+<p>List all the occurences of <code>myVar</code> and substitute only some of them with <code>myArray</code></p>
+<div class="literalblock">
+<div class="content">
+<pre>:il myVar&lt;CR&gt;:53,89s/myVar/myArray (gif)</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_search_inside_loaded_buffers">Search inside loaded buffers</h2>
+<div class="sectionbody">
+<div class="literalblock">
+<div class="content">
+<pre>:call setqflist([])&lt;CR&gt;
+:bufdo vimgrepadd foo % | cw</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>:command! -nargs=1 SearchInBuffers call setqflist([])|silent! bufdo vimgrepadd &lt;args&gt; %|cw</pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_and_replace">And replace</h3>
+
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_search_recursively_inside_project">Search recursively inside project</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="__and_replace_2">&#8230;&#8203; and replace</h3>
+<div id="nav" class="toc">
+<p>Where to go now?</p>
+<ul class="sectlevel1">
+<li><a href="#">foo</a></li>
+<li><a href="#">bar</a></li>
+<li><a href="#">baz</a></li>
+</ul>
+<div id="bottom">
+<p>Written by <a href="https://github.com/romainl">Romain Lafourcade</a>, with help from <a href="https://github.com/dahu/">Barry Arthur</a> and the #vim community.</p>
+<p class="copyleft">Copyleft 2015</p>
+</div>
+</div>
+<script src="javascript/behavior.js"></script>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-06-20 23:43:32 CEST
+Last updated 2016-07-15 13:21:25 CEST
 </div>
 </div>
 </body>

@@ -1,38 +1,63 @@
-= Advanced configuration
+= Let the work flow
 :stylesdir: css
 :stylesheet: style.css
 :imagesdir: images
 :scriptsdir: javascript
 :linkcss:
+:toc:
 
-And take advantage of a great feature called "`autocommands`" for... the automation part.
+Let's explore a typical use case: write the current buffer, start the build, check the errors.
 
-Autocommands are Vim's way of executing arbitrary commands when specific events happen. Entering a window, quitting insert mode, loading a buffer with a specific filetype are some of the many events available.
+* *Writing the current buffer* is done with `:write`, that we can shorten to `:w`.
+* *Building* is done with `:make`, that we can shorten to `:mak`. Vim is suspended to leave room for the compiler's output.
+* *Opening the quickfix window* is done with `:cwindow`, that we can shorten to `:cw`.
 
-An autocommand usually looks like that:
+Now, repeating the `:w` & `:mak` & `:cw` dance over and over doesn't sound fun. Does it? Well, those commands can be chained with a `|`:
 
-    autocmd event pattern command
+    :w|mak|cw
 
-where `autocmd` is the command that defines an autocommand, `event` can be a single event or a comma-separated list of events, `pattern` is a simple pattern describing what [todo] and `command` is what we want to happen.
+and recalled with `<Up>` so that's not such a big deal but there is still room for improvement, here:
 
-Scrolling through the list at `:help autocommand-events` we find `BufWritePost` which looks like it can be used after `:w` to `:make` and `:cwindow`. Let's try it:
+* we still have too many `<Enter>` to press,
+* some kind of automation would obviously be better.
 
-    autocmd BufWritePost *.c silent make|cwindow
+Let's address the first issue by telling Vim to shut up with the `:silent` command (or `:sil` for short):
 
-Phew! That was easy...
+    :w|sil mak|cw
 
-But we are not finished with autocommands yet. The way that feature is implemented makes it easy for autocommands to "`pile up`" when we source our `vimrc` during a session and provoke performance issues. To avoid side effects, we should wrap our autocommands in an `augroup` and empty it before define our actual autocommands. The whole boilerplate looks like this:
+A simple mapping would be a perfect alternative to all that typing. Let's try with `<F5>`, a shortcut often used in IDEs to compile the project, both in insert mode and normal mode:
 
-    augroup groupname
-        autocmd!
-        autocmd event pattern command
-    augroup END
+    inoremap <F5> <Esc>:write|silent make|cwindow<CR>
+    nnoremap <F5> :write|silent make|cwindow<CR>
 
-So...
+Hmm... It looks like Vim doesn't like bars in mappings. That's understandable, actually: bars are used to separate commands but `inoremap <F5> <Esc>:write|silent make|cwindow<CR>` is _one_ command and the parts between bars don't really make sense on their own. So what can we do? Escape those bars?
 
-    augroup c
-        autocmd!
-        autocmd BufWritePost *.c silent make|cwindow
-    augroup END
+Well yes:
 
-From there, one can configure many things to suit his needs: what program to run when doing `:make` or `:grep`, how to parse the output of those comands so that it can be used in the quickfix list, for what filetype to use what setting... but that will be the subject of another chapter.
+    inoremap <F5> <Esc>:write\|silent make\|cwindow<CR>
+    nnoremap <F5> :write\|silent make\|cwindow<CR>
+
+or we can use `<Bar>`:
+
+    inoremap <F5> <Esc>:write<Bar>silent make<Bar>cwindow<CR>
+    nnoremap <F5> :write<Bar>silent make<Bar>cwindow<CR>
+
+Let's see how it looks:
+
+    (gifcast)
+
+++++
+<div id="nav" class="toc">
+<p>Where to go now?</p>
+<ul class="sectlevel1">
+<li><a href="#">foo</a></li>
+<li><a href="#">bar</a></li>
+<li><a href="#">baz</a></li>
+</ul>
+<div id="bottom">
+<p>Written by <a href="https://github.com/romainl">Romain Lafourcade</a>, with help from <a href="https://github.com/dahu/">Barry Arthur</a> and the #vim community.</p>
+<p class="copyleft">Copyleft 2015</p>
+</div>
+</div>
+<script src="javascript/behavior.js"></script>
+++++
