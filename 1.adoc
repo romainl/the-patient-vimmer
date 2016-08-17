@@ -1,4 +1,4 @@
-= Lord of the files
+= Take the owner's tour
 :stylesdir: css
 :stylesheet: style.css
 :imagesdir: images
@@ -6,407 +6,315 @@
 :linkcss:
 :toc:
 
-== Introduction
+Vim's screen **always** contains _at least_ the following elements:
 
-This chapter explores the many ways to open text files -- or "`edit text files`" in Vim parlance -- at startup and from Vim itself.
+* _one_ tab page, containing at least...
+* _one_ window, displaying...
+* _one_ buffer.
 
-(more to come)
+At the root of that tree—and at the center of Vim's design—is _the buffer_; then comes _the window_ and, finally, _the tab page_. Vim will quit when you delete the last buffer, close the last window or close the last tab page.
 
-== For argument's sake
+== Buffers
 
-Like other text editors, Vim can be started without arguments:
+Like Microsoft Word or Adobe Photoshop, Vim lets us create, delete, switch to and edit "`buffers`" (Vim's word for "`documents`"). Like in Microsoft Word or Adobe Photoshop, those buffers:
 
-    $ vim
+* can be associated with an actual file or not,
+* are written to disk only if you instruct Vim to do so.
 
-in which case it creates an empty buffer for your convenience.
+Similarly, Vim will tell you when you are trying to quit without saving a currently opened buffer so, well... Vim is not _that_ weird, after all.
 
-Or with one or more explicit filename as arguments :
+Buffers are just abstract containers for your text so there's not much to say about their look.
 
-    $ vim file1 file2 file3
-    $ vim *.js
+== Windows
 
-in which case _n_ buffers are created and named after their respective argument.
+An interesting feature of Vim is the ability to split our workspace in multiple windows—often called "`splits`"—to display different buffers or parts of a buffer. The exact mechanism is quite simple: the current window is split in two equal parts and the cursor is placed in the new window.
 
-The buffers are stored in the global _buffer list_ and the filenames are stored in the global _argument list_.
+The purpose of a window is to provide a view into a buffer. It can be created, moved around and closed but it is important to remember that windows and buffers are not coupled **at all**. Since any buffer could end up being displayed in any window it is plain wrong to assume "`switching to a window`" to be the same as "`switching to a buffer`", let alone "`switching to a file`".
 
-The two lists differ in many ways:
+On the visual side of things, each window gets its own <<_the_status_line,"`status line`">> and, only in GVim/MacVim, its own scrollbar.
 
-* the argument list only stores filenames whereas the buffer list also stores cursor position and state,
-* it is possible to insert a new "`argument`" anywhere in the argument list but it is only possible to add a new item at the end of the buffer list,
-* adding an item to the argument list also adds an item to the buffer list but the opposite is not true,
-* ...
+== Tab pages
 
-The buffer list is best seen as a partial representation of Vim's internal state. Not being very flexible makes it reliable.
+In the same way windows are an abstraction built on top of buffers, tab pages are an abstraction built on top of windows.
 
-The argument list is best seen as a transient list of files. It is certainly possible to use it for navigation but its flexibility makes it less than reliable. Generally, the argument list is better suited for other tasks such as:
+Tab pages—too often called "`tabs`"—have been a neverending source of confusion since their appearance in Vim 7.0. Despite their name and how the <<_the_tab_line,"`tab line`">> widget is implemented, Vim's _tab pages_ are not like other editor's _tabs_.
 
-* adding a bunch of files to the buffer list in one go,
-* holding a temporary list of files for later processing,
-* keeping a number of "`special`" files on hand...
+In other editors, "`tabs`" serve as proxies for documents. This means that the editor's "`tab line`"—a list of tabs—is effectively a list of documents: one navigates from one tab to another and thus from one document to another. A "`tab`" _is_ for all intent and purpose a _document_ and there is no need to abstract away the tab _widget_ from its associated "`panel`" and thus from the document it is associated with.
 
-=== Reference
+Switching to a "`tab`" is exactly like switching to a document.
 
-    :help argument-list
-    :help buffer-list
+In Vim, "`tab pages`" are _workspaces_, associated with "`tab`" widgets, themselves listed in a "`tab line`". The "`tab`" and "`tab line`" widgets work pretty much like their counterparts in other editors but the _huge_ difference lies in the _workspace_ bit.
 
-== Editing a single file
+A workspace is a place where you arrange one or more windows displaying one or more buffers. But we have seen earlier that buffers are _global_ so, while it is entirely possible to have a single buffer displayed in a single window in a single tab page, it is impossible to force an actual one-to-one relationship between that buffer and that tab page without devising our own buffer/window/tab management paradigm.
 
-That's all good but... how do we open other files from Vim itself?
+Because "`tab`" widgets are not associated with specific buffers we simply can't use them as document proxies.
 
-`:edit` (shortened to `:e`) is probably the most common way to edit a _single_ file, whether that file exists on disk or not.
+As collections of windows, tab pages offer a pretty good way to manage workspaces. They are ideal for when we need to have multiple pairs of files displayed side-by-side, or when we suddenly need to open a file from outside the current project... But they are too limited to be used as document/file proxies.
 
-    :e foo.txt
-    :e ../bar.txt
+Just like windows, the place of tab pages in our workflow depends largely on our needs. Using tab pages as document/file proxies is wrong, but refusing to use them altogether in the name of some imaginary purity is just as wrong. If not _more_.
 
-=== Reference
+Buffers, window, and tab pages are explored thoroughly link:2.html[in the following chapter].
 
-    :help :edit
+== Special Windows
 
-== Editing multiple files at once
+Beyond the regular window described above, Vim uses a number of very useful specialized windows.
 
-`:argadd` (shortened to `:arga`) can be used to add multiple files to the argument list:
+=== The quickfix window
 
-    :arga file4 file4
-    :arga *.js
+The quickfix window is a special kind of window used to list the entries of the the _quickfix_ list. The quickfix list is a handy list of addresses that we can populate and navigate at will. Each entry in the list is roughly made of:
 
-followed by `:next` (shortened to `:n`) to edit the first one of those new files:
+* a filename,
+* a line number,
+* an optional column number,
+* some text associated with the current item.
 
-    :arga *.c
-    :n
+That list—and its associated window—is global so you can't have more than one active at the same time; But it's pefectly possible to recall up to nine previous lists with `:colder`.
 
-or the short form:
+Vim comes with a lot of commands that populate the quickfix list, like `:grep` or `:vimgrep`, used for searching text in your project, and `:make`, used to build your program or pass them through a syntax checker. Once the quickfix list is populated with valid entries, one can use a number of relatively intuitively named commands to navigate it:
 
-    :arga *.c|n
+    :cfirst
+    :clast
+    :cnext
+    :cprevious
 
-If you don't care about the argument list, `:arg` can be used as a drop-in replacement for `:argadd` + `:next`:
+or `:cwindow` to open the interactive "`quickfix window`".
 
-    :arg *.c
+One can navigate around the buffer displayed in that window with regular commands like `/foo` or `5j` and jump to the current entry with:
 
-=== Reference
-
-    :help :argadd
-    :help :next
-    :help :arg
-
-== Tab-completion
-
-`:e`, `:arg`, and `:argadd` cover a lot of ground already, but we will need fast fingers and a vast memory when we'll need to edit files buried at the bottom of a large and complex directory structure.
-
-Fortunately, tab-completion lets us cycle through eligible files:
-
-image::gifcast_off.png[link="images/1_tab-completion.gif"]
-
-Here are the default bindings:
-
-* `<Tab>`     selects the next item,
-* `<S-Tab>`   selects the previous item,
-* `<Down>`    enters a directory,
-* `<CR>`      chooses the selected item,
-* `<C-d>`     lists the completion items.
-
-Pretty basic...
-
-=== Reference
-
-    :help cmdline-completion
-
-== The wildmenu
-
-But we are in the dark, here. We have no idea how large the completion list is unless we press `<C-d>` every couple of keystrokes or if and how we could refine our query or how to leave the current directory! _Basic_ tab-completion is better than nothing but meh...
-
-Don't worry! Vim has our back with a brilliant feature called "`wildmenu`" that temporarily replaces the status line with a handy menu:
-
-image::gifcast_off.png[link="images/1_wildmenu.gif"]
-
-Navigation is a lot easier now that we have an idea of where we are and what's next. It is also easier to traverse directories with the new `<Up>` binding. You can enable this feature for the current session with:
-
-    :set wildmenu
-
-and for every further session by adding this line to your `vimrc`, as usual:
-
-    set wildmenu
-
-=== Reference
-
-    :help 'wildmenu'
-
-== Wildcards up our sleeve
-
-Most of the time, though, the first two or three letters of a filename may not be enough... or we only remember the end. Or nothing at all beyond the extension! That's where the "`star`" wildcard comes in handy, just like in your shell:
-
-    :e *fr<Tab>
-    :e README_fr.txt
-
-Vim even has a special wildcard called "`starstar`", that makes it possible to recurse through subdirectories.
-
-    :e **/*use<Tab>
-    :e app/controllers/user_management.js
-
-"`starstar`" has two main benefits:
-
-* it allows us to navigate through a flat list instead of a potentially deep hierarchy, saving quite a bunch of keystrokes and brain cells in the process,
-* we can avoid typing subdirectories names.
-
-image::gifcast_off.png[link="images/1_wildcards.gif"]
-
-=== Reference
-
-    :help starstar
-
-== Mappings
-
-What if we could skip the pretty but too repetitive `:e \**/*` part?
-
-"`Macros`" are a core aspect of the Vim experience. The name is most often associated with "`recording`" but they can also be used directly, with `:normal`, or as part of a mapping. The principle is always the same, though: we give Vim a bunch of keys to "`press`" very quickly, expecting the same result as if we pressed those keys ourself.
-
-Mappings are very important when it comes to customizing Vim, simply because they turn repetitive actions into near-instantaneous magic. Allowing us to save many thousands of keystrokes with minimal configuration.
-
-Here is the anatomy of a mapping:
-
-    :map key action
-
-where `action` is what you want to happen when you press `key`; it could be a macro, an Ex command, a function call...
-
-The command used to define your mapping — `map` in the example above — can be any of the following, try to be as specific as possible:
-
-[cols="2,3,9"]
+[cols="2,9"]
 |===
-| *recursive* | *non-recursive* | *mode*
-| `map`       | `noremap`       | normal, visual, select, operator-pending
-| `cmap`      | `cnoremap`      | command-line
-| `imap`      | `inoremap`      | insert
-| `nmap`      | `nnoremap`      | normal
-| `omap`      | `onoremap`      | operator-pending
-| `smap`      | `snoremap`      | select
-| `vmap`      | `vnoremap`      | visual, select
-| `xmap`      | `xnoremap`      | visual
+| *command*   | *description*
+| `<CR>`      | jumps to the current entry in the window above the quickfix window
+| `<C-w><CR>` | jumps to the current entry in a new window
 |===
 
-Here are a few examples for you...
+    (gifcast)
 
-* Press `<F5>` to add quotes around the word under the cursor in normal mode:
+The quickfix list and quickfix window have close cousins called "`location list`" and "`location window`" that pretty much work the same way except for these two differences:
 
-    :nnoremap <F5> ciw"<C-r>""
+* unlike the quickfix list, the location list is local to a window so you can have as many location lists and location windows as you have windows,
+* the commands start with an `l` instead of a `c`, `:lfirst`, `:lwindow`, etc.
 
-* Press `<F6>` to call a function in normal mode:
+Using the location list can be useful if you are heavily into windows and tab pages but the quickfix list is probably a simpler choice.
 
-    :nnoremap <F6> :call MyFunction()<CR>
+==== Reference
 
-* Press `<F7>` to execute a command in normal mode:
+    :help quickfix
+    :help map_bar
 
-    :nnoremap <F7> :MyCommand<CR>
+=== The preview window
 
-* Press `<F8>` to filter the current visual selection through 'uniq':
+The preview window is a small window used to _preview_ something, usually the signature of a function while we are working on its usage. It is a lot like a normal window except for these differences:
 
-    :xnoremap <F8> !uniq<CR>
+* opening the preview window doesn't steal the focus from the current window,
+* there is only one preview window per tab page,
+* it can be closed even if it is not focused.
 
-No need to worry about those examples for now.
+This window can be opened with a bunch of commands, among which these ones:
 
-Let's go back to our current "`problem`": we want Vim to type `:e \**/*` for us when we press `<F6>` in _normal_ mode. Well, the solution is pretty obvious:
+[cols="2,9"]
+|===
+| *command*      | *description*
+| `:ptag foo`    | open tag 'foo' in a preview window
+| `<C-w>}`       | open tag under the cursor in a preview window
+| `:psearch bar` | use include search to find 'bar' and open it in a preview window
+|===
 
-     :nmap <F6> :e **/*
+And closed with: `:pclose` or `<C-w>z`.
 
-Easy! We only have to do `<F6>foo<Tab>` to list every file whose name contains `foo` under the working directory and every subdirectory. Woohoo!
+Here is the preview window in action:
 
-But what's the deal with that `*map` versus `*noremap` distinction? It's really quite simple...
+    (gifcast)
 
-* `nmap key command` means that pressing `key` in normal mode will execute `command` _with its current meaning_. This form is _only_ useful when we want to use another mapping in our mapping; it is called "`recursive mapping`". Example:
+==== Reference
 
-    " change 'b' to work like 'B'
-    :nmap b B
-    " '<F5>' works like 'dB', not like 'db'
-    :nmap <F5> db
+    :help preview-window
 
-* `nnoremap key command` means that pressing `key` in normal mode will execute `command` _with its default meaning_. This form is usually the one we want, it is called "`non-recursive mapping`". Example:
+=== The Command-line window
 
-    " change 'b' to work like 'B'
-    :nmap b B
-    " '<F5>' works like 'db'
-    :nnoremap <F5> db
+The command-line is a handy way to input commands but it is not that good when it comes to editing the current command or recalling an old one and changing its parameters. This is not a design flaw or an implementation issue, though: only sane seperation of concerns that should appeal to anyone used to the concept of *modal editing*.
 
-Our mappings _have_ to be solid because they will serve as the foundation of our workflow. Non-recursive mappings are thus the safest choice:
+You use insert mode to insert text and normal mode to edit text.
 
-    :nnoremap <F6> :e **/*
+You use command-line mode to issue commands and the command-line window to edit the current command and command history.
 
-=== A leader worth following
+Simple.
 
-While the whole purpose of the `<Fx>` keys is to be "`programmed`" to do whatever specific _function_ the user needs, they don't fit very well with Vim's other highly mnemonic bindings so it is certainly wiser to use a key combo that "`maps`" to the idea of _editing_. But we have a problem: Vim already uses most -- if not all -- of the freaking keys on our keyboard!
+Opening the command-line window from the current command-line mode is done with `<C-f>`. This will open the relevant command history in the command-line window, with the current command ready for you to edit on the last line.
 
-The "`leader`" mechanism allows us to define a `<leader>` key (`\` by default) that will work as a "`mini-mode`" of sort, or a "`namespace`" for our custom mappings. `:help mapleader` gives us the following example :
+From normal mode, you can use `q:` to open the command-line history or `q/`/`q?` to open the search history, with the cursor in an empty line. Press `<CR>` in normal mode to run the current command or `:q` to quit that window.
 
-    :let mapleader = ","
+Here is the command-line window in action:
 
-which allows us to use the comma as `<leader>` in all our mappings:
+    (gifcast)
 
-    :nnoremap <leader>e :edit **/*
+Some hardcore Ex commands users like to use the command-line window instead of the usual command-line. This can be done by overriding `:` in normal mode:
 
-We are of course free to choose which key to use as our leader. `<Space>`, for example, can be a more sensible choice because:
+    nnoremap : q:i
 
-* `,` is a very useful key (repeat last `fFtT` in the other direction) with no alternative,
-* `<Space>` is synonymous with `l` and `<Right>` so it can safely be remapped,
-* `<Space>` is the largest key of the keyboard and it can be pressed with any of our two thumbs.
+I don't recommend doing that, actually, but I think it is an interesting example of customization.
 
-Let's end this section by adding these lines to our `vimrc`:
+==== Reference
 
-    let mapleader = "\<Space>"
-    nnoremap <leader>e :edit **/*
+    :h cmdline-window
 
-and try them out after sourcing our `vimrc` again:
+== Various UI elements
 
-image::gifcast_off.png[link="images/1_leader-e.gif"]
+In addition to windows, we have many UI elements at our disposal for displaying information and/or interacting with one feature or another.
 
-Neat!
+=== The tab line
 
-=== Reference
+   (picture)
 
-   :help mapping
-   :help mapleader
+The tab line is a list of "tabs" working as proxies for tab pages. Each tab shows some information on its associated tab page:
 
-== :find
+* the name of the buffer currently displayed in the currently focused window,
+* the number of windows contained in the tab page when there is more than one,
+* a `+` if one of the buffers displayed in one of the windows is "dirty".
 
-Vim comes with an often overlooked command fittingly named `:find` that differs from `:edit` in one big way: **it can be set to visit specific directories.**
+If you have enabled mouse support in your `vimrc` and your terminal emulator supports that feature, you can use your mouse to switch to a tab page, reorder the tabs or close the current tab page by clicking on the `X` at the end of the tab line.
 
-The key to using `:find` efficiently is to define a good value for the `path` option that tells Vim where to _find_ files. The default value may be a good starting point for C programmers but others can set it to a more generic -- and simplistic -- value:
+When to show a tab line can be defined with the `showtabline` option and what information to display depends on the `tabline` option.
 
-    :set path=.,**
+While Vim's _tab pages_ are definitely not equivalent to other editor's _tabs_, Vim's _tab line_ looks and works a lot like its counterparts and suffers from the same usability issues.
 
-which allows us to find files in the directory of the current file (the `.`) _and_ anywhere under the working directory, recursively, (the `**`) without needing to use `**` explicitly.
+The main issue is that tabs are used to display filenames and filenames take up a lot of horizontal space. An horizontal space that is physically limited and thus incapable of displaying more than a few tabs. Many solutions exist to remedy that problem: wrapping the tab line to form a second one, adding scrolling widgets at both ends of the tab line, grouping tabs, truncating filenames... The harsh reality is that none of those "solutions" is free of annoying side effects which, ultimately, can turn an otherwise good idea into an unusable gyzmo.
 
-Or we can use a more project-specific value:
+The tab line and tab pages still have their use, mind you, but it is important to not think about them as you would in other editors.
 
-    :set path=app/views/**,app/controllers/**
+==== Reference
 
-The sky is still the limit...
+    :help 'showtabline'
+    :help 'tabline'
+    :help setting-tabline
 
-We can now use the `:find` command as a slightly smarter replacement for `:edit`:
+=== The status line
 
-    :find foo<Tab>
+    (picture)
 
-versus:
+The status line is that "`bar`", at the bottom of windows, used to show information on the window itself or the buffer currently displayed in that window. It can also be used to resize windows vertically if mouse support is enabled.
 
-    :e **/foo<Tab>
+By default, the status line is shown only when there is more than one window but this can be changed with the `laststatus` option:
 
-But there's a catch: like `:edit`, `:find` does its completion from the start of the filename so `:find foo` will match `foobar.txt` but not `model_foo.txt`. Let's add a wildcard for an even more useful completion:
+    set laststatus=2
 
-    :find *foo<Tab>
+The default content of the status line—the filename and a status indicator—is not exactly thrilling but it's possible to beef it up by enabling the `ruler` option that shows the line and colum of the cursor and tells how much of the buffer is currently visible.
 
-Here is `:find` in action:
+It is very common, though, to customize it a bit further by playing with the `statusline` option that gives more control over the status line's content and appearance.
 
-image::gifcast_off.png[link="images/1_find.gif"]
+This is how I define the status line shown in the picture above, the explanation for each item can be found in `:help 'statusline'`:
 
-=== Reference
+    set statusline=%<\ %f\ %m%r%y%w%=\ L:\ \%l\/\%L\ C:\ \%c\
 
-    :help :find
-    :help 'path'
+It is also possible to define colors for specific parts or use functions to display dynamic information not provided by Vim but I recommend measure, here: the status line is an information device, not a decorative widget.
 
-== More mappings
+==== Reference
 
-Again, we can go a bit further with a nice _normal_ mode mapping similar to the one we devised earlier for `:edit`:
+    :help 'laststatus'
+    :help 'ruler'
+    :help 'statusline'
 
-    :nnoremap <leader>f :find *
+=== Line numbers
 
-image::gifcast_off.png[link="images/1_leader-f.gif"]
+Line numbers are a fairly straightforward feature that doesn't deserve much explanation. One enables them with `:set number`, disables them with `:set nonumber` and decides how much room they take with `:set numberwidth=6`.
 
-Let's replace the `:edit` mapping in our `vimrc` with the following:
+In most editors or IDEs, line numbers are only used directly by users in two ways: to communicate with other people who work on the same code and to jump to a specific line.
 
-    set path=.,**
-    nnoremap <leader>f :find *
+In addition, Vim allows us to use line numbers to define the range and/or the address for many Ex commands:
 
-and move on to...
+[cols="2,9"]
+|===
+| *command*      | *description*
+| `33G`          | go to line 33
+| `V13G`         | linewise visual selection from here to line 13
+| `:2t24`        | copy line 2 after line 24
+| `:m12`         | move current line after line 12
+| `:8,17d`       | delete lines 8 to 17
+| `:46put=@f`    | put content of register f after line 46
+|===
 
-== Customizing filename completion and the "`wildmenu`"
+But we are not limited to absolute line numbers: we can use relative line numbers to see how far a line is from the current line.
 
-We can further customize the behavior of Vim's filename completion with a bunch of options that work for `:edit` _and_ `:find`, as well as many other commands:
+    (screenshot)
 
-    :help wildmode        " defines the behavior of the wildmenu
-    :help wildignore      " tells Vim to ignore some patterns
-    :help wildignorecase  " enables case insensitivity
-    :help suffixes        " sets pattern-based priority
+Relative numbers can be enabled with `set relativenumber` and used in the same way as absolute line numbers:
 
-Let's go through them one by one:
+[cols="2,9"]
+|===
+| *command*      | *description*
+| `6j`           | go down 6 lines
+| `V5k`          | linewise visual selection from here to 5 lines above
+| `:-2,+6m45`    | move lines from 2 lines above to 6 lines below after line 45
+|===
 
-=== wildmode
+==== Reference
 
-`'wildmode'` defines the behavior of the wildmenu. You can tell Vim to show a list of completions or not but also when to show it. It is recommended to play with the many possible combinations until you find the right one.
+    :help 'number'
+    :help 'numberwidth'
+    :help 'relativenumber'
 
-The default value, `full`, is pretty good, here is anotehr reasonably useful one:
+=== The fold column
 
-    set wildmode=list:full
+    (picture)
 
-=== wildignore
+The "`fold column`" is disabled by default but can be enabled by setting the `foldcolumn` option to a number between 1 and 12. It is used to show information about the folds in your buffer and to let you open and close them with the mouse if mouse support is enabled.
 
-`'wildignore'` serves the same purpose as `.gitignore` and similar configuration files: patterns are used to tell Vim what files/directories to ignore when doing completion. Again, the right values depend on your actual needs.
+Open folds are marked with a clickable `-`, lines belonging to a fold are marked with a `|` and closed folds are marked with a clickable `+`.
 
-Here is an example value that ignores `tags` and `cscope.out` files:
+==== Reference
 
-    set wildignore+=tags,cscope.out
+    :h fold-foldcolumn
+    :h 'foldcolumn'
 
-Note the `+=` operator that allows us to _add_ new values instead of redefining the whole thing every time.
+=== The sign column
 
-=== wildignorecase
+    (picture)
 
-`'wildignorecase'` is a more generic variant of `'fileignorecase'`; it allows this:
+The "`sign column`" can't be shown or hidden easily. Actually, only plugin authors have to manage signs so they are not really the most interesting feature to explore. Vim shows the sign column when you have one or more signs in your buffer, removes it when there's no sign anymore and that's about it.
 
-    :e read<Tab>
+The color and content of individual signs is usually defined by plugin authors whereas the background of the column is the responsibility of your colorscheme.
 
-to yield:
+==== Reference
 
-    :e README.md
+    :help signs
 
-and is enabled with a simple:
+=== The vertical split
 
-    set wildignorecase
+The "`vertical split`" is the vertical bar that separates two windows. It can be dragged with the mouse...
 
-=== suffixes
+    "vertical"     "horizontal"
+    splitting      splitting
+    ┌────┬────┐    ┌─────────┐
+    │    │    │    │         │
+    │    ←    │    ├─── ↑ ───┤
+    │    │    │    │         │
+    └────┴────┘    └─────────┘
 
-`'suffixes'` is a mechanism that allows Vim to give low priority to files matching the defined patterns.
+==== Reference
 
-Example usage:
+=== The completion menu
 
-    set suffixes+=.foo,.min.bar
+    (picture)
 
-=== Reference
+The completion menu comes up when you press one of the many key-combinations affected to insert mode completion and there is at least one or more possible completions. In pure "modal" fashion, once the menu is displayed, some keys acquire a new meaning to allow cursor movement and selection but the general pattern stays consistent with the general Vim UI and works more or less how we expect.
 
-    :help 'wildmode'
-    :help 'wildignore'
-    :help 'wildignorecase'
-    :help 'suffixes'
+problems and solutions (to be written)
 
-== But I _need_ a file explorer!
+==== Reference
 
-Sometimes, we just need to find our way in the deep and uncharted waters of a project that was started by the guy whom just left the company. We only have a rough idea of the structure of the project and choosing what to edit on the command-line can be less than fun, even with our shiny mappings.
+    :help ins-completion-menu
 
-Thankfully, Vim comes with Netrw, a full-featured (some say "`bloated`") text-based file explorer that allows us to dig down that new project much like we would do in a graphical file explorer:
+=== The command-line
 
-image::gifcast_off.png[link="images/1_netrw.gif"]
+    (picture)
 
-Here are a few default bindings for reference:
+The command-line is Vim's main interface. Like the prompt of your computer's shell, it is used to send commands to Vim and for feedback if necessary.
 
-* `<cr>`   open the file/directory under the cursor,
-* `-`      go up one directory,
-* `o`      open the file/directory under the cursor in a new window,
-* `P`      open the file/directory under the cursor in the previous window,
-* `t`      open the file/directory under the cursor in a new tab page.
-
-And the three most basic commands:
-
-* `:Ex`    open a listing of the current directory,
-* `:Lex`   open a listing of the current directory in a smaller vertical window, similar to the "project" pane common in other editors and IDEs,
-* `:Rex`   come back to the previous listing.
-
-=== Reference
-
-Netrw's documentation is massive and covers a lot more than what you probably need for basic exploration and file-handling but you should at least take a look at the following sections...
-
-    :help netrw-browse-maps
-    :help netrw-quickhelp
-    :help :Lexplore
+==== Reference
 
 == Conclusion
 
-Opening files for editing is neither complex nor hard but -- as with everything in Vim -- it can be made quicker and easier with a couple of settings and mappings. Make sure you have exhausted the built-in ways before installing the latest and greatest fuzzy gadget people rave about on Reddit, Twitter or Hacker News.
-
-But, now that we have a bunch of files to edit, how are we supposed to work with them?
+(to be written)
 
 ++++
 <div id="nav" class="toc">

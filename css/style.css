@@ -510,16 +510,13 @@ table {
     width: 100%;
 }
 table col {
-    width: 1 !important;
 }
 table tr th {
-    width: 1;
     border-bottom: 2px solid #999999;
     padding-left: 1em;
 }
 table tr td {
     border-bottom: 1px solid #999999;
-    width: 1;
     padding-left: 1em;
 }
 table tr th:first-child,
@@ -550,11 +547,12 @@ table tr td p {
     background-color: #007F00;
     border-radius: 2px 0 0 2px;
     padding: 12px;
-    max-width: 2em;
+    width: 10%;
 }
 .note table tr td.content {
     font-style: italic;
     padding: 12px;
+    width: 90%;
     background-color: #229F22;
     border-radius: 0 2px 2px 0;
 }
