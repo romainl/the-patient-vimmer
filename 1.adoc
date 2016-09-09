@@ -16,7 +16,7 @@ At the root of that tree—and at the center of Vim's design—is _the buffer_; 
 
 == Buffers
 
-Like Microsoft Word or Adobe Photoshop, Vim lets us create, delete, switch to and edit "`buffers`" (Vim's word for "`documents`"). Like in Microsoft Word or Adobe Photoshop, those buffers:
+Like Microsoft Word or Adobe Photoshop, Vim lets us create, delete, switch to, and edit "`buffers`" (Vim's word for "`documents`"). Like in Microsoft Word or Adobe Photoshop, those buffers:
 
 * can be associated with an actual file or not,
 * are written to disk only if you instruct Vim to do so.
@@ -27,9 +27,9 @@ Buffers are just abstract containers for your text so there's not much to say ab
 
 == Windows
 
-An interesting feature of Vim is the ability to split our workspace in multiple windows—often called "`splits`"—to display different buffers or parts of a buffer. The exact mechanism is quite simple: the current window is split in two equal parts and the cursor is placed in the new window.
+An interesting feature of Vim is the ability to split the screen in multiple windows—often called "`splits`"—to display different buffers or parts of a buffer. The exact mechanism is quite simple: the current window is split in two equal parts and the cursor is placed in the new window.
 
-The purpose of a window is to provide a view into a buffer. It can be created, moved around and closed but it is important to remember that windows and buffers are not coupled **at all**. Since any buffer could end up being displayed in any window it is plain wrong to assume "`switching to a window`" to be the same as "`switching to a buffer`", let alone "`switching to a file`".
+The purpose of a window is to provide a view into a buffer. A window can be created, moved around and closed, but it is important to remember that windows and buffers are not coupled **at all**. Since any buffer could end up being displayed in any window it is plain wrong to assume "`switching to a window`" to be the same as "`switching to a buffer`", let alone "`switching to a file`".
 
 On the visual side of things, each window gets its own <<_the_status_line,"`status line`">> and, only in GVim/MacVim, its own scrollbar.
 
@@ -41,11 +41,11 @@ Tab pages—too often called "`tabs`"—have been a neverending source of confus
 
 In other editors, "`tabs`" serve as proxies for documents. This means that the editor's "`tab line`"—a list of tabs—is effectively a list of documents: one navigates from one tab to another and thus from one document to another. A "`tab`" _is_ for all intent and purpose a _document_ and there is no need to abstract away the tab _widget_ from its associated "`panel`" and thus from the document it is associated with.
 
-Switching to a "`tab`" is exactly like switching to a document.
+In those editors, switching to a "`tab`" is exactly like switching to a document.
 
 In Vim, "`tab pages`" are _workspaces_, associated with "`tab`" widgets, themselves listed in a "`tab line`". The "`tab`" and "`tab line`" widgets work pretty much like their counterparts in other editors but the _huge_ difference lies in the _workspace_ bit.
 
-A workspace is a place where you arrange one or more windows displaying one or more buffers. But we have seen earlier that buffers are _global_ so, while it is entirely possible to have a single buffer displayed in a single window in a single tab page, it is impossible to force an actual one-to-one relationship between that buffer and that tab page without devising our own buffer/window/tab management paradigm.
+A tab page is just like a workspace: a place where you arrange one or more windows displaying one or more buffers. But we have seen earlier that buffers are _global_ so, while it is entirely possible to have a single buffer displayed in a single window in a single tab page, it is impossible to force an actual one-to-one relationship between that buffer and that tab page without devising our own buffer/window/tab management paradigm.
 
 Because "`tab`" widgets are not associated with specific buffers we simply can't use them as document proxies.
 
@@ -280,17 +280,18 @@ The color and content of individual signs is usually defined by plugin authors w
 
 === The vertical split
 
-The "`vertical split`" is the vertical bar that separates two windows. It can be dragged with the mouse...
+    (picture)
 
-    "vertical"     "horizontal"
-    splitting      splitting
-    ┌────┬────┐    ┌─────────┐
-    │    │    │    │         │
-    │    ←    │    ├─── ↑ ───┤
-    │    │    │    │         │
-    └────┴────┘    └─────────┘
+The "`vertical split`" is the vertical bar that separates two windows. Like the status line, it can be dragged with the mouse to resize windows and... that's about it.
+
+It's style is defined by the `VertSplit` highlight group and the character used to draw it can be changed with the `fillchars` option. In the example below, a simple space is used instead of the original "`pipe`" character:
+
+    :set fillchars+=vert:\ 
 
 ==== Reference
+
+    :help hl-vertsplit
+    :help 'fillchars'
 
 === The completion menu
 

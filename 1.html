@@ -591,23 +591,30 @@
 </div>
 <div class="sect2">
 <h3 id="_the_vertical_split">The vertical split</h3>
+<div class="literalblock">
+<div class="content">
+<pre>(picture)</pre>
+</div>
+</div>
 <div class="paragraph">
-<p>The &#8220;vertical split&#8221; is the vertical bar that separates two windows. It can be dragged with the mouse&#8230;&#8203;</p>
+<p>The &#8220;vertical split&#8221; is the vertical bar that separates two windows. Like the status line, it can be dragged with the mouse to resize windows and&#8230;&#8203; that&#8217;s about it.</p>
+</div>
+<div class="paragraph">
+<p>It&#8217;s style is defined by the <code>VertSplit</code> highlight group and the character used to draw it can be changed with the <code>fillchars</code> option. In the example below, a simple space is used instead of the original &#8220;pipe&#8221; character:</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>"vertical"     "horizontal"
-splitting      splitting
-┌────┬────┐    ┌─────────┐
-│    │    │    │         │
-│    ←    │    ├─── ↑ ───┤
-│    │    │    │         │
-└────┴────┘    └─────────┘</pre>
+<pre>:set fillchars+=vert:\</pre>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_reference_9">Reference</h4>
-
+<div class="literalblock">
+<div class="content">
+<pre>:help hl-vertsplit
+:help 'fillchars'</pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -673,7 +680,7 @@ splitting      splitting
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-08-16 17:57:13 CEST
+Last updated 2016-08-18 22:15:20 CEST
 </div>
 </div>
 </body>

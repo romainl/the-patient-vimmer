@@ -17,7 +17,7 @@ Beside that number, buffers are also named after the file they are associated wi
 * by its number,
 * by its name.
 
-A typical Vim session could consist of editing a single file--and thus a single buffer--or it could go on for weeks and consist of dozens and dozens of buffers. Keeping track of a potentially large number of buffers would be daunting if Vim didn't gave us not one, not two, but _three_ commands for listing buffers:
+A typical Vim session could consist of editing a single file—and thus a single buffer—or it could go on for weeks and consist of dozens and dozens of buffers. Keeping track of a potentially large number of buffers would be daunting if Vim didn't gave us not one, not two, but _three_ commands for listing buffers:
 
     :buffers
     :files
@@ -91,7 +91,7 @@ And the same can be done with other operators:
     ya  yc  yd  ym  yo  yp  yq  yr  ys  yu  yv  yx  yz
     yA
 
-There's another--slightly smaller--gap: "`commands starting with g`" and "`commands starting with z`". Even if they work differently, those two-characters commands look a lot like the operator-based commands above and the missing pairs can be used in the same way:
+There's another—slightly smaller—gap: "`commands starting with g`" and "`commands starting with z`". Even if they work differently, those two-characters commands look a lot like the operator-based commands above and the missing pairs can be used in the same way:
 
     gb  gc  gl
     gB
@@ -118,12 +118,12 @@ Again, we can easily create a convenient mapping to save a bunch of keystrokes:
 
     nnoremap <leader>b :buffer *
 
-The similarity with the `<leader>f` mapping we added to our `vimrc` in the previous chapter and the `<leader>e` mapping it replaced is not a happy coincidense. We have two commands with a similar purpose--navigation--that work exactly the same way and follow the same naming convention:
+The similarity with the `<leader>f` mapping we added to our `vimrc` in the previous chapter and the `<leader>e` mapping it replaced is not a happy coincidense. We have two commands with a similar purpose—navigation—that work exactly the same way and follow the same naming convention:
 
 * `f` for "`file`",
 * `b` for "`buffer`".
 
-With `<leader>f` and now `<leader>b` we have the beginning of a collection of easy-to-remember and consistant navigation mappings--exactly the kind of mapping we need--as well as another one, `gb`, which simply demonstrates another way to approach the same problem.
+With `<leader>f` and now `<leader>b` we have the beginning of a collection of easy-to-remember and consistant navigation mappings—exactly the kind of mapping we need—as well as another one, `gb`, which simply demonstrates another way to approach the same problem.
 
 We shouldn't be concerned with buffers only for navigation, of course: Vim allows us to perform actions _on each buffer in the buffer list_ with the `:bufdo` command:
 
@@ -147,7 +147,7 @@ By the way, did you notice that Vim doesn't ask us to write each buffer before c
 
 === Creating windows
 
-Splitting the current window in two side-by-side views is done with either `<C-w>v`--all window-related commands start with `<C-w>`--or `:vsplit` (shortened to `:vs`).
+Splitting the current window in two side-by-side views is done with either `<C-w>v`—all window-related commands start with `<C-w>`—or `:vsplit` (shortened to `:vs`).
 
 Splitting the current window in two windows one above the other is done with either `<C-w>s` or `:split` (shortened to `:sp`).
 
@@ -156,7 +156,7 @@ By default, the splitting is done above and to the left of the current window. T
     :bel vs
     :bel sp
 
-or--more constructively--by adding those two options to your `vimrc`:
+or—more constructively—by adding those two options to your `vimrc`:
 
     set splitright
     set splitbelow

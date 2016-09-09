@@ -5,101 +5,18 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.2">
-<title>Let the work flow</title>
+<title>Vim and its environment</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="article">
 <div id="header">
-<h1>Let the work flow</h1>
+<h1>Vim and its environment</h1>
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 
 </div>
 </div>
 <div id="content">
-<div class="paragraph">
-<p>Let&#8217;s explore a typical use case: write the current buffer, start the build, check the errors.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Writing the current buffer</strong> is done with <code>:write</code>, that we can shorten to <code>:w</code>.</p>
-</li>
-<li>
-<p><strong>Building</strong> is done with <code>:make</code>, that we can shorten to <code>:mak</code>. Vim is suspended to leave room for the compiler&#8217;s output.</p>
-</li>
-<li>
-<p><strong>Opening the quickfix window</strong> is done with <code>:cwindow</code>, that we can shorten to <code>:cw</code>.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Now, repeating the <code>:w</code> &amp; <code>:mak</code> &amp; <code>:cw</code> dance over and over doesn&#8217;t sound fun. Does it? Well, those commands can be chained with a <code>|</code>:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>:w|mak|cw</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>and recalled with <code>&lt;Up&gt;</code> so that&#8217;s not such a big deal but there is still room for improvement, here:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>we still have too many <code>&lt;Enter&gt;</code> to press,</p>
-</li>
-<li>
-<p>some kind of automation would obviously be better.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Let&#8217;s address the first issue by telling Vim to shut up with the <code>:silent</code> command (or <code>:sil</code> for short):</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>:w|sil mak|cw</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>A simple mapping would be a perfect alternative to all that typing. Let&#8217;s try with <code>&lt;F5&gt;</code>, a shortcut often used in IDEs to compile the project, both in insert mode and normal mode:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>inoremap &lt;F5&gt; &lt;Esc&gt;:write|silent make|cwindow&lt;CR&gt;
-nnoremap &lt;F5&gt; :write|silent make|cwindow&lt;CR&gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Hmm&#8230;&#8203; It looks like Vim doesn&#8217;t like bars in mappings. That&#8217;s understandable, actually: bars are used to separate commands but <code>inoremap &lt;F5&gt; &lt;Esc&gt;:write|silent make|cwindow&lt;CR&gt;</code> is <em>one</em> command and the parts between bars don&#8217;t really make sense on their own. So what can we do? Escape those bars?</p>
-</div>
-<div class="paragraph">
-<p>Well yes:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>inoremap &lt;F5&gt; &lt;Esc&gt;:write\|silent make\|cwindow&lt;CR&gt;
-nnoremap &lt;F5&gt; :write\|silent make\|cwindow&lt;CR&gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>or we can use <code>&lt;Bar&gt;</code>:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>inoremap &lt;F5&gt; &lt;Esc&gt;:write&lt;Bar&gt;silent make&lt;Bar&gt;cwindow&lt;CR&gt;
-nnoremap &lt;F5&gt; :write&lt;Bar&gt;silent make&lt;Bar&gt;cwindow&lt;CR&gt;</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Let&#8217;s see how it looks:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>(gifcast)</pre>
-</div>
-</div>
 <div id="nav" class="toc">
 <p>Where to go now?</p>
 <ul class="sectlevel1">

@@ -6,28 +6,47 @@
 :linkcss:
 :toc:
 
+You should know the mantra by now: "`Vim does a lot by itself`". But Vim doesn't do _everything_ and, sometimes, we would like it to do what it does in a slightly different way.
 
-NB: Since 7.4, it is possible to keep our `vimrc` *inside* our `~/.vim/` (on Unix-like systems)
+== Vimscript
 
-vimscript
-	functions
-	commands
-	variables
-	etc.
-good practices
-when to look for plugins
-where to look for plugins
-installing plugins
-	manually
-	vimball
-	pathogen
-	vundle
-	neobundle
-	VAM
-	plug
-	notes on Git/Mercurial…
-updating plugins
-removing plugins
+=== Functions
+
+=== Commands
+
+=== Variables
+
+=== Etc.
+
+== Good practices
+
+== When to look for plugins
+
+== Where to look for plugins
+
+== Installing plugins
+
+=== Manually
+
+=== Vimball
+
+=== Pathogen
+
+=== Vundle
+
+=== Neobundle
+
+=== VAM
+
+=== Plug
+
+=== Packages
+
+=== Notes on Git/Mercurial…
+
+== Updating plugins
+
+== Removing plugins
 
 ++++
 <div id="nav" class="toc">
