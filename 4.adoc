@@ -98,7 +98,7 @@ Zooming out a bit more, we have another set of motions:
 |`{`|jump to previous blank line above a non-blank line
 |===
 
-`(` and `)` are only useful for prose but the ability to position the cursor above a paragraph or code block is extremely usefuful:
+`(` and `)` are only useful for prose but the ability to position the cursor above a paragraph or code block is priceless:
 
     (gifcast)
 
@@ -163,7 +163,8 @@ These few options are generally considered useful:
 
 == Search inside the current buffer
 
-While `/` and `#` are awesome *navigation* tools, they are not that good for *actual* searching. "Searching" usually involves comparing matches, filtering... all things `/` and `?` actually make quite hard, if only because we can't see all the matches at once.
+Searching usually involves comparing matches, filtering... all things `/` and `?` actually make quite hard, if only because we can't see all the matches at once.
+While `/` and `#` are awesome *navigation* tools, they are not that good for *actual* searching.
 
 === The Power of `:g`
 
@@ -233,15 +234,22 @@ But Vim has got our back with `:help :ilist`:
 
 * List every line containing the whole word `foo` and jump to one of them:
 
-    :il foo<CR>:202<CR> (gif)
+    :il foo<CR>
+    :202<CR>
+
+    (gif)
 
 * List every line containing `foo`
 
-    :il /foo<CR> (gif)
+    :il /foo<CR>
+
+    (gif)
 
 * Create a TOC of the current markdown document
 
-    :il /#<CR> (gif)
+    :il /#<CR>
+
+    (gif)
 
 ... and its more specialized sibling `:help :dlist`:
 
@@ -257,20 +265,26 @@ But Vim has got our back with `:help :ilist`:
 
 * List all the functions containing `user` and add a TODO item above one of them 
 
-    :dli /user<CR>:1034norm O// TODO: fix this function<CR> (gif)
+    :dli /user<CR>
+    :1034norm O// TODO: fix this function<CR>
+
+    (gif)
 
 * List all the occurences of `myVar` and substitute only some of them with `myArray`
 
-    :il myVar<CR>:53,89s/myVar/myArray (gif)
+    :il myVar<CR>
+    :53,89s/myVar/myArray<CR>
+
+    (gif)
 
 == Search inside loaded buffers
 
     :call setqflist([])<CR>
-    :bufdo vimgrepadd foo % | cw
+    :bufdo vimgrepadd foo % | cw<CR>
     
     :command! -nargs=1 SearchInBuffers call setqflist([])|silent! bufdo vimgrepadd <args> %|cw
 
-=== And replace
+=== ... and replace
 
     
 

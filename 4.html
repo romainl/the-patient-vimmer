@@ -41,12 +41,12 @@
 </li>
 <li><a href="#_search_inside_loaded_buffers">Search inside loaded buffers</a>
 <ul class="sectlevel2">
-<li><a href="#_and_replace">And replace</a></li>
+<li><a href="#__and_replace_2">&#8230;&#8203; and replace</a></li>
 </ul>
 </li>
 <li><a href="#_search_recursively_inside_project">Search recursively inside project</a>
 <ul class="sectlevel2">
-<li><a href="#__and_replace_2">&#8230;&#8203; and replace</a></li>
+<li><a href="#__and_replace_3">&#8230;&#8203; and replace</a></li>
 </ul>
 </li>
 </ul>
@@ -263,7 +263,7 @@ We live in a "wonderful" world.
 </tbody>
 </table>
 <div class="paragraph">
-<p><code>(</code> and <code>)</code> are only useful for prose but the ability to position the cursor above a paragraph or code block is extremely usefuful:</p>
+<p><code>(</code> and <code>)</code> are only useful for prose but the ability to position the cursor above a paragraph or code block is priceless:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -418,7 +418,8 @@ The default behavior of <code>H</code> and <code>L</code> can be altered with th
 <h2 id="_search_inside_the_current_buffer">Search inside the current buffer</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>While <code>/</code> and <code>#</code> are awesome <strong>navigation</strong> tools, they are not that good for <strong>actual</strong> searching. "Searching" usually involves comparing matches, filtering&#8230;&#8203; all things <code>/</code> and <code>?</code> actually make quite hard, if only because we can&#8217;t see all the matches at once.</p>
+<p>Searching usually involves comparing matches, filtering&#8230;&#8203; all things <code>/</code> and <code>?</code> actually make quite hard, if only because we can&#8217;t see all the matches at once.
+While <code>/</code> and <code>#</code> are awesome <strong>navigation</strong> tools, they are not that good for <strong>actual</strong> searching.</p>
 </div>
 <div class="sect2">
 <h3 id="_the_power_of_code_g_code">The Power of <code>:g</code></h3>
@@ -547,7 +548,13 @@ The default behavior of <code>H</code> and <code>L</code> can be altered with th
 <p>List every line containing the whole word <code>foo</code> and jump to one of them:</p>
 <div class="literalblock">
 <div class="content">
-<pre>:il foo&lt;CR&gt;:202&lt;CR&gt; (gif)</pre>
+<pre>:il foo&lt;CR&gt;
+:202&lt;CR&gt;</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(gif)</pre>
 </div>
 </div>
 </li>
@@ -555,7 +562,12 @@ The default behavior of <code>H</code> and <code>L</code> can be altered with th
 <p>List every line containing <code>foo</code></p>
 <div class="literalblock">
 <div class="content">
-<pre>:il /foo&lt;CR&gt; (gif)</pre>
+<pre>:il /foo&lt;CR&gt;</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(gif)</pre>
 </div>
 </div>
 </li>
@@ -563,7 +575,12 @@ The default behavior of <code>H</code> and <code>L</code> can be altered with th
 <p>Create a TOC of the current markdown document</p>
 <div class="literalblock">
 <div class="content">
-<pre>:il /#&lt;CR&gt; (gif)</pre>
+<pre>:il /#&lt;CR&gt;</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(gif)</pre>
 </div>
 </div>
 <div class="olist lowerroman">
@@ -600,7 +617,13 @@ The default behavior of <code>H</code> and <code>L</code> can be altered with th
 <p>List all the functions containing <code>user</code> and add a TODO item above one of them</p>
 <div class="literalblock">
 <div class="content">
-<pre>:dli /user&lt;CR&gt;:1034norm O// TODO: fix this function&lt;CR&gt; (gif)</pre>
+<pre>:dli /user&lt;CR&gt;
+:1034norm O// TODO: fix this function&lt;CR&gt;</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(gif)</pre>
 </div>
 </div>
 </li>
@@ -608,7 +631,13 @@ The default behavior of <code>H</code> and <code>L</code> can be altered with th
 <p>List all the occurences of <code>myVar</code> and substitute only some of them with <code>myArray</code></p>
 <div class="literalblock">
 <div class="content">
-<pre>:il myVar&lt;CR&gt;:53,89s/myVar/myArray (gif)</pre>
+<pre>:il myVar&lt;CR&gt;
+:53,89s/myVar/myArray&lt;CR&gt;</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(gif)</pre>
 </div>
 </div>
 </li>
@@ -623,7 +652,7 @@ The default behavior of <code>H</code> and <code>L</code> can be altered with th
 <div class="literalblock">
 <div class="content">
 <pre>:call setqflist([])&lt;CR&gt;
-:bufdo vimgrepadd foo % | cw</pre>
+:bufdo vimgrepadd foo % | cw&lt;CR&gt;</pre>
 </div>
 </div>
 <div class="literalblock">
@@ -632,7 +661,7 @@ The default behavior of <code>H</code> and <code>L</code> can be altered with th
 </div>
 </div>
 <div class="sect2">
-<h3 id="_and_replace">And replace</h3>
+<h3 id="__and_replace_2">&#8230;&#8203; and replace</h3>
 
 </div>
 </div>
@@ -641,7 +670,7 @@ The default behavior of <code>H</code> and <code>L</code> can be altered with th
 <h2 id="_search_recursively_inside_project">Search recursively inside project</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="__and_replace_2">&#8230;&#8203; and replace</h3>
+<h3 id="__and_replace_3">&#8230;&#8203; and replace</h3>
 <div id="nav" class="toc">
 <p>Where to go now?</p>
 <ul class="sectlevel1">
@@ -661,7 +690,7 @@ The default behavior of <code>H</code> and <code>L</code> can be altered with th
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-07-15 13:21:25 CEST
+Last updated 2016-10-08 11:07:03 CEST
 </div>
 </div>
 </body>
