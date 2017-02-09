@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.2">
+<meta name="generator" content="Asciidoctor 1.5.5">
 <title>Buffers, Windows, Tab Pages</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
@@ -16,7 +16,9 @@
 <ul class="sectlevel1">
 <li><a href="#_buffers">Buffers</a>
 <ul class="sectlevel2">
+<li><a href="#_listing_buffers">Listing buffers</a></li>
 <li><a href="#_switching_buffers">Switching buffers</a></li>
+<li><a href="#_working_across_buffers">Working across buffers</a></li>
 <li><a href="#_reference">Reference</a></li>
 </ul>
 </li>
@@ -43,7 +45,7 @@
 <h2 id="_buffers">Buffers</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_switching_buffers">Switching buffers</h3>
+<h3 id="_listing_buffers">Listing buffers</h3>
 <div class="paragraph">
 <p>Every buffer created in Vim, at startup or later, is added to the <em>buffer list</em> where it is assigned a number that will <strong>never</strong> change until the buffer is explicitely wiped out from the list.</p>
 </div>
@@ -61,7 +63,7 @@
 </ul>
 </div>
 <div class="paragraph">
-<p>A typical Vim session could consist of editing a single file—and thus a single buffer—or it could go on for weeks and consist of dozens and dozens of buffers. Keeping track of a potentially large number of buffers would be daunting if Vim didn&#8217;t gave us not one, not two, but <em>three</em> commands for listing buffers:</p>
+<p>A typical Vim session could consist of editing a single file&#8212;&#8203;and thus a single buffer&#8212;&#8203;or it could go on for weeks and consist of dozens and dozens of buffers. Keeping track of a potentially large number of buffers would be daunting if Vim didn&#8217;t gave us not one, not two, but <em>three</em> commands for listing buffers:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -97,31 +99,65 @@ Press ENTER or type command to continue</pre>
 </li>
 </ul>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_switching_buffers">Switching buffers</h3>
 <div class="paragraph">
 <p>But we have no cursor, no active line, no selection&#8230;&#8203; Obviously, this list is not nicely interactive so what good is it? Well, the last line gives us a hint: pressing <code>ENTER</code> unsurprisingly makes the list go away but we can also press <code>:</code> to enter command-line mode and use an Ex command to do something with the info we get from the list.</p>
 </div>
 <div class="paragraph">
 <p>Because of their central role, buffers come with <em>a lot</em> of navigation and management commands, let&#8217;s see a few things we can do with the list above:</p>
 </div>
-<div class="literalblock">
-<div class="content">
-<pre>:b1     " jump to buffer number 1
-:b#     " jump back to previous buffer
-:bd2    " delete buffer number 2</pre>
-</div>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 18.1818%;">
+<col style="width: 81.8182%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>command</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>description</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:b1</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jump to buffer number 1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:b#</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jump back to previous buffer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:bd2</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">delete buffer number 2</p></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
 <p>Unlike &#8220;modern&#8221; editors, Vim can&#8217;t display a permanent list of loaded buffers by default. This may feel like a limitation if you are used to that feature but think about it for a moment&#8230;&#8203; do you <em>really</em> need that list when you are not trying to jump to another buffer?</p>
 </div>
 <div class="paragraph">
 <p>To sum it up, the most basic way to switch to another <em>specific</em> buffer is a two steps process:</p>
 </div>
-<div class="literalblock">
-<div class="content">
-<pre>:ls     " display the buffer list
-:b24    " switch to the desired buffer</pre>
-</div>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 18.1818%;">
+<col style="width: 81.8182%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>command</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>description</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:ls</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jump to buffer number 1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:b24</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jump back to previous buffer</p></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
 <p>Of course, it is not necessary to do <code>:ls</code> before doing <code>:b24</code> but who wants to actively maintain a list of buffers in his head? Well&#8230;&#8203; I certainly don&#8217;t.</p>
 </div>
@@ -154,7 +190,7 @@ Press ENTER or type command to continue</pre>
 <p>Vim is rather famous for the way its normal mode commands span the entire keyboard but there are a few gaps, here and there, that we can take to our advantage.</p>
 </div>
 <div class="paragraph">
-<p>One of those gaps can be found in how operators work. Operators are normal mode commands that don&#8217;t do anything by themselves; they wait for us to tell them on what to operate. <code>c</code>, for example, is an operator, just like <code>y</code> or <code>d</code>, that expects a text-object or motion. If we don&#8217;t provide one, operators will keep waiting indefinitely until we decide to give them <em>a purpose</em>. As an example, here is the command for &#8220;changing from the cursor to the end of the current word&#8221;:</p>
+<p>One of those gaps can be found in how operators work. Operators are normal mode commands that don&#8217;t do anything by themselves; they wait for us to tell them on what to operate. <code>c</code>, for example, is an operator, just like <code>y</code> or <code>d</code>, that expects a text-object or motion. If we don&#8217;t provide one, operators will keep waiting until we decide to give them <em>a purpose</em>. As an example, here is the command for &#8220;changing from the cursor to the end of the current word&#8221;:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -192,7 +228,7 @@ yA</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>There&#8217;s another—slightly smaller—gap: &#8220;commands starting with g&#8221; and &#8220;commands starting with z&#8221;. Even if they work differently, those two-characters commands look a lot like the operator-based commands above and the missing pairs can be used in the same way:</p>
+<p>There&#8217;s another&#8212;&#8203;slightly smaller&#8212;&#8203;gap: &#8220;commands starting with g&#8221; and &#8220;commands starting with z&#8221;. Even if they work differently, those two-characters commands look a lot like the operator-based commands above and the missing pairs can be used in the same way:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -225,10 +261,10 @@ gB</pre>
 <p>Not bad at all, and that&#8217;s one more mapping to add to our <code>vimrc</code>.</p>
 </div>
 <div class="paragraph">
-<p>But there&#8217;s one problem with numbers: the file-to-number relationship is not very intuitive. Humans being humans, we are naturally better at names than numbers so the second way to address buffers, <strong>names,</strong> may have a lot of potential here.</p>
+<p>But there&#8217;s one problem with numbers: the file-to-number relationship is not very intuitive. We Humans are naturally better at names than numbers so the second way to address buffers, <strong>names,</strong> may have a lot of potential here.</p>
 </div>
 <div class="paragraph">
-<p>Well, it happens that the buffer commands we used before, <code>:b</code> and <code>:bd</code>, can take a partial name as argument so switching to a buffer, especially with tab-completion and the wildmenu, can be very close to friction-less:</p>
+<p>Well, it happens that the buffer commands we used before, <code>:b</code> and <code>:bd</code>, can take a buffer name (even partial) as argument so switching to a buffer, especially with tab-completion and the wildmenu, can be very close to friction-less:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -244,7 +280,7 @@ gB</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The similarity with the <code>&lt;leader&gt;f</code> mapping we added to our <code>vimrc</code> in the previous chapter and the <code>&lt;leader&gt;e</code> mapping it replaced is not a happy coincidense. We have two commands with a similar purpose—navigation—that work exactly the same way and follow the same naming convention:</p>
+<p>The similarity with the <code>&lt;leader&gt;f</code> mapping we added to our <code>vimrc</code> in the previous chapter and the <code>&lt;leader&gt;e</code> mapping it replaced is not a happy coincidence. We have two commands with a similar purpose&#8212;&#8203;navigation&#8212;&#8203;that work exactly the same way and follow the same naming convention:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -257,8 +293,11 @@ gB</pre>
 </ul>
 </div>
 <div class="paragraph">
-<p>With <code>&lt;leader&gt;f</code> and now <code>&lt;leader&gt;b</code> we have the beginning of a collection of easy-to-remember and consistant navigation mappings—exactly the kind of mapping we need—as well as another one, <code>gb</code>, which simply demonstrates another way to approach the same problem.</p>
+<p>With <code>&lt;leader&gt;f</code> and now <code>&lt;leader&gt;b</code> we have the beginning of a collection of easy-to-remember and consistant navigation mappings&#8212;&#8203;exactly the kind of mapping we need&#8212;&#8203;as well as another one, <code>gb</code>, which simply demonstrates another way to approach the same problem.</p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_working_across_buffers">Working across buffers</h3>
 <div class="paragraph">
 <p>We shouldn&#8217;t be concerned with buffers only for navigation, of course: Vim allows us to perform actions <em>on each buffer in the buffer list</em> with the <code>:bufdo</code> command:</p>
 </div>
@@ -296,7 +335,7 @@ gB</pre>
 <div class="sect2">
 <h3 id="_creating_windows">Creating windows</h3>
 <div class="paragraph">
-<p>Splitting the current window in two side-by-side views is done with either <code>&lt;C-w&gt;v</code>—all window-related commands start with <code>&lt;C-w&gt;</code>—or <code>:vsplit</code> (shortened to <code>:vs</code>).</p>
+<p>Splitting the current window in two side-by-side views is done with either <code>&lt;C-w&gt;v</code>--all window-related commands start with <code>&lt;C-w&gt;</code>--or <code>:vsplit</code> (shortened to <code>:vs</code>).</p>
 </div>
 <div class="paragraph">
 <p>Splitting the current window in two windows one above the other is done with either <code>&lt;C-w&gt;s</code> or <code>:split</code> (shortened to <code>:sp</code>).</p>
@@ -311,7 +350,7 @@ gB</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>or—more constructively—by adding those two options to your <code>vimrc</code>:</p>
+<p>or&#8212;&#8203;more constructively&#8212;&#8203;by adding those two options to your <code>vimrc</code>:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -350,8 +389,8 @@ splitting      splitting
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 18%;">
-<col style="width: 81%;">
+<col style="width: 18.1818%;">
+<col style="width: 81.8182%;">
 </colgroup>
 <tbody>
 <tr>
@@ -414,8 +453,8 @@ Prepending <code>&lt;C-w&gt;</code> with a count moves the cursor by <code>count
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 18%;">
-<col style="width: 81%;">
+<col style="width: 18.1818%;">
+<col style="width: 81.8182%;">
 </colgroup>
 <tbody>
 <tr>
@@ -444,8 +483,8 @@ Prepending <code>&lt;C-w&gt;</code> with a count moves the cursor by <code>count
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 18%;">
-<col style="width: 81%;">
+<col style="width: 18.1818%;">
+<col style="width: 81.8182%;">
 </colgroup>
 <tbody>
 <tr>
@@ -475,8 +514,8 @@ Prepending <code>&lt;C-w&gt;</code> with a count moves the cursor by <code>count
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 18%;">
-<col style="width: 81%;">
+<col style="width: 18.1818%;">
+<col style="width: 81.8182%;">
 </colgroup>
 <tbody>
 <tr>
@@ -521,8 +560,8 @@ Prepending <code>&lt;C-w&gt;</code> with a count moves the cursor by <code>count
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 18%;">
-<col style="width: 81%;">
+<col style="width: 18.1818%;">
+<col style="width: 81.8182%;">
 </colgroup>
 <tbody>
 <tr>
@@ -662,7 +701,7 @@ nnoremap &lt;leader&gt;tf :tabfind *</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-09-09 15:53:41 CEST
+Last updated 2017-02-07 18:03:50 CET
 </div>
 </div>
 </body>

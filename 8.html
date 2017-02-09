@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.2">
+<meta name="generator" content="Asciidoctor 1.5.5">
 <title>Extending Vim</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
@@ -23,23 +23,15 @@
 </ul>
 </li>
 <li><a href="#_good_practices">Good practices</a></li>
+<li><a href="#_plugins">Plugins</a>
+<ul class="sectlevel2">
 <li><a href="#_when_to_look_for_plugins">When to look for plugins</a></li>
 <li><a href="#_where_to_look_for_plugins">Where to look for plugins</a></li>
-<li><a href="#_installing_plugins">Installing plugins</a>
-<ul class="sectlevel2">
-<li><a href="#_manually">Manually</a></li>
-<li><a href="#_vimball">Vimball</a></li>
-<li><a href="#_pathogen">Pathogen</a></li>
-<li><a href="#_vundle">Vundle</a></li>
-<li><a href="#_neobundle">Neobundle</a></li>
-<li><a href="#_vam">VAM</a></li>
-<li><a href="#_plug">Plug</a></li>
-<li><a href="#_packages">Packages</a></li>
-<li><a href="#_notes_on_git_mercurial">Notes on Git/Mercurial…</a></li>
-</ul>
-</li>
+<li><a href="#_installing_plugins">Installing plugins</a></li>
 <li><a href="#_updating_plugins">Updating plugins</a></li>
 <li><a href="#_removing_plugins">Removing plugins</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -79,67 +71,69 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_when_to_look_for_plugins">When to look for plugins</h2>
+<h2 id="_plugins">Plugins</h2>
 <div class="sectionbody">
-
-</div>
-</div>
-<div class="sect1">
-<h2 id="_where_to_look_for_plugins">Where to look for plugins</h2>
-<div class="sectionbody">
-
-</div>
-</div>
-<div class="sect1">
-<h2 id="_installing_plugins">Installing plugins</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_manually">Manually</h3>
-
+<div class="paragraph">
+<p>A &#8220;Plugin&#8221; is one or more scripts written by other Vimmers to extend Vim in one way or another. Some plugins may add support for a language not supported by Vim natively. Some plugins may provide a more useable abstraction over a built-in feature. Some plugins may give you a nice colorscheme. Some plugins may provide no benefit whatsoever. Some plugins&#8230;&#8203; Well there are <em>thousands</em> of them.</p>
 </div>
 <div class="sect2">
-<h3 id="_vimball">Vimball</h3>
+<h3 id="_when_to_look_for_plugins">When to look for plugins</h3>
+<div class="paragraph">
+<p>For the self-respecting Patient Vimmer, installing a third-party plugin should be the last resort. Not because plugins are antiethical or whatever but because there&#8217;s more often than not a built-in way to do what you want and/or a built-in way to customize Vim to do what you want.</p>
+</div>
+<div class="paragraph">
+<p>In my opinion, Vimmers should look</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_where_to_look_for_plugins">Where to look for plugins</h3>
 
 </div>
 <div class="sect2">
-<h3 id="_pathogen">Pathogen</h3>
+<h3 id="_installing_plugins">Installing plugins</h3>
+<div class="sect3">
+<h4 id="_manually">Manually</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_vimball">Vimball</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_pathogen">Pathogen</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_vundle">Vundle</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_neobundle">Neobundle</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_vam">VAM</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_plug">Plug</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_packages">Packages</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_notes_on_git_mercurial">Notes on Git/Mercurial…</h4>
+
+</div>
+</div>
+<div class="sect2">
+<h3 id="_updating_plugins">Updating plugins</h3>
 
 </div>
 <div class="sect2">
-<h3 id="_vundle">Vundle</h3>
-
-</div>
-<div class="sect2">
-<h3 id="_neobundle">Neobundle</h3>
-
-</div>
-<div class="sect2">
-<h3 id="_vam">VAM</h3>
-
-</div>
-<div class="sect2">
-<h3 id="_plug">Plug</h3>
-
-</div>
-<div class="sect2">
-<h3 id="_packages">Packages</h3>
-
-</div>
-<div class="sect2">
-<h3 id="_notes_on_git_mercurial">Notes on Git/Mercurial…</h3>
-
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_updating_plugins">Updating plugins</h2>
-<div class="sectionbody">
-
-</div>
-</div>
-<div class="sect1">
-<h2 id="_removing_plugins">Removing plugins</h2>
-<div class="sectionbody">
+<h3 id="_removing_plugins">Removing plugins</h3>
 <div id="nav" class="toc">
 <p>Where to go now?</p>
 <ul class="sectlevel1">
@@ -156,9 +150,10 @@
 </div>
 </div>
 </div>
+</div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-08-20 13:54:15 CEST
+Last updated 2017-02-09 10:56:16 CET
 </div>
 </div>
 </body>

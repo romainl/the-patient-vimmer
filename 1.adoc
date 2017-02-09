@@ -325,10 +325,10 @@ The command-line is Vim's main interface. Like the prompt of your computer's she
 <li><a href="#">bar</a></li>
 <li><a href="#">baz</a></li>
 </ul>
+</div>
 <div id="bottom">
 <p>Written by <a href="https://github.com/romainl">Romain Lafourcade</a>, with help from <a href="https://github.com/dahu/">Barry Arthur</a> and the #vim community.</p>
 <p class="copyleft">Copyleft 2015</p>
-</div>
 </div>
 <script src="javascript/behavior.js"></script>
 ++++

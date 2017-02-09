@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.2">
+<meta name="generator" content="Asciidoctor 1.5.5">
 <title>Take the owner&#8217;s tour</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
@@ -68,7 +68,7 @@
 <h2 id="_buffers">Buffers</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Like Microsoft Word or Adobe Photoshop, Vim lets us create, delete, switch to and edit &#8220;buffers&#8221; (Vim&#8217;s word for &#8220;documents&#8221;). Like in Microsoft Word or Adobe Photoshop, those buffers:</p>
+<p>Like Microsoft Word or Adobe Photoshop, Vim lets us create, delete, switch to, and edit &#8220;buffers&#8221; (Vim&#8217;s word for &#8220;documents&#8221;). Like in Microsoft Word or Adobe Photoshop, those buffers:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -92,10 +92,10 @@
 <h2 id="_windows">Windows</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>An interesting feature of Vim is the ability to split our workspace in multiple windows—often called &#8220;splits&#8221;—to display different buffers or parts of a buffer. The exact mechanism is quite simple: the current window is split in two equal parts and the cursor is placed in the new window.</p>
+<p>An interesting feature of Vim is the ability to split the screen in multiple windows—often called &#8220;splits&#8221;—to display different buffers or parts of a buffer. The exact mechanism is quite simple: the current window is split in two equal parts and the cursor is placed in the new window.</p>
 </div>
 <div class="paragraph">
-<p>The purpose of a window is to provide a view into a buffer. It can be created, moved around and closed but it is important to remember that windows and buffers are not coupled <strong>at all</strong>. Since any buffer could end up being displayed in any window it is plain wrong to assume &#8220;switching to a window&#8221; to be the same as &#8220;switching to a buffer&#8221;, let alone &#8220;switching to a file&#8221;.</p>
+<p>The purpose of a window is to provide a view into a buffer. A window can be created, moved around and closed, but it is important to remember that windows and buffers are not coupled <strong>at all</strong>. Since any buffer could end up being displayed in any window it is plain wrong to assume &#8220;switching to a window&#8221; to be the same as &#8220;switching to a buffer&#8221;, let alone &#8220;switching to a file&#8221;.</p>
 </div>
 <div class="paragraph">
 <p>On the visual side of things, each window gets its own <a href="#_the_status_line">&#8220;status line&#8221;</a> and, only in GVim/MacVim, its own scrollbar.</p>
@@ -115,13 +115,13 @@
 <p>In other editors, &#8220;tabs&#8221; serve as proxies for documents. This means that the editor&#8217;s &#8220;tab line&#8221;—a list of tabs—is effectively a list of documents: one navigates from one tab to another and thus from one document to another. A &#8220;tab&#8221; <em>is</em> for all intent and purpose a <em>document</em> and there is no need to abstract away the tab <em>widget</em> from its associated &#8220;panel&#8221; and thus from the document it is associated with.</p>
 </div>
 <div class="paragraph">
-<p>Switching to a &#8220;tab&#8221; is exactly like switching to a document.</p>
+<p>In those editors, switching to a &#8220;tab&#8221; is exactly like switching to a document.</p>
 </div>
 <div class="paragraph">
 <p>In Vim, &#8220;tab pages&#8221; are <em>workspaces</em>, associated with &#8220;tab&#8221; widgets, themselves listed in a &#8220;tab line&#8221;. The &#8220;tab&#8221; and &#8220;tab line&#8221; widgets work pretty much like their counterparts in other editors but the <em>huge</em> difference lies in the <em>workspace</em> bit.</p>
 </div>
 <div class="paragraph">
-<p>A workspace is a place where you arrange one or more windows displaying one or more buffers. But we have seen earlier that buffers are <em>global</em> so, while it is entirely possible to have a single buffer displayed in a single window in a single tab page, it is impossible to force an actual one-to-one relationship between that buffer and that tab page without devising our own buffer/window/tab management paradigm.</p>
+<p>A tab page is just like a workspace: a place where you arrange one or more windows displaying one or more buffers. But we have seen earlier that buffers are <em>global</em> so, while it is entirely possible to have a single buffer displayed in a single window in a single tab page, it is impossible to force an actual one-to-one relationship between that buffer and that tab page without devising our own buffer/window/tab management paradigm.</p>
 </div>
 <div class="paragraph">
 <p>Because &#8220;tab&#8221; widgets are not associated with specific buffers we simply can&#8217;t use them as document proxies.</p>
@@ -186,8 +186,8 @@
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 18%;">
-<col style="width: 81%;">
+<col style="width: 18.1818%;">
+<col style="width: 81.8182%;">
 </colgroup>
 <tbody>
 <tr>
@@ -258,8 +258,8 @@
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 18%;">
-<col style="width: 81%;">
+<col style="width: 18.1818%;">
+<col style="width: 81.8182%;">
 </colgroup>
 <tbody>
 <tr>
@@ -464,8 +464,8 @@
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 18%;">
-<col style="width: 81%;">
+<col style="width: 18.1818%;">
+<col style="width: 81.8182%;">
 </colgroup>
 <tbody>
 <tr>
@@ -511,8 +511,8 @@
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 18%;">
-<col style="width: 81%;">
+<col style="width: 18.1818%;">
+<col style="width: 81.8182%;">
 </colgroup>
 <tbody>
 <tr>
@@ -669,10 +669,10 @@
 <li><a href="#">bar</a></li>
 <li><a href="#">baz</a></li>
 </ul>
+</div>
 <div id="bottom">
 <p>Written by <a href="https://github.com/romainl">Romain Lafourcade</a>, with help from <a href="https://github.com/dahu/">Barry Arthur</a> and the #vim community.</p>
 <p class="copyleft">Copyleft 2015</p>
-</div>
 </div>
 <script src="javascript/behavior.js"></script>
 </div>
@@ -680,7 +680,7 @@
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-08-18 22:15:20 CEST
+Last updated 2017-02-07 17:29:46 CET
 </div>
 </div>
 </body>

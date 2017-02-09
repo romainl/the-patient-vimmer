@@ -8,7 +8,7 @@
 
 == Buffers
 
-=== Switching buffers
+=== Listing buffers
 
 Every buffer created in Vim, at startup or later, is added to the _buffer list_ where it is assigned a number that will *never* change until the buffer is explicitely wiped out from the list.
 
@@ -17,7 +17,7 @@ Beside that number, buffers are also named after the file they are associated wi
 * by its number,
 * by its name.
 
-A typical Vim session could consist of editing a single file—and thus a single buffer—or it could go on for weeks and consist of dozens and dozens of buffers. Keeping track of a potentially large number of buffers would be daunting if Vim didn't gave us not one, not two, but _three_ commands for listing buffers:
+A typical Vim session could consist of editing a single file--and thus a single buffer--or it could go on for weeks and consist of dozens and dozens of buffers. Keeping track of a potentially large number of buffers would be daunting if Vim didn't gave us not one, not two, but _three_ commands for listing buffers:
 
     :buffers
     :files
@@ -38,20 +38,30 @@ All those commands do the same thing so we will simply use the shortest: `:ls`. 
 
 * And the last column shows the current position of the cursor.
 
+=== Switching buffers
+
 But we have no cursor, no active line, no selection... Obviously, this list is not nicely interactive so what good is it? Well, the last line gives us a hint: pressing `ENTER` unsurprisingly makes the list go away but we can also press `:` to enter command-line mode and use an Ex command to do something with the info we get from the list.
 
 Because of their central role, buffers come with _a lot_ of navigation and management commands, let's see a few things we can do with the list above:
 
-    :b1     " jump to buffer number 1
-    :b#     " jump back to previous buffer
-    :bd2    " delete buffer number 2
+[cols="2,9"]
+|===
+| *command* | *description*
+| `:b1`     | jump to buffer number 1
+| `:b#`     | jump back to previous buffer
+| `:bd2`    | delete buffer number 2
+|===
 
 Unlike "`modern`" editors, Vim can't display a permanent list of loaded buffers by default. This may feel like a limitation if you are used to that feature but think about it for a moment... do you _really_ need that list when you are not trying to jump to another buffer?
 
 To sum it up, the most basic way to switch to another _specific_ buffer is a two steps process:
 
-    :ls     " display the buffer list
-    :b24    " switch to the desired buffer
+[cols="2,9"]
+|===
+| *command* | *description*
+| `:ls`     | jump to buffer number 1
+| `:b24`    | jump back to previous buffer
+|===
 
 Of course, it is not necessary to do `:ls` before doing `:b24` but who wants to actively maintain a list of buffers in his head? Well... I certainly don't.
 
@@ -71,7 +81,7 @@ But there's something fishy with that mapping: it certainly is easy to remember,
 
 Vim is rather famous for the way its normal mode commands span the entire keyboard but there are a few gaps, here and there, that we can take to our advantage.
 
-One of those gaps can be found in how operators work. Operators are normal mode commands that don't do anything by themselves; they wait for us to tell them on what to operate. `c`, for example, is an operator, just like `y` or `d`, that expects a text-object or motion. If we don't provide one, operators will keep waiting indefinitely until we decide to give them _a purpose_. As an example, here is the command for "`changing from the cursor to the end of the current word`":
+One of those gaps can be found in how operators work. Operators are normal mode commands that don't do anything by themselves; they wait for us to tell them on what to operate. `c`, for example, is an operator, just like `y` or `d`, that expects a text-object or motion. If we don't provide one, operators will keep waiting until we decide to give them _a purpose_. As an example, here is the command for "`changing from the cursor to the end of the current word`":
 
     ce
 
@@ -91,7 +101,7 @@ And the same can be done with other operators:
     ya  yc  yd  ym  yo  yp  yq  yr  ys  yu  yv  yx  yz
     yA
 
-There's another—slightly smaller—gap: "`commands starting with g`" and "`commands starting with z`". Even if they work differently, those two-characters commands look a lot like the operator-based commands above and the missing pairs can be used in the same way:
+There's another--slightly smaller--gap: "`commands starting with g`" and "`commands starting with z`". Even if they work differently, those two-characters commands look a lot like the operator-based commands above and the missing pairs can be used in the same way:
 
     gb  gc  gl
     gB
@@ -108,9 +118,9 @@ Now, pressing `gb` in normal mode opens the buffer list like `:ls` and populates
 
 Not bad at all, and that's one more mapping to add to our `vimrc`.
 
-But there's one problem with numbers: the file-to-number relationship is not very intuitive. Humans being humans, we are naturally better at names than numbers so the second way to address buffers, *names,* may have a lot of potential here.
+But there's one problem with numbers: the file-to-number relationship is not very intuitive. We Humans are naturally better at names than numbers so the second way to address buffers, *names,* may have a lot of potential here.
 
-Well, it happens that the buffer commands we used before, `:b` and `:bd`, can take a partial name as argument so switching to a buffer, especially with tab-completion and the wildmenu, can be very close to friction-less:
+Well, it happens that the buffer commands we used before, `:b` and `:bd`, can take a buffer name (even partial) as argument so switching to a buffer, especially with tab-completion and the wildmenu, can be very close to friction-less:
 
     (gifcast)
 
@@ -118,12 +128,14 @@ Again, we can easily create a convenient mapping to save a bunch of keystrokes:
 
     nnoremap <leader>b :buffer *
 
-The similarity with the `<leader>f` mapping we added to our `vimrc` in the previous chapter and the `<leader>e` mapping it replaced is not a happy coincidense. We have two commands with a similar purpose—navigation—that work exactly the same way and follow the same naming convention:
+The similarity with the `<leader>f` mapping we added to our `vimrc` in the previous chapter and the `<leader>e` mapping it replaced is not a happy coincidence. We have two commands with a similar purpose--navigation--that work exactly the same way and follow the same naming convention:
 
 * `f` for "`file`",
 * `b` for "`buffer`".
 
-With `<leader>f` and now `<leader>b` we have the beginning of a collection of easy-to-remember and consistant navigation mappings—exactly the kind of mapping we need—as well as another one, `gb`, which simply demonstrates another way to approach the same problem.
+With `<leader>f` and now `<leader>b` we have the beginning of a collection of easy-to-remember and consistant navigation mappings--exactly the kind of mapping we need--as well as another one, `gb`, which simply demonstrates another way to approach the same problem.
+
+=== Working across buffers
 
 We shouldn't be concerned with buffers only for navigation, of course: Vim allows us to perform actions _on each buffer in the buffer list_ with the `:bufdo` command:
 
@@ -147,7 +159,7 @@ By the way, did you notice that Vim doesn't ask us to write each buffer before c
 
 === Creating windows
 
-Splitting the current window in two side-by-side views is done with either `<C-w>v`—all window-related commands start with `<C-w>`—or `:vsplit` (shortened to `:vs`).
+Splitting the current window in two side-by-side views is done with either `<C-w>v`--all window-related commands start with `<C-w>`--or `:vsplit` (shortened to `:vs`).
 
 Splitting the current window in two windows one above the other is done with either `<C-w>s` or `:split` (shortened to `:sp`).
 
@@ -156,7 +168,7 @@ By default, the splitting is done above and to the left of the current window. T
     :bel vs
     :bel sp
 
-or—more constructively—by adding those two options to your `vimrc`:
+or--more constructively--by adding those two options to your `vimrc`:
 
     set splitright
     set splitbelow

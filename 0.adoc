@@ -6,7 +6,7 @@
 :linkcss:
 :toc:
 
-Our first contact with Vim is always frustrating: the incapacity to type text right away, the non-obvious commands for writing and quitting...
+From the incapacity to type text right away to the non-obvious commands for writing and quitting, our first contact with Vim is always frustrating.
 
 Most of us bail out and learn to mentally replace `vi` and `vim` with `nano` in every tutorial they read.
 
@@ -20,7 +20,7 @@ Vim does a lot and thus requires quite a bit of learning as well as a significan
 
 But what kind of involvement are we talking about? Is it the kind that requires us to commit all of http://www.viemu.com/vi-vim-cheat-sheet.gif[that meaningless garbage] to memory?
 
-No. http://www.moolenaar.net/habits.html[Like Vim's author], I don't believe "`knowing all of Vim`" or "`being a Vim guru`" should be anyone's goal. Those may be _consequences_ of using Vim daily for 10 or 20 years, _maybe_, but we shouldn't focus too much on that target. Learning Vim is a long journey where the destination doesn't really matter. What happens along the way and the positive changes it causes in us are all that counts.
+No. I don't believe "`knowing all of Vim`" or "`being a Vim guru`" should be anyone's goal. Those may be happy _consequences_ of using Vim daily for 10 or 20 years, _maybe_, but we shouldn't focus too much on that target. Learning Vim is a long journey where the destination doesn't really matter. What happens along the way and the positive changes it causes in us are all that counts.
 
 You are playing in your own Tolkien trilogy, goddammit!
 
@@ -28,11 +28,15 @@ You are playing in your own Tolkien trilogy, goddammit!
 
 This guide assumes three things:
 
-* that you are relatively comfortable with the command-line, our primary environment for the whole guide,
+* that you are relatively comfortable with "`the UNIX shell`", our primary environment for the whole guide;
 
-* that you have already followed `vimtutor` at least a couple of times,
+* that you have already followed `vimtutor` at least a couple of times;
 
 * that you have access to a reasonably up-to-date Vim build.
+
+"`The UNIX shell`" is a large and fascinating subject in its own right and I simply don't know enough about it anyway so... no "`patient sheller`" for you.
+
+This guide is very likely to gloss over very important things found in `vimtutor` so going through it is an absolute requisite if you intend to ever be comfortable in Vim. Or if you intend to follow this guide.
 
 Most of what makes Vim Vim can be found even in the smallest build but the default Vim on your system--if you have one--is usually a very small one that lacks useful features for _serious_ usage.
 
@@ -42,7 +46,7 @@ The first step in our journey will thus be to upgrade Vim to a more up-to-date a
 
 On Linux/BSD systems, the trick is generally to install the more featured "`gvim`" package, which usually gives you both a `vim` command for terminal usage and a `gvim` command for GUI usage.
 
-The recipes below are safe but they obviously don't cover every Linux/BSD flavor. If in doubt, check your distribution's documentation.
+The recipes below are relatively safe but they obviously don't cover every Linux/BSD flavor. If in doubt, check your distribution's documentation.
 
 ==== Arch
 
@@ -89,7 +93,7 @@ MacVim, the most complete Vim you can get on Mac OS X, comes with both a GUI ver
 
 1. Download and install https://github.com/b4winckler/macvim/releases[an official snapshot] like you would with any other Mac OS X application.
 
-2. Place the `mvim` script that is bundled with MacVim somewhere in your `$PATH`.
+2. Place the `mvim` script that comes bundled with MacVim somewhere in your `$PATH`.
 
 ==== Package manager
 
@@ -187,7 +191,7 @@ What's happening here is that Vim is just being humble and professional. Its rol
 
 Or _more_, if we consider all the _improvements_ hidden behind that impenetrable `vi` persona.
 
-Like many other command-line programs, Vim depends on a number of configuration files and scripts to work its magic. Those files constitute Vim's "`runtime`" and are generaly not to be messed with. Halas, distribution maintainers like to edit them or move them around. This means that Vim's "`runtime`" can be in many places and that the system `vimrc`--if there is one--may or may not already contain solutions to some of the problems below. For those reasons, it is hard to even talk about a "`default`" setup so, in order to keep this guide simple and generic, I'll just do like if none of that mattered. Because, well... it doesn't.
+Like many other command-line programs, Vim depends on a number of configuration files and scripts to work its magic. Those files constitute Vim's "`runtime`" and are generaly not to be messed with. Halas, distribution maintainers like to edit them or move them around. This means that Vim's "`runtime`" can be in many places and that the system startup script--if there is one--may or may not already contain solutions to some of the problems below. Now, Vim 8.0 even comes with a script that attempts to provide a "`reasonable`" baseline but only manages to make things more complicated. For those reasons, it is hard to even talk about a "`default`" setup so, in order to keep this guide simple and generic, I'll just do like if none of that mattered. Because, well... it doesn't.
 
 Whatever, making Vim _a little bit_ more comfortable is a quick and easy exercise that will give us many opportunities to learn useful things: let's do it step by step, one problem at a time.
 
@@ -405,7 +409,7 @@ I would say we are doing good, here.
 </ul>
 </div>
 <div id="bottom">
-<p>Written by <a href="https://github.com/romainl">Romain Lafourcade</a>, with help from <a href="https://github.com/dahu/">Barry Arthur</a> and the #vim community.</p>
+<p>Written by <a href="https://github.com/romainl">Romain Lafourcade</a>, with help from <a href="https://github.com/dahu/">Barry Arthur</a> and the <a href="https://www.vi-improved.org/">#vim</a> community.</p>
 <p class="copyleft">Copyleft 2015</p>
 </div>
 <script src="javascript/behavior.js"></script>

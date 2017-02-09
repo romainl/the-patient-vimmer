@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.2">
+<meta name="generator" content="Asciidoctor 1.5.5">
 <title>A gentle introduction</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
@@ -41,7 +41,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Our first contact with Vim is always frustrating: the incapacity to type text right away, the non-obvious commands for writing and quitting&#8230;&#8203;</p>
+<p>From the incapacity to type text right away to the non-obvious commands for writing and quitting, our first contact with Vim is always frustrating.</p>
 </div>
 <div class="paragraph">
 <p>Most of us bail out and learn to mentally replace <code>vi</code> and <code>vim</code> with <code>nano</code> in every tutorial they read.</p>
@@ -62,7 +62,7 @@
 <p>But what kind of involvement are we talking about? Is it the kind that requires us to commit all of <a href="http://www.viemu.com/vi-vim-cheat-sheet.gif">that meaningless garbage</a> to memory?</p>
 </div>
 <div class="paragraph">
-<p>No. <a href="http://www.moolenaar.net/habits.html">Like Vim&#8217;s author</a>, I don&#8217;t believe &#8220;knowing all of Vim&#8221; or &#8220;being a Vim guru&#8221; should be anyone&#8217;s goal. Those may be <em>consequences</em> of using Vim daily for 10 or 20 years, <em>maybe</em>, but we shouldn&#8217;t focus too much on that target. Learning Vim is a long journey where the destination doesn&#8217;t really matter. What happens along the way and the positive changes it causes in us are all that counts.</p>
+<p>No. I don&#8217;t believe &#8220;knowing all of Vim&#8221; or &#8220;being a Vim guru&#8221; should be anyone&#8217;s goal. Those may be happy <em>consequences</em> of using Vim daily for 10 or 20 years, <em>maybe</em>, but we shouldn&#8217;t focus too much on that target. Learning Vim is a long journey where the destination doesn&#8217;t really matter. What happens along the way and the positive changes it causes in us are all that counts.</p>
 </div>
 <div class="paragraph">
 <p>You are playing in your own Tolkien trilogy, goddammit!</p>
@@ -78,15 +78,21 @@
 <div class="ulist">
 <ul>
 <li>
-<p>that you are relatively comfortable with the command-line, our primary environment for the whole guide,</p>
+<p>that you are relatively comfortable with &#8220;the UNIX shell&#8221;, our primary environment for the whole guide;</p>
 </li>
 <li>
-<p>that you have already followed <code>vimtutor</code> at least a couple of times,</p>
+<p>that you have already followed <code>vimtutor</code> at least a couple of times;</p>
 </li>
 <li>
 <p>that you have access to a reasonably up-to-date Vim build.</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>&#8220;The UNIX shell&#8221; is a large and fascinating subject in its own right and I simply don&#8217;t know enough about it anyway so&#8230;&#8203; no &#8220;patient sheller&#8221; for you.</p>
+</div>
+<div class="paragraph">
+<p>This guide is very likely to gloss over very important things found in <code>vimtutor</code> so going through it is an absolute requisite if you intend to ever be comfortable in Vim. Or if you intend to follow this guide.</p>
 </div>
 <div class="paragraph">
 <p>Most of what makes Vim Vim can be found even in the smallest build but the default Vim on your system&#8212;&#8203;if you have one&#8212;&#8203;is usually a very small one that lacks useful features for <em>serious</em> usage.</p>
@@ -100,7 +106,7 @@
 <p>On Linux/BSD systems, the trick is generally to install the more featured &#8220;gvim&#8221; package, which usually gives you both a <code>vim</code> command for terminal usage and a <code>gvim</code> command for GUI usage.</p>
 </div>
 <div class="paragraph">
-<p>The recipes below are safe but they obviously don&#8217;t cover every Linux/BSD flavor. If in doubt, check your distribution&#8217;s documentation.</p>
+<p>The recipes below are relatively safe but they obviously don&#8217;t cover every Linux/BSD flavor. If in doubt, check your distribution&#8217;s documentation.</p>
 </div>
 <div class="sect3">
 <h4 id="_arch">Arch</h4>
@@ -184,7 +190,7 @@ $ mvim -v     " opens a new CLI MacVim instance</pre>
 <p>Download and install <a href="https://github.com/b4winckler/macvim/releases">an official snapshot</a> like you would with any other Mac OS X application.</p>
 </li>
 <li>
-<p>Place the <code>mvim</code> script that is bundled with MacVim somewhere in your <code>$PATH</code>.</p>
+<p>Place the <code>mvim</code> script that comes bundled with MacVim somewhere in your <code>$PATH</code>.</p>
 </li>
 </ol>
 </div>
@@ -353,7 +359,7 @@ Search for help:
 <p>Or <em>more</em>, if we consider all the <em>improvements</em> hidden behind that impenetrable <code>vi</code> persona.</p>
 </div>
 <div class="paragraph">
-<p>Like many other command-line programs, Vim depends on a number of configuration files and scripts to work its magic. Those files constitute Vim&#8217;s &#8220;runtime&#8221; and are generaly not to be messed with. Halas, distribution maintainers like to edit them or move them around. This means that Vim&#8217;s &#8220;runtime&#8221; can be in many places and that the system <code>vimrc</code>--if there is one&#8212;&#8203;may or may not already contain solutions to some of the problems below. For those reasons, it is hard to even talk about a &#8220;default&#8221; setup so, in order to keep this guide simple and generic, I&#8217;ll just do like if none of that mattered. Because, well&#8230;&#8203; it doesn&#8217;t.</p>
+<p>Like many other command-line programs, Vim depends on a number of configuration files and scripts to work its magic. Those files constitute Vim&#8217;s &#8220;runtime&#8221; and are generaly not to be messed with. Halas, distribution maintainers like to edit them or move them around. This means that Vim&#8217;s &#8220;runtime&#8221; can be in many places and that the system startup script&#8212;&#8203;if there is one&#8212;&#8203;may or may not already contain solutions to some of the problems below. Now, Vim 8.0 even comes with a script that attempts to provide a &#8220;reasonable&#8221; baseline but only manages to make things more complicated. For those reasons, it is hard to even talk about a &#8220;default&#8221; setup so, in order to keep this guide simple and generic, I&#8217;ll just do like if none of that mattered. Because, well&#8230;&#8203; it doesn&#8217;t.</p>
 </div>
 <div class="paragraph">
 <p>Whatever, making Vim <em>a little bit</em> more comfortable is a quick and easy exercise that will give us many opportunities to learn useful things: let&#8217;s do it step by step, one problem at a time.</p>
@@ -784,7 +790,7 @@ There are two ways to &#8220;set&#8221; an option in Vim. The <code>:set</code> 
 </ul>
 </div>
 <div id="bottom">
-<p>Written by <a href="https://github.com/romainl">Romain Lafourcade</a>, with help from <a href="https://github.com/dahu/">Barry Arthur</a> and the #vim community.</p>
+<p>Written by <a href="https://github.com/romainl">Romain Lafourcade</a>, with help from <a href="https://github.com/dahu/">Barry Arthur</a> and the <a href="https://www.vi-improved.org/">#vim</a> community.</p>
 <p class="copyleft">Copyleft 2015</p>
 </div>
 <script src="javascript/behavior.js"></script>
@@ -793,7 +799,7 @@ There are two ways to &#8220;set&#8221; an option in Vim. The <code>:set</code> 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-07-11 20:13:09 CEST
+Last updated 2017-02-07 18:14:44 CET
 </div>
 </div>
 </body>

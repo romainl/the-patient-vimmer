@@ -20,33 +20,41 @@ You should know the mantra by now: "`Vim does a lot by itself`". But Vim doesn't
 
 == Good practices
 
-== When to look for plugins
+== Plugins
 
-== Where to look for plugins
+A "`Plugin`" is one or more scripts written by other Vimmers to extend Vim in one way or another. Some plugins may add support for a language not supported by Vim natively. Some plugins may provide a more useable abstraction over a built-in feature. Some plugins may give you a nice colorscheme. Some plugins may provide no benefit whatsoever. Some plugins... Well there are _thousands_ of them.
 
-== Installing plugins
+=== When to look for plugins
 
-=== Manually
+For the self-respecting Patient Vimmer, installing a third-party plugin should be the last resort. Not because plugins are antiethical or whatever but because there's more often than not a built-in way to do what you want and/or a built-in way to customize Vim to do what you want.
 
-=== Vimball
+In my opinion, Vimmers should look
 
-=== Pathogen
+=== Where to look for plugins
 
-=== Vundle
+=== Installing plugins
 
-=== Neobundle
+==== Manually
 
-=== VAM
+==== Vimball
 
-=== Plug
+==== Pathogen
 
-=== Packages
+==== Vundle
 
-=== Notes on Git/Mercurial…
+==== Neobundle
 
-== Updating plugins
+==== VAM
 
-== Removing plugins
+==== Plug
+
+==== Packages
+
+==== Notes on Git/Mercurial…
+
+=== Updating plugins
+
+=== Removing plugins
 
 ++++
 <div id="nav" class="toc">
