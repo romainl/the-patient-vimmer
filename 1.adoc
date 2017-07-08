@@ -313,6 +313,45 @@ The command-line is Vim's main interface. Like the prompt of your computer's she
 
 ==== Reference
 
+== Glossary
+
+Let's finish this chapter with a hopefully complete glossary.
+
+Buffer::
+qsmdgqsldhfqsld
+Window::
+qsdqsdsqdsqdqsdqsdqsd
+Tab page::
+Status line::
+Tab line::
+Preview window::
+Quickfix list::
+Quickfix window::
+Location list::
+Location window::
+Vertical split::
+Line numbers::
+Fold column::
+Sign column::
+Completion menu::
+Command-line::
+Command-line window::
+sdfksgdfsd
+Function::
+Custom function::
+Ex command::
+Custom command::
+Mapping::
+Abbreviation::
+Motion::
+Operator::
+Text-object::
+Register::
+Macro::
+Recording::
+Yank and put::
+sdhflsyd
+
 == Conclusion
 
 (to be written)

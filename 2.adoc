@@ -10,7 +10,7 @@
 
 === Listing buffers
 
-Every buffer created in Vim, at startup or later, is added to the _buffer list_ where it is assigned a number that will *never* change until the buffer is explicitely wiped out from the list.
+Every buffer created in Vim, at startup or later, is added to the _buffer list_ where it is assigned a number that will *never* change until the buffer is explicitly wiped out from the list.
 
 Beside that number, buffers are also named after the file they are associated with, if applicable. This gives us two ways to address a buffer:
 
