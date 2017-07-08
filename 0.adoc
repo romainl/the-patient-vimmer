@@ -50,9 +50,8 @@ The recipes below are relatively safe but they obviously don't cover every Linux
 
 ==== Arch
 
-    $ sudo pacman -Sy
-    $ sudo pacman -R vim
-    $ sudo pacman -S gvim
+    $ sudo pacman -Syy
+    $ sudo pacman -S vim gvim # vim pkg includes huge features, gvim optional
 
 ==== Debian
 
