@@ -28,6 +28,8 @@
 <li><a href="#_moving_the_cursor_between_windows">Moving the cursor between windows</a></li>
 <li><a href="#_moving_and_resizing_windows">Moving and resizing windows</a></li>
 <li><a href="#_closing_windows">Closing windows</a></li>
+<li><a href="#_managing_windows_from_the_command_line">Managing windows from the command-line</a></li>
+<li><a href="#_addressing_windows">Addressing windows</a></li>
 <li><a href="#_reference_2">Reference</a></li>
 </ul>
 </li>
@@ -106,7 +108,7 @@ Press ENTER or type command to continue</pre>
 <p>But we have no cursor, no active line, no selection&#8230;&#8203; Obviously, this list is not nicely interactive so what good is it? Well, the last line gives us a hint: pressing <code>ENTER</code> unsurprisingly makes the list go away but we can also press <code>:</code> to enter command-line mode and use an Ex command to do something with the info we get from the list.</p>
 </div>
 <div class="paragraph">
-<p>Because of their central role, buffers come with <em>a lot</em> of navigation and management commands, let&#8217;s see a few things we can do with the list above:</p>
+<p>Because of their central role, buffers come with <em>many</em> navigation and management commands, let&#8217;s see a few things we can do with the list above:</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -150,11 +152,11 @@ Press ENTER or type command to continue</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>:ls</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">jump to buffer number 1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">open the list of buffers</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>:b24</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">jump back to previous buffer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jump to buffer 24</p></td>
 </tr>
 </tbody>
 </table>
@@ -468,7 +470,7 @@ Prepending <code>&lt;C-w&gt;</code> with a count moves the cursor by <code>count
 </tbody>
 </table>
 <div class="paragraph">
-<p>which makes alterning between two windows a <em>breeze</em>.</p>
+<p>which makes alterning between two windows a <em>breeze</em>. Just like with <code>&lt;C-^&gt;</code> for buffers.</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -577,11 +579,33 @@ Prepending <code>&lt;C-w&gt;</code> with a count moves the cursor by <code>count
 </div>
 <div class="sect2">
 <h3 id="_closing_windows">Closing windows</h3>
+<div class="paragraph">
+<p>You can close the current window with <code>:q</code> or <code>&lt;C-w&gt;q</code>.</p>
+</div>
+<div class="paragraph">
+<p>You can close <em>every</em> window with <code>:qa</code>.</p>
+</div>
+<div class="paragraph">
+<p>If Vim complains about unsaved buffers but you don&#8217;t care about losing your changes, you can use <code>:q!</code> and <code>:qa!</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_managing_windows_from_the_command_line">Managing windows from the command-line</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_addressing_windows">Addressing windows</h3>
 
 </div>
 <div class="sect2">
 <h3 id="_reference_2">Reference</h3>
-
+<div class="literalblock">
+<div class="content">
+<pre>:help :q
+:help :qa
+and so on</pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -701,7 +725,7 @@ nnoremap &lt;leader&gt;tf :tabfind *</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-07-08 15:50:58 CEST
+Last updated 2017-08-27 12:54:39 CEST
 </div>
 </div>
 </body>

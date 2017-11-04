@@ -42,7 +42,7 @@ All those commands do the same thing so we will simply use the shortest: `:ls`. 
 
 But we have no cursor, no active line, no selection... Obviously, this list is not nicely interactive so what good is it? Well, the last line gives us a hint: pressing `ENTER` unsurprisingly makes the list go away but we can also press `:` to enter command-line mode and use an Ex command to do something with the info we get from the list.
 
-Because of their central role, buffers come with _a lot_ of navigation and management commands, let's see a few things we can do with the list above:
+Because of their central role, buffers come with _many_ navigation and management commands, let's see a few things we can do with the list above:
 
 [cols="2,9"]
 |===
@@ -59,8 +59,8 @@ To sum it up, the most basic way to switch to another _specific_ buffer is a two
 [cols="2,9"]
 |===
 | *command* | *description*
-| `:ls`     | jump to buffer number 1
-| `:b24`    | jump back to previous buffer
+| `:ls`     | open the list of buffers
+| `:b24`    | jump to buffer 24
 |===
 
 Of course, it is not necessary to do `:ls` before doing `:b24` but who wants to actively maintain a list of buffers in his head? Well... I certainly don't.
@@ -218,7 +218,7 @@ Then comes my favorite window-related command:
 | `<C-w>p`  | moves the cursor to the previous window
 |===
 
-which makes alterning between two windows a _breeze_.
+which makes alterning between two windows a _breeze_. Just like with `<C-^>` for buffers.
 
     (gifcast)
 
@@ -261,7 +261,25 @@ Here is a last command to wrap up the subject:
 
 === Closing windows
 
+You can close the current window with `:q` or `<C-w>q`.
+
+You can close _every_ window with `:qa`.
+
+If Vim complains about unsaved buffers but you don't care about losing your changes, you can use `:q!` and `:qa!`.
+
+=== Managing windows from the command-line
+
+
+
+=== Addressing windows
+
+
+
 === Reference
+
+    :help :q
+    :help :qa
+    and so on
 
 == Tab pages
 

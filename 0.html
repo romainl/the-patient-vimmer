@@ -78,7 +78,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>that you are relatively comfortable with &#8220;the UNIX shell&#8221;, our primary environment for the whole guide;</p>
+<p>that you are relatively comfortable with &#8220;the Unix shell&#8221;, our primary environment for the whole guide;</p>
 </li>
 <li>
 <p>that you have already followed <code>vimtutor</code> at least a couple of times;</p>
@@ -89,7 +89,7 @@
 </ul>
 </div>
 <div class="paragraph">
-<p>&#8220;The UNIX shell&#8221; is a large and fascinating subject in its own right and I simply don&#8217;t know enough about it anyway so&#8230;&#8203; no &#8220;patient sheller&#8221; for you.</p>
+<p>&#8220;The Unix shell&#8221; is a large and fascinating subject in its own right and I simply don&#8217;t know enough about it anyway so&#8230;&#8203; no &#8220;patient sheller&#8221; for you and no explanation of shell things.</p>
 </div>
 <div class="paragraph">
 <p>This guide is very likely to gloss over very important things found in <code>vimtutor</code> so going through it is an absolute requisite if you intend to ever be comfortable in Vim. Or if you intend to follow this guide.</p>
@@ -359,7 +359,7 @@ Search for help:
 <p>Or <em>more</em>, if we consider all the <em>improvements</em> hidden behind that impenetrable <code>vi</code> persona.</p>
 </div>
 <div class="paragraph">
-<p>Like many other command-line programs, Vim depends on a number of configuration files and scripts to work its magic. Those files constitute Vim&#8217;s &#8220;runtime&#8221; and are generaly not to be messed with. Halas, distribution maintainers like to edit them or move them around. This means that Vim&#8217;s &#8220;runtime&#8221; can be in many places and that the system startup script&#8212;&#8203;if there is one&#8212;&#8203;may or may not already contain solutions to some of the problems below. Now, Vim 8.0 even comes with a script that attempts to provide a &#8220;reasonable&#8221; baseline but only manages to make things more complicated. For those reasons, it is hard to even talk about a &#8220;default&#8221; setup so, in order to keep this guide simple and generic, I&#8217;ll just do like if none of that mattered. Because, well&#8230;&#8203; it doesn&#8217;t.</p>
+<p>Like many other command-line programs, Vim depends on a number of configuration files and scripts to work its magic. Those files constitute Vim&#8217;s &#8220;runtime&#8221; and are generaly not to be messed with. Halas, distribution maintainers like to edit them or move them around. This means that Vim&#8217;s &#8220;runtime&#8221; can be in many places and that Vim&#8217;s system-wide startup script&#8212;&#8203;if there is one&#8212;&#8203;may or may not already contain solutions to some of the problems below. Now, Vim 8.0 even comes with a script that attempts to provide a &#8220;reasonable&#8221; baseline but only manages to make things more complicated. For those reasons, it is hard to even talk about a &#8220;default&#8221; setup so, in order to keep this guide simple and generic, I&#8217;ll just do like if none of that mattered. Because, well&#8230;&#8203; it doesn&#8217;t.</p>
 </div>
 <div class="paragraph">
 <p>Whatever, making Vim <em>a little bit</em> more comfortable is a quick and easy exercise that will give us many opportunities to learn useful things: let&#8217;s do it step by step, one problem at a time.</p>
@@ -500,7 +500,7 @@ The very existence of that file makes adding <code>set nocompatible</code> to ou
 <div class="title">Note</div>
 </td>
 <td class="content">
-When used as an argument for an Ex command, <code>%</code> is replaced before execution by the current file name so, in this example, <code>:source %</code> is exactly the same as <code>:source ~/.vimrc</code>, except a lot shorter <em>and</em> generic. That will certainly come in handy!
+When used as an argument for an Ex command (that&#8217;s how we call command starting with <code>:</code>), <code>%</code> is replaced before execution by the current file name so, in this example, <code>:source %</code> is exactly the same as <code>:source ~/.vimrc</code>, except a lot shorter <em>and</em> generic. That will certainly come in handy!
 </td>
 </tr>
 </table>
@@ -524,7 +524,7 @@ When used as an argument for an Ex command, <code>%</code> is replaced before ex
 <p>Next comes automatic indentation. This one is more of a <em>comfort</em> thing but how are we supposed to be efficient at text editing if we have to to adjust the indent of every new line manually?</p>
 </div>
 <div class="paragraph">
-<p>It turns out Vim has a bunch of automatic indentation mechanisms, none of which are enabled by default. The most basic, <code>'autoindent'</code>, doesn&#8217;t try to be too smart and that&#8217;s all we need for now.</p>
+<p>It turns out Vim has a bunch of automatic indentation mechanisms, but none of those are enabled by default. The most basic, <code>'autoindent'</code>, doesn&#8217;t try to be too smart and that&#8217;s all we need for now.</p>
 </div>
 <div class="sect3">
 <h4 id="_solution_3">Solution</h4>
@@ -559,7 +559,7 @@ When used as an argument for an Ex command, <code>%</code> is replaced before ex
 <div class="title">Note</div>
 </td>
 <td class="content">
-Most Ex commands and options can be shortened to a couple of letters. This undoubtedly make things easier to type! In configuration files and scripts, though, the short form can be hard to read and doesn&#8217;t provide any benefit over the long form so don&#8217;t use it; your future self will thank you.
+Most Ex commands and options can be shortened to a couple of letters. This undoubtedly makes things easier to type! In configuration files and scripts, though, the short form can be hard to read and doesn&#8217;t provide any benefit over the long form so don&#8217;t use it; your future self will thank you.
 </td>
 </tr>
 </table>
@@ -695,7 +695,7 @@ Vim remembers 20 commands by default so I know someone who will fall in love wit
 <div class="sect2">
 <h3 id="_problem_6_huge_tabs">Problem 6&#8212;&#8203;Huge tabs</h3>
 <div class="paragraph">
-<p>Vim follows the de-facto standard of 8 spaces but we, programmers, <em>need</em> our 4 or 2 character-wide indentation, don&#8217;t we? <code>:help 'tabstop'</code> does a good job of explaining what strategy to adopt when dealing with tabulation. The strategy I recommend is to leave <code>'tabstop'</code> at its default value and only adjust <code>'shiftwidth'</code> and <code>'softtabstop'</code>.</p>
+<p>Vim follows the de-facto standard width of 8 characters but we, programmers, <em>need</em> our 4 or 2 character-wide indentation, don&#8217;t we? <code>:help 'tabstop'</code> does a good job of explaining what strategy to adopt when dealing with tabulation. The strategy I recommend is to leave <code>'tabstop'</code> at its default value and only adjust <code>'shiftwidth'</code> and <code>'softtabstop'</code>.</p>
 </div>
 <div class="sect3">
 <h4 id="_solution_7">Solution</h4>
@@ -799,7 +799,7 @@ There are two ways to &#8220;set&#8221; an option in Vim. The <code>:set</code> 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-02-10 23:27:06 CET
+Last updated 2017-08-27 12:36:46 CEST
 </div>
 </div>
 </body>

@@ -171,14 +171,34 @@
 <div class="paragraph">
 <p>Vim comes with a lot of commands that populate the quickfix list, like <code>:grep</code> or <code>:vimgrep</code>, used for searching text in your project, and <code>:make</code>, used to build your program or pass them through a syntax checker. Once the quickfix list is populated with valid entries, one can use a number of relatively intuitively named commands to navigate it:</p>
 </div>
-<div class="literalblock">
-<div class="content">
-<pre>:cfirst
-:clast
-:cnext
-:cprevious</pre>
-</div>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 18.1818%;">
+<col style="width: 81.8182%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>command</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>description</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:cfirst</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jumps to the first entry</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:clast</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jumps to the last entry</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:cnext</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jumps to the next entry</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>:cprevious</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jumps to the previous entry</p></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
 <p>or <code>:cwindow</code> to open the interactive &#8220;quickfix window&#8221;.</p>
 </div>
@@ -219,7 +239,7 @@
 <p>unlike the quickfix list, the location list is local to a window so you can have as many location lists and location windows as you have windows,</p>
 </li>
 <li>
-<p>the commands start with an <code>l</code> instead of a <code>c</code>, <code>:lfirst</code>, <code>:lwindow</code>, etc.</p>
+<p>the commands start with an <code>l</code> instead of a <code>c</code>: <code>:lfirst</code>, <code>:lwindow</code>, etc.</p>
 </li>
 </ul>
 </div>
@@ -239,7 +259,7 @@
 <div class="sect2">
 <h3 id="_the_preview_window">The preview window</h3>
 <div class="paragraph">
-<p>The preview window is a small window used to <em>preview</em> something, usually the signature of a function while we are working on its usage. It is a lot like a normal window except for these differences:</p>
+<p>The preview window is a small window used to <em>preview</em> something, typically the signature of a function while we are working on its usage. It is a lot like a normal window except for these differences:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -304,7 +324,7 @@
 <div class="sect2">
 <h3 id="_the_command_line_window">The Command-line window</h3>
 <div class="paragraph">
-<p>The command-line is a handy way to input commands but it is not that good when it comes to editing the current command or recalling an old one and changing its parameters. This is not a design flaw or an implementation issue, though: only sane seperation of concerns that should appeal to anyone used to the concept of <strong>modal editing</strong>.</p>
+<p>The command-line is a handy way to input commands but it is not that good when it comes to editing the current command or recalling an old one and changing its parameters. This is not a design flaw or an implementation issue, though: only sane separation of concerns that should appeal to anyone used to the concept of <strong>modal editing</strong>.</p>
 </div>
 <div class="paragraph">
 <p>You use insert mode to insert text and normal mode to edit text.</p>
@@ -330,7 +350,7 @@
 </div>
 </div>
 <div class="paragraph">
-<p>Some hardcore Ex commands users like to use the command-line window instead of the usual command-line. This can be done by overriding <code>:</code> in normal mode:</p>
+<p>Some hardcore Ex command users like to use the command-line window instead of the usual command-line. This can be done by overriding <code>:</code> in normal mode:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -435,7 +455,9 @@
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>set statusline=%&lt;\ %f\ %m%r%y%w%=\ L:\ \%l\/\%L\ C:\ \%c\</pre>
+<pre>set statusline=%&lt;\ %f\ %m%r%y%w%=\ L:\ \%l\/\%L\ C:\ \%c\
+                                                         |
+                                                         +-- there's a space, here</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -455,13 +477,13 @@
 <div class="sect2">
 <h3 id="_line_numbers">Line numbers</h3>
 <div class="paragraph">
-<p>Line numbers are a fairly straightforward feature that doesn&#8217;t deserve much explanation. One enables them with <code>:set number</code>, disables them with <code>:set nonumber</code> and decides how much room they take with <code>:set numberwidth=6</code>.</p>
+<p>Showing line numbers is a fairly straightforward feature that doesn&#8217;t deserve much explanation. One enables it with <code>:set number</code>, disables it with <code>:set nonumber</code> and decides how much room it takes with <code>:set numberwidth=6</code>.</p>
 </div>
 <div class="paragraph">
 <p>In most editors or IDEs, line numbers are only used directly by users in two ways: to communicate with other people who work on the same code and to jump to a specific line.</p>
 </div>
 <div class="paragraph">
-<p>In addition, Vim allows us to use line numbers to define the range and/or the address for many Ex commands:</p>
+<p>In addition, Vim allows us to use line numbers as prefix for many normal mode commands or to define the range and/or the address for many Ex commands:</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -605,7 +627,9 @@
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>:set fillchars+=vert:\</pre>
+<pre>:set fillchars+=vert:\
+                      |
+                      +-- there's a space, here</pre>
 </div>
 </div>
 <div class="sect3">
@@ -735,7 +759,7 @@
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-02-10 23:45:44 CET
+Last updated 2017-08-27 12:50:02 CEST
 </div>
 </div>
 </body>

@@ -72,10 +72,14 @@ That list—and its associated window—is global so you can't have more than on
 
 Vim comes with a lot of commands that populate the quickfix list, like `:grep` or `:vimgrep`, used for searching text in your project, and `:make`, used to build your program or pass them through a syntax checker. Once the quickfix list is populated with valid entries, one can use a number of relatively intuitively named commands to navigate it:
 
-    :cfirst
-    :clast
-    :cnext
-    :cprevious
+[cols="2,9"]
+|===
+| *command*    | *description*
+| `:cfirst`    | jumps to the first entry
+| `:clast`     | jumps to the last entry
+| `:cnext`     | jumps to the next entry
+| `:cprevious` | jumps to the previous entry
+|===
 
 or `:cwindow` to open the interactive "`quickfix window`".
 
@@ -93,7 +97,7 @@ One can navigate around the buffer displayed in that window with regular command
 The quickfix list and quickfix window have close cousins called "`location list`" and "`location window`" that pretty much work the same way except for these two differences:
 
 * unlike the quickfix list, the location list is local to a window so you can have as many location lists and location windows as you have windows,
-* the commands start with an `l` instead of a `c`, `:lfirst`, `:lwindow`, etc.
+* the commands start with an `l` instead of a `c`: `:lfirst`, `:lwindow`, etc.
 
 Using the location list can be useful if you are heavily into windows and tab pages but the quickfix list is probably a simpler choice.
 
@@ -104,7 +108,7 @@ Using the location list can be useful if you are heavily into windows and tab pa
 
 === The preview window
 
-The preview window is a small window used to _preview_ something, usually the signature of a function while we are working on its usage. It is a lot like a normal window except for these differences:
+The preview window is a small window used to _preview_ something, typically the signature of a function while we are working on its usage. It is a lot like a normal window except for these differences:
 
 * opening the preview window doesn't steal the focus from the current window,
 * there is only one preview window per tab page,
@@ -132,7 +136,7 @@ Here is the preview window in action:
 
 === The Command-line window
 
-The command-line is a handy way to input commands but it is not that good when it comes to editing the current command or recalling an old one and changing its parameters. This is not a design flaw or an implementation issue, though: only sane seperation of concerns that should appeal to anyone used to the concept of *modal editing*.
+The command-line is a handy way to input commands but it is not that good when it comes to editing the current command or recalling an old one and changing its parameters. This is not a design flaw or an implementation issue, though: only sane separation of concerns that should appeal to anyone used to the concept of *modal editing*.
 
 You use insert mode to insert text and normal mode to edit text.
 
@@ -148,7 +152,7 @@ Here is the command-line window in action:
 
     (gifcast)
 
-Some hardcore Ex commands users like to use the command-line window instead of the usual command-line. This can be done by overriding `:` in normal mode:
+Some hardcore Ex command users like to use the command-line window instead of the usual command-line. This can be done by overriding `:` in normal mode:
 
     nnoremap : q:i
 
@@ -204,7 +208,9 @@ It is very common, though, to customize it a bit further by playing with the `st
 
 This is how I define the status line shown in the picture above, the explanation for each item can be found in `:help 'statusline'`:
 
-    set statusline=%<\ %f\ %m%r%y%w%=\ L:\ \%l\/\%L\ C:\ \%c\
+    set statusline=%<\ %f\ %m%r%y%w%=\ L:\ \%l\/\%L\ C:\ \%c\ 
+                                                             |
+                                                             +-- there's a space, here
 
 It is also possible to define colors for specific parts or use functions to display dynamic information not provided by Vim but I recommend measure, here: the status line is an information device, not a decorative widget.
 
@@ -216,11 +222,11 @@ It is also possible to define colors for specific parts or use functions to disp
 
 === Line numbers
 
-Line numbers are a fairly straightforward feature that doesn't deserve much explanation. One enables them with `:set number`, disables them with `:set nonumber` and decides how much room they take with `:set numberwidth=6`.
+Showing line numbers is a fairly straightforward feature that doesn't deserve much explanation. One enables it with `:set number`, disables it with `:set nonumber` and decides how much room it takes with `:set numberwidth=6`.
 
 In most editors or IDEs, line numbers are only used directly by users in two ways: to communicate with other people who work on the same code and to jump to a specific line.
 
-In addition, Vim allows us to use line numbers to define the range and/or the address for many Ex commands:
+In addition, Vim allows us to use line numbers as prefix for many normal mode commands or to define the range and/or the address for many Ex commands:
 
 [cols="2,9"]
 |===
@@ -287,6 +293,8 @@ The "`vertical split`" is the vertical bar that separates two windows. Like the 
 It's style is defined by the `VertSplit` highlight group and the character used to draw it can be changed with the `fillchars` option. In the example below, a simple space is used instead of the original "`pipe`" character:
 
     :set fillchars+=vert:\ 
+                          |
+                          +-- there's a space, here
 
 ==== Reference
 

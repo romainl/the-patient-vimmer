@@ -28,7 +28,7 @@ A "`Plugin`" is one or more scripts written by other Vimmers to extend Vim in on
 
 For the self-respecting Patient Vimmer, installing a third-party plugin should be the last resort. Not because plugins are antiethical or whatever but because there's more often than not a built-in way to do what you want and/or a built-in way to customize Vim to do what you want the way you want.
 
-Let's say you are starting with Vim. You have read a few threads on http://reddit.com/r/vim[r/vim] or the poorly named https://news.ycombinator.com/newsi[Hacker News], a couple of highly voted answers on http://stackoverflow.com/questions/tagged/vim?sort=votes&pageSize=30[Stack Overflow] and most importantly two dozens of blog posts that _all_ advised you to install the same plugin for a nice "file explorer pane". Comforted by that consensus around [NERDTree] you install it only to find out in its documentation that there's already a built-in file explorer that does everything that third-party plugin does _and more_.
+Let's say you are starting with Vim. You have read a few threads on http://reddit.com/r/vim[r/vim] or the poorly named https://news.ycombinator.com/newsi[Hacker News], a couple of highly voted answers on http://stackoverflow.com/questions/tagged/vim?sort=votes[Stack Overflow] and most importantly two dozens of blog posts that _all_ advised you to install the same file explorer. Comforted by that consensus around NERDTree you install it only to find out in its documentation that there's already a built-in file explorer that does everything that third-party plugin does _and more_.
 
 === Where to look for plugins
 

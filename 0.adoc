@@ -28,13 +28,13 @@ You are playing in your own Tolkien trilogy, goddammit!
 
 This guide assumes three things:
 
-* that you are relatively comfortable with "`the UNIX shell`", our primary environment for the whole guide;
+* that you are relatively comfortable with "`the Unix shell`", our primary environment for the whole guide;
 
 * that you have already followed `vimtutor` at least a couple of times;
 
 * that you have access to a reasonably up-to-date Vim build.
 
-"`The UNIX shell`" is a large and fascinating subject in its own right and I simply don't know enough about it anyway so... no "`patient sheller`" for you.
+"`The Unix shell`" is a large and fascinating subject in its own right and I simply don't know enough about it anyway so... no "`patient sheller`" for you and no explanation of shell things.
 
 This guide is very likely to gloss over very important things found in `vimtutor` so going through it is an absolute requisite if you intend to ever be comfortable in Vim. Or if you intend to follow this guide.
 
@@ -190,7 +190,7 @@ What's happening here is that Vim is just being humble and professional. Its rol
 
 Or _more_, if we consider all the _improvements_ hidden behind that impenetrable `vi` persona.
 
-Like many other command-line programs, Vim depends on a number of configuration files and scripts to work its magic. Those files constitute Vim's "`runtime`" and are generaly not to be messed with. Halas, distribution maintainers like to edit them or move them around. This means that Vim's "`runtime`" can be in many places and that the system startup script--if there is one--may or may not already contain solutions to some of the problems below. Now, Vim 8.0 even comes with a script that attempts to provide a "`reasonable`" baseline but only manages to make things more complicated. For those reasons, it is hard to even talk about a "`default`" setup so, in order to keep this guide simple and generic, I'll just do like if none of that mattered. Because, well... it doesn't.
+Like many other command-line programs, Vim depends on a number of configuration files and scripts to work its magic. Those files constitute Vim's "`runtime`" and are generaly not to be messed with. Halas, distribution maintainers like to edit them or move them around. This means that Vim's "`runtime`" can be in many places and that Vim's system-wide startup script--if there is one--may or may not already contain solutions to some of the problems below. Now, Vim 8.0 even comes with a script that attempts to provide a "`reasonable`" baseline but only manages to make things more complicated. For those reasons, it is hard to even talk about a "`default`" setup so, in order to keep this guide simple and generic, I'll just do like if none of that mattered. Because, well... it doesn't.
 
 Whatever, making Vim _a little bit_ more comfortable is a quick and easy exercise that will give us many opportunities to learn useful things: let's do it step by step, one problem at a time.
 
@@ -258,7 +258,7 @@ and source it with:
 
     :source %
 
-NOTE: When used as an argument for an Ex command, `%` is replaced before execution by the current file name so, in this example, `:source %` is exactly the same as `:source ~/.vimrc`, except a lot shorter _and_ generic. That will certainly come in handy!
+NOTE: When used as an argument for an Ex command (that's how we call command starting with `:`), `%` is replaced before execution by the current file name so, in this example, `:source %` is exactly the same as `:source ~/.vimrc`, except a lot shorter _and_ generic. That will certainly come in handy!
 
 ==== Reference
 
@@ -271,7 +271,7 @@ NOTE: When used as an argument for an Ex command, `%` is replaced before executi
 
 Next comes automatic indentation. This one is more of a _comfort_ thing but how are we supposed to be efficient at text editing if we have to to adjust the indent of every new line manually?
 
-It turns out Vim has a bunch of automatic indentation mechanisms, none of which are enabled by default. The most basic, `'autoindent'`, doesn't try to be too smart and that's all we need for now.
+It turns out Vim has a bunch of automatic indentation mechanisms, but none of those are enabled by default. The most basic, `'autoindent'`, doesn't try to be too smart and that's all we need for now.
 
 ==== Solution
 
@@ -287,7 +287,7 @@ and source it with:
 
     :so %
 
-NOTE: Most Ex commands and options can be shortened to a couple of letters. This undoubtedly make things easier to type! In configuration files and scripts, though, the short form can be hard to read and doesn't provide any benefit over the long form so don't use it; your future self will thank you.
+NOTE: Most Ex commands and options can be shortened to a couple of letters. This undoubtedly makes things easier to type! In configuration files and scripts, though, the short form can be hard to read and doesn't provide any benefit over the long form so don't use it; your future self will thank you.
 
 ==== Reference
 
@@ -353,7 +353,7 @@ Add this line to your `vimrc`:
 
 === Problem 6--Huge tabs
 
-Vim follows the de-facto standard of 8 spaces but we, programmers, _need_ our 4 or 2 character-wide indentation, don't we? `:help 'tabstop'` does a good job of explaining what strategy to adopt when dealing with tabulation. The strategy I recommend is to leave `'tabstop'` at its default value and only adjust `'shiftwidth'` and `'softtabstop'`.
+Vim follows the de-facto standard width of 8 characters but we, programmers, _need_ our 4 or 2 character-wide indentation, don't we? `:help 'tabstop'` does a good job of explaining what strategy to adopt when dealing with tabulation. The strategy I recommend is to leave `'tabstop'` at its default value and only adjust `'shiftwidth'` and `'softtabstop'`.
 
 ==== Solution
 
